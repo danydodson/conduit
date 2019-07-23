@@ -9,6 +9,7 @@
     "server": "node ./app.js",
     "watch": "nodemon ./app.js",
     "dev": "concurrently \"npm run watch\" \"npm run client\"",
+    "prod": "NODE_ENV=production node app.js",
     "stop": "lsof -ti :3000 | xargs kill",
     "test": "newman run ./tests/api-tests.postman.json -e ./tests/env-api-tests.postman.json",
     "mongo:start": "docker run --name realworld-mongo -p 27017:27017 mongo & sleep 5",

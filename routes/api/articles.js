@@ -1,10 +1,8 @@
 const router = require('express').Router()
-
 const mongoose = require('mongoose')
 const Article = mongoose.model('Article')
 const Comment = mongoose.model('Comment')
 const User = mongoose.model('User')
-
 const auth = require('../auth')
 
 

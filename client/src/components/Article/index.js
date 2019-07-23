@@ -6,19 +6,8 @@ import { connect } from 'react-redux'
 import marked from 'marked'
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes'
 
-const mapStateToProps = state => ({
-  ...state.article,
-  currentUser: state.common.currentUser
-})
-
-const mapDispatchToProps = dispatch => ({
-  onLoad: payload =>
-    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
-  onUnload: () =>
-    dispatch({ type: ARTICLE_PAGE_UNLOADED })
-})
-
 class Article extends React.Component {
+
   componentWillMount() {
     this.props.onLoad(Promise.all([
       agent.Articles.get(this.props.match.params.id),
@@ -31,14 +20,17 @@ class Article extends React.Component {
   }
 
   render() {
-    if (!this.props.article) {
-      return null
-    }
+
+    if (!this.props.article) { return null }
 
     //const markup = { __html: marked(this.props.article.body, { sanitize: true }) }
     const markup = { __html: marked(this.props.article.body, {}) }
-    const canModify = this.props.currentUser &&
-      this.props.currentUser.username === this.props.article.author.username
+
+    const canModify =
+      this.props.currentUser &&
+      this.props.currentUser.username ===
+      this.props.article.author.username
+
     return (
       <div className="article-page">
 
@@ -94,5 +86,17 @@ class Article extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  ...state.article,
+  currentUser: state.common.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+  onLoad: payload =>
+    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
+  onUnload: () =>
+    dispatch({ type: ARTICLE_PAGE_UNLOADED })
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article)
