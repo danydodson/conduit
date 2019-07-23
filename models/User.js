@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator')
 var crypto = require('crypto')
 var jwt = require('jsonwebtoken')
-var secret = require('../config').secret
+var SECRET = require('../config').SECRET
 
 var UserSchema = new mongoose.Schema({
 
@@ -73,7 +73,7 @@ UserSchema.methods.generateJWT = function () {
     id: this._id,
     username: this.username,
     exp: parseInt(exp.getTime() / 1000),
-  }, secret)
+  }, SECRET)
 }
 
 

@@ -13,11 +13,11 @@ const YourFeedTab = props => {
 
     return (
       <li className="nav-item">
-        <a  href=""
-            className={ props.tab === 'feed' ? 'nav-link active' : 'nav-link' }
-            onClick={clickHandler}>
+        <button href=""
+          className={props.tab === 'feed' ? 'nav-link active' : 'nav-link'}
+          onClick={clickHandler}>
           Your Feed
-        </a>
+        </button>
       </li>
     )
   }
@@ -31,12 +31,12 @@ const GlobalFeedTab = props => {
   }
   return (
     <li className="nav-item">
-      <a
+      <button
         href=""
-        className={ props.tab === 'all' ? 'nav-link active' : 'nav-link' }
+        className={props.tab === 'all' ? 'nav-link active' : 'nav-link'}
         onClick={clickHandler}>
         Global Feed
-      </a>
+      </button>
     </li>
   )
 }
@@ -48,9 +48,9 @@ const TagFilterTab = props => {
 
   return (
     <li className="nav-item">
-      <a href="" className="nav-link active">
+      <button href="" className="nav-link active">
         <i className="ion-pound"></i> {props.tag}
-      </a>
+      </button>
     </li>
   )
 }

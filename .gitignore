@@ -42,3 +42,5 @@ node_modules
 /client/.build
 /.env
 /.vscode
+/config/dev.js
+/logs/access.log

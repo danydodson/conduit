@@ -17,7 +17,7 @@ const Comment = props => {
           className="comment-author">
           <img src={comment.author.image} className="comment-author-img" alt={comment.author.username} />
         </Link>
-        &nbsp
+        &nbsp;
         <Link
           to={`/@${comment.author.username}`}
           className="comment-author">
