@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Article = mongoose.model('Article')
 const Comment = mongoose.model('Comment')
 const User = mongoose.model('User')
+const log = require('../../logs/colors')
 const auth = require('../auth')
 
 
@@ -132,7 +133,14 @@ router.post('/', auth.required, function (req, res, next) {
     article.author = user
 
     return article.save().then(function () {
-      console.log(article.author)
+      log.data(`
+      ${`New Article !`}`)
+      log.info(`
+      ${`username: ${article.author.username}`}
+      ${`email: ${article.author.email}`}
+      ${`created at: ${article.author.createdAt}`}
+      ${`updated at: ${article.author.updatedAt}`}
+      `)
       return res.json({ article: article.toJSONFor(user) })
     })
   }).catch(next)

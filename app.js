@@ -19,13 +19,14 @@ if (process.env.NODE_ENV === 'production') {
   app.use(colorMorgan())
 }
 
+
 const conn = db => mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true
 })
 
 conn(key.db)
-  .then(() => log.info(`Connected to db`))
+  .then(() => log.info(`[mongodb] connected to db`))
   .catch(err => log.err(err))
 
 app.use(cors())
@@ -86,4 +87,4 @@ app.use(function (err, req, res, next) {
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => log.info(`Listening on port ${port}`))
+app.listen(port, () => log.info(`[express] listening on port ${port}`))
