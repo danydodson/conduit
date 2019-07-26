@@ -13,9 +13,7 @@ var CommentSchema = new mongoose.Schema({
   }
 
 },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 )
 
 

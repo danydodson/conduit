@@ -1,43 +1,36 @@
 
 import { applyMiddleware, createStore } from 'redux'
-import { createLogger } from 'redux-logger'
-//import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
-import { promiseMiddleware, localStorageMiddleware } from './middleware'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import { promiseMiddleware } from './middleware'
+import { localStorageMiddleware } from './middleware'
+//import { createLogger } from 'redux-logger'
 import reducer from './reducer'
 
-//import devToolsEnhancer from 'remote-redux-devtools';
-import { composeWithDevTools } from 'remote-redux-devtools'
+import { routerMiddleware } from 'react-router-redux'
+import { createBrowserHistory } from 'history'
 
-//import { routerMiddleware } from 'react-router-redux'
-//import { createBrowserHistory } from 'history'
-//export const history = createBrowserHistory()
+export const history = createBrowserHistory()
+
 //Build the middleware for intercepting and dispatching navigation actions
-//const myRouterMiddleware = routerMiddleware(history)
-const composeEnhancers = composeWithDevTools({
-  name: 'conduit',
-  realtime: true,
-  trace: true,
-  port: 8000
-})
+const myRouterMiddleware = routerMiddleware(history)
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
     return applyMiddleware(
-      //myRouterMiddleware,
+      myRouterMiddleware,
       promiseMiddleware,
       localStorageMiddleware
     )
   } else {
     return applyMiddleware(
-      //myRouterMiddleware,
+      myRouterMiddleware,
       promiseMiddleware,
       localStorageMiddleware,
-      createLogger()
+      //createLogger()
     )
   }
 }
 
 export const store = createStore(
-  reducer, composeEnhancers(getMiddleware())
-  //reducer, composeWithDevTools(getMiddleware())
+  reducer, composeWithDevTools(getMiddleware())
 )

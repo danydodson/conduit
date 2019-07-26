@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const errorhandler = require('errorhandler')
-const colorMorgan = require('./logs/morgan')
+//const colorMorgan = require('./logs/morgan')
 const mongoose = require('mongoose')
 const log = require('./logs/colors')
 const cors = require('cors')
@@ -13,12 +13,11 @@ require('dotenv').config()
 const key = require('./config/index')
 const prod = process.env.NODE_ENV
 
-if (process.env.NODE_ENV === 'production') {
-  mongoose.set('debug', key.clean)
+if (prod !== 'production') {
+  //mongoose.set('debug', key.clean)
   app.use(errorhandler())
-  app.use(colorMorgan())
+  //app.use(colorMorgan())
 }
-
 
 const conn = db => mongoose.connect(db, {
   useNewUrlParser: true,

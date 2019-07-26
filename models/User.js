@@ -41,9 +41,7 @@ var UserSchema = new mongoose.Schema({
   salt: String
 
 },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 )
 
 
