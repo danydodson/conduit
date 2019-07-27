@@ -1,12 +1,17 @@
 {
-  "name": "conduit",
+  "name": "react-redux-realworld-example-app",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
+  "scripts": {
+    "start": "cross-env PORT=4100 react-scripts start",
+    "build": "react-scripts build",
+    "test": "cross-env PORT=4100 freact-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "react-scripts": "^3.0.1",
-    "remote-redux-devtools": "^0.5.16"
+    "react-scripts": "^3.0.1"
   },
   "dependencies": {
     "history": "^4.9.0",
@@ -20,15 +25,8 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "storm-react-diagrams": "^5.2.1",
     "superagent": "^5.1.0",
     "superagent-promise": "^1.1.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [

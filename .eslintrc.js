@@ -1,35 +1,33 @@
 module.exports = {
-
   extends: [
-    //  'eslint:recommended',
-    //  'plugin:react/recommended',
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
-
   env: {
-    //  es6: true,
-    //  commonjs: true,
-    //  browser: true,
-    //  node: true,
+    node: true,
+    es6: true,
+    browser: true,
   },
-
   plugins: [
-    //  'react'
+    'react'
   ],
-
   parserOptions: {
-    //  ecmaVersion: 2018,
-    //  sourceType: 'module',
-    //  jsx: true,
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
-
   rules: {
-
-  },
-
-  settings: {
-    //  "react": {
-    //    "version": "detect"
-    //  }
+    "no-unused-vars": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/prop-types": 0
+    //"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    //"implicit-arrow-linebreak": "off",
+    //"comma-dangle": "off",
+    //"indent": "off",
+    //"no-trailing-spaces": "off"
   }
-
 }
+
