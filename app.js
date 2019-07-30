@@ -84,6 +84,6 @@ app.use(function (err, req, res, next) {
   })
 })
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 
 app.listen(port, () => log.info(`[express] listening on port ${port}`))
