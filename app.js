@@ -18,7 +18,6 @@ const DBURI = require('./config').DBURI
 const SECRET = require('./config').SECRET
 const PORT = process.env.PORT || 5001
 
-
 mongoose.connect(DBURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
