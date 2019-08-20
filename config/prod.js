@@ -1,4 +1,4 @@
 module.exports = {
-  db: `${process.env.DB_URI}`,
-  secret: `${process.env.SECRET}`
+  DBURI: `${process.env.DBURI}`,
+  SECRET: `${process.env.SECRET}`
 }

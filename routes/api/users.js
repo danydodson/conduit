@@ -4,6 +4,8 @@ var passport = require('passport')
 var User = mongoose.model('User')
 var auth = require('../auth')
 
+//-----------------------------------------------------------------------
+
 router.get('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
     if(!user){ return res.sendStatus(401) }
@@ -11,6 +13,8 @@ router.get('/user', auth.required, function(req, res, next){
     return res.json({user: user.toAuthJSON()})
   }).catch(next)
 })
+
+//-----------------------------------------------------------------------
 
 router.put('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
@@ -39,6 +43,8 @@ router.put('/user', auth.required, function(req, res, next){
   }).catch(next)
 })
 
+//-----------------------------------------------------------------------
+
 router.post('/users/login', function(req, res, next){
   if(!req.body.user.email){
     return res.status(422).json({errors: {email: "can't be blank"}})
@@ -60,6 +66,8 @@ router.post('/users/login', function(req, res, next){
   })(req, res, next)
 })
 
+//-----------------------------------------------------------------------
+
 router.post('/users', function(req, res, next){
   var user = new User()
 
@@ -71,5 +79,7 @@ router.post('/users', function(req, res, next){
     return res.json({user: user.toAuthJSON()})
   }).catch(next)
 })
+
+//-----------------------------------------------------------------------
 
 module.exports = router

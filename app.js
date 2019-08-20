@@ -2,42 +2,38 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const errorhandler = require('errorhandler')
-//const colorMorgan = require('./logs/morgan')
+const mongooselogs = require('./logs/mongoose')
+const morganLogs = require('./logs/morgan')
 const mongoose = require('mongoose')
-const log = require('./logs/colors')
+const log = require('./logs/chalk')
 const cors = require('cors')
 const app = express()
 
 require('dotenv').config()
 
-const key = require('./config/index')
-const prod = process.env.NODE_ENV
+const PROD = 'production'
+const DBURI = require('./config').DBURI
+const SECRET = require('./config').SECRET
 
-if (prod !== 'production') {
-  //mongoose.set('debug', key.clean)
-  app.use(errorhandler())
-  //app.use(colorMorgan())
-}
-
-const conn = db => mongoose.connect(db, {
+mongoose.connect(DBURI, {
+  useCreateIndex: true,
   useNewUrlParser: true,
-  useCreateIndex: true
-})
+}).then(() => console.log(log.info(`[mongodb] Connection: mongoDB`)))
+  .catch(err => console.log(log.error(err)))
 
-conn(key.db)
-  .then(() => log.info(`[mongodb] connected to db`))
-  .catch(err => log.err(err))
+
+//mongoose.set('debug', mongooselogs)
 
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(morganLogs())
+app.use(errorhandler())
 app.use(bodyParser.json())
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(__dirname + '/public'))
 app.use(require('method-override')())
 
-app.use(express.static(__dirname + '/public'))
-
 app.use(session({
-  secret: key.secret,
+  secret: SECRET,
   cookie: { maxAge: 60000 },
   resave: false,
   saveUninitialized: false
@@ -59,9 +55,9 @@ app.use(function (req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (!prod) {
+if (!PROD) {
   app.use(function (err, req, res, next) {
-    console.log(err.stack)
+    console.log(log.err(err.stack))
     res.status(err.status || 500)
     res.json({
       'errors': {
@@ -84,6 +80,6 @@ app.use(function (err, req, res, next) {
   })
 })
 
-const port = process.env.PORT || 5001
+const PORT = process.env.PORT || 5001
 
-app.listen(port, () => log.info(`[express] listening on port ${port}`))
+app.listen(PORT, () => console.log(log.info(`[express] Port: ${PORT}`)))
