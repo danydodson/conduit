@@ -85,4 +85,4 @@ app.use(function (err, req, res, next) {
   })
 })
 
-app.listen(PORT, () => console.info(chalk.yellow((`[express] port: ${PORT} ✓`))))
+app.listen(PORT, () => console.info(chalk.blue((`[express] port: ${PORT} ✓`))))

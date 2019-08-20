@@ -3,6 +3,7 @@ import ListPagination from './ListPagination'
 import React from 'react'
 
 const ArticleList = props => {
+
   if (!props.articles) {
     return (
       <div className="article-preview">Loading...</div>
@@ -26,7 +27,6 @@ const ArticleList = props => {
           )
         })
       }
-
       <ListPagination
         pager={props.pager}
         articlesCount={props.articlesCount}

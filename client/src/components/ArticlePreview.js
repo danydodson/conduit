@@ -2,7 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import agent from '../agent'
 import { connect } from 'react-redux'
-import { ARTICLE_FAVORITED, ARTICLE_UNFAVORITED } from '../constants/actionTypes'
+import {
+  ARTICLE_FAVORITED,
+  ARTICLE_UNFAVORITED
+} from '../constants/actionTypes'
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'

@@ -9,7 +9,6 @@ import {
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
-
   switch (action.type) {
 
     case EDITOR_PAGE_LOADED:
@@ -42,7 +41,6 @@ export default (state = {}, action) => {
     case ADD_TAG:
       return {
         ...state,
-        //tagList: [state.tagList, ...state.tagInput],
         tagList: state.tagList.concat([state.tagInput]),
         tagInput: ''
       }
