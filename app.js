@@ -1,28 +1,32 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+
 const errorhandler = require('errorhandler')
-const mongooselogs = require('./logs/mongoose')
 const morganLogs = require('./logs/morgan')
+const chalk = require('chalk')
+
 const mongoose = require('mongoose')
-const log = require('./logs/chalk')
 const cors = require('cors')
-const app = express()
 
 require('dotenv').config()
+
+const app = express()
 
 const PROD = 'production'
 const DBURI = require('./config').DBURI
 const SECRET = require('./config').SECRET
+const PORT = process.env.PORT || 5001
+
 
 mongoose.connect(DBURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
-}).then(() => console.log(log.info(`[mongodb] Connection: mongoDB`)))
-  .catch(err => console.log(log.error(err)))
+}).then(() => console.info(chalk.blue(`[mongo] mongo ✓`)))
+  .catch(err => console.error(chalk.red(err)))
 
-
-//mongoose.set('debug', mongooselogs)
+// const mongooselogs = require('./logs/mongoose')
+// mongoose.set('debug', mongooselogs)
 
 app.use(cors())
 app.use(morganLogs())
@@ -47,17 +51,18 @@ require('./config/passport')
 app.use(require('./routes'))
 
 /// catch 404 and forward to error handler
+
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
   err.status = 404
   next(err)
 })
 
-// development error handler
-// will print stacktrace
+// development error handler will print stacktrace
+
 if (!PROD) {
   app.use(function (err, req, res, next) {
-    console.log(log.err(err.stack))
+    console.error(chalk.red(err.stack))
     res.status(err.status || 500)
     res.json({
       'errors': {
@@ -68,8 +73,8 @@ if (!PROD) {
   })
 }
 
-// production error handler
-// no stacktraces leaked to user
+// production error handler no stacktraces leaked to user
+
 app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.json({
@@ -80,6 +85,4 @@ app.use(function (err, req, res, next) {
   })
 })
 
-const PORT = process.env.PORT || 5001
-
-app.listen(PORT, () => console.log(log.info(`[express] Port: ${PORT}`)))
+app.listen(PORT, () => console.info(chalk.yellow((`[express] port: ${PORT} ✓`))))

@@ -13,7 +13,9 @@ import {
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
+
   switch (action.type) {
+
     case ARTICLE_FAVORITED:
     case ARTICLE_UNFAVORITED:
       return {
@@ -29,6 +31,7 @@ export default (state = {}, action) => {
           return article
         })
       }
+
     case SET_PAGE:
       return {
         ...state,
@@ -36,6 +39,7 @@ export default (state = {}, action) => {
         articlesCount: action.payload.articlesCount,
         currentPage: action.page
       }
+
     case APPLY_TAG_FILTER:
       return {
         ...state,
@@ -46,6 +50,7 @@ export default (state = {}, action) => {
         tag: action.tag,
         currentPage: 0
       }
+
     case HOME_PAGE_LOADED:
       return {
         ...state,
@@ -56,8 +61,10 @@ export default (state = {}, action) => {
         currentPage: 0,
         tab: action.tab
       }
+
     case HOME_PAGE_UNLOADED:
       return {}
+
     case CHANGE_TAB:
       return {
         ...state,
@@ -68,6 +75,7 @@ export default (state = {}, action) => {
         currentPage: 0,
         tag: null
       }
+
     case PROFILE_PAGE_LOADED:
     case PROFILE_FAVORITES_PAGE_LOADED:
       return {
@@ -77,9 +85,11 @@ export default (state = {}, action) => {
         articlesCount: action.payload[1].articlesCount,
         currentPage: 0
       }
+
     case PROFILE_PAGE_UNLOADED:
     case PROFILE_FAVORITES_PAGE_UNLOADED:
       return {}
+
     default:
       return state
   }
