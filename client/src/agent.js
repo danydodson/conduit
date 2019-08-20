@@ -58,8 +58,8 @@ const Articles = {
   favoritedBy: (author, page) =>
     requests.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
   feed: (page) =>
+    // requests.get(`/articles/feed?limit=10&offset=0`),
     requests.get(`/articles/feed?${limit(10, page)}`),
-  // requests.get(`/articles/feed?limit=10&offset=0`),
   get: slug =>
     requests.get(`/articles/${slug}`),
   unfavorite: slug =>

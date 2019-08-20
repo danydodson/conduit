@@ -37,6 +37,7 @@ const ListPagination = props => {
             const onClick = ev => {
               ev.preventDefault()
               setPage(v)
+              window.scrollTo(0, 0)
             }
             return (
               <li
