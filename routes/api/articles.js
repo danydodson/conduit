@@ -7,16 +7,14 @@ const chalk = require('chalk')
 const auth = require('../auth')
 
 //-----------------------------------------------------------------------
-
 // Preload article objects on routes with ':article'
+
 router.param('article', function (req, res, next, slug) {
   Article.findOne({ slug: slug })
     .populate('author')
     .then(function (article) {
       if (!article) { return res.sendStatus(404) }
-
       req.article = article
-
       return next()
     }).catch(next)
 })
@@ -26,9 +24,7 @@ router.param('article', function (req, res, next, slug) {
 router.param('comment', function (req, res, next, id) {
   Comment.findById(id).then(function (comment) {
     if (!comment) { return res.sendStatus(404) }
-
     req.comment = comment
-
     return next()
   }).catch(next)
 })
@@ -142,9 +138,9 @@ router.post('/', auth.required, function (req, res, next) {
     article.author = user
 
     return article.save().then(function () {
-console.info(chalk.blue(`
+      console.info(chalk.blue(`
 ${`New Article !`}`))
-console.info(chalk.blue(`
+      console.info(chalk.blue(`
 ${`username: ${article.author.username}`}
 ${`email: ${article.author.email}`}
 ${`created at: ${article.author.createdAt}`}
@@ -156,8 +152,8 @@ ${`updated at: ${article.author.updatedAt}`}
 })
 
 //-----------------------------------------------------------------------
-
 // return a article
+
 router.get('/:article', auth.optional, function (req, res, next) {
   Promise.all([
     req.payload ? User.findById(req.payload.id) : null,
@@ -170,8 +166,8 @@ router.get('/:article', auth.optional, function (req, res, next) {
 })
 
 //-----------------------------------------------------------------------
-
 // update article
+
 router.put('/:article', auth.required, function (req, res, next) {
   User.findById(req.payload.id).then(function (user) {
     if (req.article.author._id.toString() === req.payload.id.toString()) {
@@ -201,8 +197,8 @@ router.put('/:article', auth.required, function (req, res, next) {
 })
 
 //-----------------------------------------------------------------------
-
 // delete article
+
 router.delete('/:article', auth.required, function (req, res, next) {
   User.findById(req.payload.id).then(function (user) {
     if (!user) { return res.sendStatus(401) }
@@ -218,8 +214,8 @@ router.delete('/:article', auth.required, function (req, res, next) {
 })
 
 //-----------------------------------------------------------------------
-
 // Favorite an article
+
 router.post('/:article/favorite', auth.required, function (req, res, next) {
   var articleId = req.article._id
 
@@ -250,8 +246,8 @@ router.delete('/:article/favorite', auth.required, function (req, res, next) {
 })
 
 //-----------------------------------------------------------------------
-
 // return an article's comments
+
 router.get('/:article/comments', auth.optional, function (req, res, next) {
   Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function (user) {
     return req.article.populate({
@@ -275,8 +271,8 @@ router.get('/:article/comments', auth.optional, function (req, res, next) {
 })
 
 //-----------------------------------------------------------------------
-
 // create a new comment
+
 router.post('/:article/comments', auth.required, function (req, res, next) {
   User.findById(req.payload.id).then(function (user) {
     if (!user) { return res.sendStatus(401) }
