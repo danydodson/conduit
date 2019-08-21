@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { store } from './store'
-import { ConnectedRouter } from 'connected-react-router'
-import { history } from './store'
 import { Switch, Route } from 'react-router-dom'
+import { ConnectedRouter } from 'connected-react-router'
+import { history, store } from './store'
 
-import App from './components/App'
+import App from './containers/App/App'
 
 ReactDOM.render((
   <Provider store={store}>
@@ -16,5 +15,4 @@ ReactDOM.render((
       </Switch>
     </ConnectedRouter>
   </Provider>
-
 ), document.getElementById('root'))

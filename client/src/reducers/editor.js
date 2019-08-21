@@ -6,7 +6,7 @@ import {
   ADD_TAG,
   REMOVE_TAG,
   UPDATE_FIELD_EDITOR
-} from '../constants/actionTypes'
+} from '../actions/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
