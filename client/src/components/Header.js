@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import {
   LOGOUT,
   SETTINGS_PAGE_UNLOADED
@@ -78,7 +79,10 @@ const LoggedInView = props => {
           <Link
             to={`/@${props.currentUser.username}`}
             className="nav-link">
-            <img src={props.currentUser.image} className="user-pic" alt={props.currentUser.username} />
+            <img
+              className="user-pic"
+              src={props.currentUser.image}
+              alt={''} />
             {props.currentUser.username}
           </Link>
         </li>

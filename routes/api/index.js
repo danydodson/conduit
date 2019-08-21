@@ -14,7 +14,6 @@ router.use(function (err, req, res, next) {
     return res.status(422).json({
       errors: Object.keys(err.errors).reduce(function (errors, key) {
         errors[key] = err.errors[key].message
-
         return errors
       }, {})
     })

@@ -21,6 +21,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
+    "styled-components": "^4.3.2",
     "superagent": "^5.1.0",
     "superagent-promise": "^1.1.0"
   },

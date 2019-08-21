@@ -1,9 +1,15 @@
 import React from 'react'
 import agent from '../agent'
-import Header from './Header'
-import { connect } from 'react-redux'
-import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
+
 import { Route, Switch } from 'react-router-dom'
+import { push } from 'connected-react-router'
+import { connect } from 'react-redux'
+import { store } from '../store'
+
+import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
+
+import Header from './Header'
+
 import Article from '../components/Article'
 import Editor from '../components/Editor'
 import Home from '../components/Home'
@@ -12,8 +18,8 @@ import Profile from '../components/Profile'
 import ProfileFavorites from '../components/ProfileFavorites'
 import Register from '../components/Register'
 import Settings from '../components/Settings'
-import { store } from '../store'
-import { push } from 'connected-react-router'
+
+import GlobalStyle from '../styles/global-styles'
 
 const mapStateToProps = state => {
   return {
@@ -67,6 +73,7 @@ class App extends React.Component {
             <Route path="/@:username/favorites" component={ProfileFavorites} />
             <Route path="/@:username" component={Profile} />
           </Switch>
+          <GlobalStyle />
         </div>
       )
     }
@@ -75,6 +82,7 @@ class App extends React.Component {
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
+        <GlobalStyle />
       </div>
     )
   }

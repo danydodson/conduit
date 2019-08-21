@@ -5,6 +5,13 @@ var jwt = require('jsonwebtoken')
 var SECRET = require('../config').SECRET
 
 var UserSchema = new mongoose.Schema({
+  bio: String,
+  hash: String,
+  salt: String,
+  image: {
+    type: String
+    //required: [true, "can't be blank"],
+  },
   username: {
     type: String,
     lowercase: true,
@@ -21,15 +28,10 @@ var UserSchema = new mongoose.Schema({
     match: [/\S+@\S+\.\S+/, 'is invalid'],
     index: true
   },
-  bio: String,
-  image: String,
+  type: { type: String, default: 'basic' },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  hash: String,
-  salt: String
-},
-  { timestamps: true }
-)
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+}, { timestamps: true })
 
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' })
@@ -52,6 +54,7 @@ UserSchema.methods.generateJWT = function () {
   return jwt.sign({
     id: this._id,
     username: this.username,
+    image: this.image,
     exp: parseInt(exp.getTime() / 1000),
   }, SECRET)
 }
@@ -70,7 +73,7 @@ UserSchema.methods.toProfileJSONFor = function (user) {
   return {
     username: this.username,
     bio: this.bio,
-    image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
+    image: this.image || 'https://res.cloudinary.com/scenicloud/image/upload/v1566379881/seesee/heart.png',
     following: user ? user.isFollowing(this._id) : false
   }
 }

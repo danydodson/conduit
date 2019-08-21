@@ -28,8 +28,8 @@ const requests = {
 }
 
 const Auth = {
-  current: () =>
-    requests.get('/user'),
+  current: user =>
+    requests.get('/user', { user }),
   login: (email, password) =>
     requests.post('/users/login', { user: { email, password } }),
   register: (username, email, password) =>

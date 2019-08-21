@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 
 const errorhandler = require('errorhandler')
-const morganLogs = require('./logs/morgan')
+const logger = require('./logs/logger')
 const chalk = require('chalk')
 
 const mongoose = require('mongoose')
@@ -13,10 +13,10 @@ require('dotenv').config()
 
 const app = express()
 
-const PROD = 'production'
 const DBURI = require('./config').DBURI
 const SECRET = require('./config').SECRET
-const PORT = process.env.PORT || 5001
+const PORT = require('./routes/port')
+const PROD = 'production'
 
 mongoose.connect(DBURI, {
   useCreateIndex: true,
@@ -28,7 +28,7 @@ mongoose.connect(DBURI, {
 // mongoose.set('debug', mongooselogs)
 
 app.use(cors())
-app.use(morganLogs())
+app.use(logger())
 app.use(errorhandler())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -45,7 +45,7 @@ app.use(session({
 require('./models/User')
 require('./models/Article')
 require('./models/Comment')
-require('./config/passport')
+require('./routes/passport')
 
 app.use(require('./routes'))
 
