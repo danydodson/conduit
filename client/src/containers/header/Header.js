@@ -4,6 +4,7 @@ import ListItem from '../../components/listitem'
 import NavList from '../../components/navlist'
 import Link from '../../components/link'
 import Button from '../../components/button'
+import Nav from './Styles'
 
 import {
   LOGOUT,
@@ -55,7 +56,7 @@ const LoggedInView = props => {
 class Header extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-light flex">
+      <Nav>
         <NavList>
           <ListItem item={
             <Link to="/">{this.props.appName.toLowerCase()}</Link>} />
@@ -65,7 +66,7 @@ class Header extends React.Component {
             currentUser={this.props.currentUser}
             logout={this.props.onClickLogout} />
         </NavList>
-      </nav>
+      </Nav>
     )
   }
 }

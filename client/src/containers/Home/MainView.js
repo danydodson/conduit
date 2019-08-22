@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import agent from '../../middleware/agent'
-
-//import Modal from '../modal'
 import Articles from '../articles/Articles'
 
 import { CHANGE_TAB } from '../../actions/types'
@@ -74,14 +72,6 @@ const MainView = props => {
     <div className="col-md-9">
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
-
-          {/* <Modal>
-            <h1>Would you like to adopt ?</h1>
-            <div className="buttons">
-              <button>Yes</button>
-              <button>No</button>
-            </div>
-          </Modal> */}
 
           <YourFeedTab
             token={props.token}

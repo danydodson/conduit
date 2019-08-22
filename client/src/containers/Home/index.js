@@ -11,6 +11,8 @@ import {
   APPLY_TAG_FILTER
 } from '../../actions/types'
 
+import Details from '../modal'
+
 const Promise = global.Promise
 
 const mapStateToProps = state => ({
@@ -29,7 +31,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Home extends React.Component {
-  
+
+  state = { showModal: false }
+
+  toggleModal = () => this.setState({ showModal: !this.state.showModal })
+
   UNSAFE_componentWillMount() {
     const tab = this.props.token ? 'feed' : 'all'
     const articlesPromise = this.props.token ?
@@ -48,10 +54,17 @@ class Home extends React.Component {
   }
 
   render() {
+
+    const { showModal } = this.state
+
     return (
       <div className="home-page">
 
         <Banner token={this.props.token} appName={this.props.appName} />
+
+        <button onClick={this.toggleModal} >OPEN</button>
+
+        {showModal ? <Details /> : null}
 
         <div className="container page">
           <div className="row">

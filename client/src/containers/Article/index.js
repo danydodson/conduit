@@ -10,6 +10,18 @@ import {
   ARTICLE_PAGE_UNLOADED
 } from '../../actions/types'
 
+const mapStateToProps = state => ({
+  ...state.article,
+  currentUser: state.common.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+  onLoad: payload =>
+    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
+  onUnload: () =>
+    dispatch({ type: ARTICLE_PAGE_UNLOADED })
+})
+
 class Article extends React.Component {
 
   UNSAFE_componentWillMount() {
@@ -90,15 +102,4 @@ class Article extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.article,
-  currentUser: state.common.currentUser
-})
-
-const mapDispatchToProps = dispatch => ({
-  onLoad: payload =>
-    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
-  onUnload: () =>
-    dispatch({ type: ARTICLE_PAGE_UNLOADED })
-})
 export default connect(mapStateToProps, mapDispatchToProps)(Article)

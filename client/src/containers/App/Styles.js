@@ -46,7 +46,6 @@ const GlobalStyle = createGlobalStyle`
 
   #modal > div {
     background-color: white;
-    max-width: 500px;
     padding: 15px;
     border-radius: 5px;
     text-align: center;
