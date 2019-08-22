@@ -1,25 +1,24 @@
 import { css } from 'styled-components'
 
 const buttonStyles = css`
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 0.25em 2em;
-  text-decoration: none;
-  border-radius: 4px;
-  -webkit-font-smoothing: antialiased;
-  -webkit-touch-callout: none;
-  user-select: none;
   cursor: pointer;
-  outline: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: bold;
+  color: #818a91;
   font-size: 16px;
-  border: 2px solid #41addd;
-  color: #41addd;
+  text-decoration: none;
+  font-family: 'Titillium Web';
+
+  &:hover {
+    color: #4e4e4e;
+    text-decoration: none;
+  }
+  
+  &:focus {
+    color: #4e4e4e;
+    text-decoration: none;
+  }
   
   &:active {
-    background: #41addd;
-    color: #fff;
+    color: #4e4e4e;
   }
 `
 

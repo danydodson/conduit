@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import Item from './ListItem'
+import { Item } from './Styles'
 
-function ListItem(props) {
+function Items(props) {
   return <Item>{props.item}</Item>
 }
 
-ListItem.propTypes = {
+Items.propTypes = {
   item: PropTypes.any
 }
 
-export default ListItem
+export default Items

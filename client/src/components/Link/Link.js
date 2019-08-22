@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const StyledLink = styled(Link)`
   cursor: pointer;
   color: #818a91;
-  font-size: 16px;
   text-decoration: none;
   font-family: 'Titillium Web';
 

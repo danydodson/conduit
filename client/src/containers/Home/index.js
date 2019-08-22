@@ -11,7 +11,7 @@ import {
   APPLY_TAG_FILTER
 } from '../../actions/types'
 
-import Details from '../modal'
+// import Details from '../modal'
 
 const Promise = global.Promise
 
@@ -55,16 +55,15 @@ class Home extends React.Component {
 
   render() {
 
-    const { showModal } = this.state
+    // const { showModal } = this.state
 
     return (
       <div className="home-page">
 
         <Banner token={this.props.token} appName={this.props.appName} />
 
-        <button onClick={this.toggleModal} >OPEN</button>
-
-        {showModal ? <Details /> : null}
+        {/* <button onClick={this.toggleModal} >OPEN</button>
+        {showModal ? <Details /> : null} */}
 
         <div className="container page">
           <div className="row">

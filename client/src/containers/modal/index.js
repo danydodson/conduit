@@ -18,7 +18,6 @@ const Modal = ({ children }) => {
   }
 
   const onButtonClick = () => {
-    // `current` points to the mounted text input element
     modalRoot.removeChild(elRef.current)
   }
 

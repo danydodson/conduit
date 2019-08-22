@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ListItem from '../../components/listitem'
-import NavList from '../../components/navlist'
+import { NavList, List } from '../../components/Lists/Styles'
+import { Image } from '../../components/images/Styles'
+import Item from '../../components/Items'
 import Link from '../../components/link'
 import Button from '../../components/button'
-import Nav from './Styles'
+import { Nav } from './Styles'
 
 import {
   LOGOUT,
@@ -22,9 +23,9 @@ const LoggedOutView = props => {
   if (!props.to) {
     return (
       <>
-        <ListItem item={<Link to="/">home</Link>} />
-        <ListItem item={<Link to="/login">sign in</Link>} />
-        <ListItem item={<Link to="/register">sign up</Link>} />
+        <Item item={<Link to="/">home</Link>} />
+        <Item item={<Link to="/login">sign in</Link>} />
+        <Item item={<Link to="/register">sign up</Link>} />
       </>
     )
   }
@@ -36,13 +37,13 @@ const LoggedInView = props => {
   if (props.currentUser) {
     return (
       <>
-        <ListItem item={<Link to="/">Home</Link>} />
-        <ListItem item={<Link to="/editor">Create Post</Link>} />
-        <ListItem item={<Link to="/settings">Settings</Link>} />
-        <ListItem item={<Button onClick={props.logout}>Logout</Button>} />
-        <ListItem item={
+        <Item item={<Link to="/">Home</Link>} />
+        <Item item={<Link to="/editor">Create Post</Link>} />
+        <Item item={<Link to="/settings">Settings</Link>} />
+        <Item item={<Button onClick={props.logout}>Logout</Button>} />
+        <Item item={
           <Link to={`/@${props.currentUser.username}`}>
-            <img alt={''} src={props.currentUser.image} />
+            <Image alt={''} src={props.currentUser.image} />
             {props.currentUser.username}
           </Link>
         } />
@@ -58,13 +59,15 @@ class Header extends React.Component {
     return (
       <Nav>
         <NavList>
-          <ListItem item={
+          <Item item={
             <Link to="/">{this.props.appName.toLowerCase()}</Link>} />
-          <LoggedOutView
-            currentUser={this.props.currentUser} />
-          <LoggedInView
-            currentUser={this.props.currentUser}
-            logout={this.props.onClickLogout} />
+          <List>
+            <LoggedOutView
+              currentUser={this.props.currentUser} />
+            <LoggedInView
+              currentUser={this.props.currentUser}
+              logout={this.props.onClickLogout} />
+          </List>
         </NavList>
       </Nav>
     )

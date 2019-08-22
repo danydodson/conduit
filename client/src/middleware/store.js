@@ -22,7 +22,9 @@ const getMiddleware = () => {
       myRouterMiddleware,
       promiseMiddleware,
       localStorageMiddleware,
-      createLogger()
+      createLogger({
+        collapsed: (getState, action, logEntry) => !logEntry.error
+      })
     )
   }
 }
