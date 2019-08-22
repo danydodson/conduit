@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import agent from '../../middleware/agent'
 
-import ArticleList from './ArticleList'
+import Articles from '../articles/Articles'
 
 import {
   FOLLOW_USER,
@@ -58,7 +58,7 @@ const FollowUserButton = props => {
 }
 
 const mapStateToProps = state => ({
-  ...state.articleList,
+  ...state.articles,
   currentUser: state.common.currentUser,
   profile: state.profile
 })
@@ -153,7 +153,7 @@ class Profile extends React.Component {
                 {this.renderTabs()}
               </div>
 
-              <ArticleList
+              <Articles
                 pager={this.props.pager}
                 articles={this.props.articles}
                 articlesCount={this.props.articlesCount}

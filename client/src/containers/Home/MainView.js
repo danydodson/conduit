@@ -1,7 +1,9 @@
 import React from 'react'
-import ArticleList from '../Pages/ArticleList'
-import agent from '../../middleware/agent'
 import { connect } from 'react-redux'
+import agent from '../../middleware/agent'
+
+//import Modal from '../modal'
+import Articles from '../articles/Articles'
 
 import { CHANGE_TAB } from '../../actions/types'
 
@@ -22,6 +24,7 @@ const YourFeedTab = props => {
       </li>
     )
   }
+
   return null
 }
 
@@ -30,6 +33,7 @@ const GlobalFeedTab = props => {
     ev.preventDefault()
     props.onTabClick('all', agent.Articles.all, agent.Articles.all())
   }
+
   return (
     <li className="nav-item">
       <button
@@ -43,9 +47,7 @@ const GlobalFeedTab = props => {
 }
 
 const TagFilterTab = props => {
-  if (!props.tag) {
-    return null
-  }
+  if (!props.tag) return null
 
   return (
     <li className="nav-item">
@@ -57,13 +59,14 @@ const TagFilterTab = props => {
 }
 
 const mapStateToProps = state => ({
-  ...state.articleList,
+  ...state.articles,
   tags: state.home.tags,
   token: state.common.token
 })
 
 const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, pager, payload) => dispatch({ type: CHANGE_TAB, tab, pager, payload })
+  onTabClick: (tab, pager, payload) =>
+    dispatch({ type: CHANGE_TAB, tab, pager, payload })
 })
 
 const MainView = props => {
@@ -71,6 +74,14 @@ const MainView = props => {
     <div className="col-md-9">
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
+
+          {/* <Modal>
+            <h1>Would you like to adopt ?</h1>
+            <div className="buttons">
+              <button>Yes</button>
+              <button>No</button>
+            </div>
+          </Modal> */}
 
           <YourFeedTab
             token={props.token}
@@ -84,7 +95,7 @@ const MainView = props => {
         </ul>
       </div>
 
-      <ArticleList
+      <Articles
         pager={props.pager}
         articles={props.articles}
         loading={props.loading}

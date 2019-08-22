@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ArticleMeta from './ArticleMeta'
-import CommentContainer from './CommentContainer'
+import CommentContainer from '../notes/CommentContainer'
 import agent from '../../middleware/agent'
 import marked from 'marked'
 

@@ -1,4 +1,4 @@
-import DeleteButton from './DeleteButton'
+import DeleteButton from '../article/DeleteButton'
 import { Link } from 'react-router-dom'
 import React from 'react'
 

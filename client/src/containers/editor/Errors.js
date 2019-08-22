@@ -1,6 +1,6 @@
 import React from 'react'
 
-class ListErrors extends React.Component {
+class Errors extends React.Component {
   render() {
     const errors = this.props.errors
     if (errors) {
@@ -23,4 +23,4 @@ class ListErrors extends React.Component {
   }
 }
 
-export default ListErrors
+export default Errors

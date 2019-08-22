@@ -1,4 +1,4 @@
-import ListErrors from './ListErrors'
+import Errors from './Errors'
 import React from 'react'
 import agent from '../../middleware/agent'
 import { connect } from 'react-redux'
@@ -98,7 +98,7 @@ class Editor extends React.Component {
           <div className="row">
             <div className="col-md-10 offset-md-1 col-xs-12">
 
-              <ListErrors errors={this.props.errors}></ListErrors>
+              <Errors errors={this.props.errors}></Errors>
 
               <form>
                 <fieldset>

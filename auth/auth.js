@@ -1,4 +1,5 @@
-var jwt = require('express-jwt')
+const jwt = require('express-jwt')
+
 const SECRET = require('../config').SECRET
 
 function getTokenFromHeader(req) {

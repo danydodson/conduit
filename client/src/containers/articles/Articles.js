@@ -1,8 +1,8 @@
-import ArticlePreview from './ArticlePreview'
-import ListPagination from './ListPagination'
+import ArticlePreview from './Preview'
+import ListPagination from './Pagination'
 import React from 'react'
 
-const ArticleList = props => {
+const Articles = props => {
 
   if (!props.articles) {
     return (
@@ -35,4 +35,4 @@ const ArticleList = props => {
   )
 }
 
-export default ArticleList
+export default Articles

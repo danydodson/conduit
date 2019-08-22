@@ -4,7 +4,7 @@ const Article = mongoose.model('Article')
 const Comment = mongoose.model('Comment')
 const User = mongoose.model('User')
 const chalk = require('chalk')
-const auth = require('../auth')
+const auth = require('../../auth/auth')
 
 //-----------------------------------------------------------------------
 // Preload article objects on routes with ':article'

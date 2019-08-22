@@ -1,21 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-
 const errorhandler = require('errorhandler')
+
 const logger = require('./logs/logger')
 const chalk = require('chalk')
-
 const mongoose = require('mongoose')
 const cors = require('cors')
+const app = express()
 
 require('dotenv').config()
 
-const app = express()
-
 const DBURI = require('./config').DBURI
 const SECRET = require('./config').SECRET
-const PORT = require('./routes/port')
+const PORT = require('./config/port')
 const PROD = 'production'
 
 mongoose.connect(DBURI, {
@@ -45,7 +43,7 @@ app.use(session({
 require('./models/User')
 require('./models/Article')
 require('./models/Comment')
-require('./routes/passport')
+require('./auth/passport')
 
 app.use(require('./routes'))
 

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import article from './article'
-import articleList from './articleList'
+import articles from './articles'
 import auth from './auth'
 import common from './common'
 import editor from './editor'
@@ -11,7 +11,7 @@ import { connectRouter } from 'connected-react-router'
 
 export default (history) => combineReducers({
   article,
-  articleList,
+  articles,
   auth,
   common,
   editor,

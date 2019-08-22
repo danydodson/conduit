@@ -1,16 +1,16 @@
 import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 import Wrapper from './Wrapper'
-import Button from './Button'
+import Btn from './Button'
 
 function Button(props) {
 
   const button = (
-    <Button onClick={props.handleRoute}>
+    <Btn onClick={props.onClick}>
       {Children.toArray(props.children)}
-    </Button>
+    </Btn>
   )
-  
+
   return <Wrapper>{button}</Wrapper>
 }
 

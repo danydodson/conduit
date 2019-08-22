@@ -1,21 +1,21 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { store } from '../../store'
+import { store } from '../../middleware/store'
 import { push } from 'connected-react-router'
 import agent from '../../middleware/agent'
 
-import Home from '../Home'
-import Header from '../Pages/Header'
-import Article from '../Article'
-import Editor from '../Pages/Editor'
-import Login from '../Pages/Login'
-import Profile from '../Pages/Profile'
-import Favorites from '../Pages/Favorites'
-import Register from '../Pages/Register'
-import Settings from '../Pages/Settings'
+import Home from '../home'
+import Header from '../header/Header'
+import Article from '../article'
+import Editor from '../editor/Editor'
+import Login from '../auth/Login'
+import Profile from '../user/Profile'
+import Favorites from '../user/Favorites'
+import Register from '../auth/Register'
+import Settings from '../user/Settings'
 
-import GlobalStyle from '../../utilities/global'
+import Styles from './Styles'
 
 import { APP_LOAD, REDIRECT } from '../../actions/types'
 
@@ -71,7 +71,7 @@ class App extends React.Component {
             <Route path="/@:username/favorites" component={Favorites} />
             <Route path="/@:username" component={Profile} />
           </Switch>
-          <GlobalStyle />
+          <Styles />
         </div>
       )
     }
@@ -80,7 +80,7 @@ class App extends React.Component {
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
-        <GlobalStyle />
+        <Styles />
       </div>
     )
   }

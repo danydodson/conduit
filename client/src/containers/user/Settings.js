@@ -1,4 +1,4 @@
-import ListErrors from './ListErrors'
+import Errors from '../editor/Errors'
 import React from 'react'
 import agent from '../../middleware/agent'
 import { connect } from 'react-redux'
@@ -147,7 +147,7 @@ class Settings extends React.Component {
 
               <h1 className="text-xs-center">Your Settings</h1>
 
-              <ListErrors errors={this.props.errors}></ListErrors>
+              <Errors errors={this.props.errors}></Errors>
 
               <SettingsForm
                 currentUser={this.props.currentUser}

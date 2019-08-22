@@ -1,7 +1,8 @@
 {
-  "name": "conduit",
-  "version": "1.0.0",
-  "description": "conduit",
+  "name": "seesee",
+  "version": "2.0.0",
+  "description": "seesee",
+  "license": "ISC",
   "main": "app.js",
   "scripts": {
     "build": "cd client && npm run build",
@@ -13,11 +14,6 @@
     "lint": "eslint client/src/**/*.js src/**/*.jsx",
     "prod": "NODE_ENV=production node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gothinkster/productionready-node-api.git"
-  },
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
@@ -41,5 +37,9 @@
     "rotating-file-stream": "^1.4.3",
     "slug": "^1.1.0",
     "underscore": "^1.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanyDodson/conduit"
   }
 }
