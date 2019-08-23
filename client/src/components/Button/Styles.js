@@ -1,25 +1,25 @@
-import { css } from 'styled-components'
+import styled from 'styled-components'
 
-const buttonStyles = css`
+export const NavButton = styled.button`
   cursor: pointer;
   color: #818a91;
+  border: none;
+  outline: none;
   font-size: 16px;
   text-decoration: none;
+  text-decoration: none;
+  background-color: transparent;
   font-family: 'Titillium Web';
 
   &:hover {
     color: #4e4e4e;
-    text-decoration: none;
   }
   
   &:focus {
     color: #4e4e4e;
-    text-decoration: none;
   }
   
   &:active {
     color: #4e4e4e;
   }
 `
-
-export default buttonStyles

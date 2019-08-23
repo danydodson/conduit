@@ -132,10 +132,9 @@ router.get('/feed', auth.required, function (req, res, next) {
 
 router.post('/', auth.required, function (req, res, next) {
   User.findById(req.payload.id).then(function (user) {
-    if (!user) { return res.sendStatus(401) }
+    if (!user) return res.sendStatus(401) 
 
     var article = new Article(req.body.article)
-
     article.author = user
 
     return article.save().then(function () {
@@ -175,19 +174,18 @@ router.put('/:article', auth.required, function (req, res, next) {
       if (typeof req.body.article.title !== 'undefined') {
         req.article.title = req.body.article.title
       }
-
       if (typeof req.body.article.description !== 'undefined') {
         req.article.description = req.body.article.description
       }
-
       if (typeof req.body.article.body !== 'undefined') {
         req.article.body = req.body.article.body
       }
-
+      if (typeof req.body.article.medium !== 'undefined') {
+        req.article.body = req.body.article.medium
+      }
       if (typeof req.body.article.tagList !== 'undefined') {
         req.article.tagList = req.body.article.tagList
       }
-
       req.article.save().then(function (article) {
         return res.json({ article: article.toJSONFor(user) })
       }).catch(next)

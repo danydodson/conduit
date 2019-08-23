@@ -1,21 +1,21 @@
 import React, { Children } from 'react'
-import Link from './Link'
 import PropTypes from 'prop-types'
+import { StyledLink } from './Styles'
 
-function Linkto(props) {
+function Link(props) {
 
   const link = (
-    <Link to={props.to}>
+    <StyledLink to={props.to}>
       {Children.toArray(props.children)}
-    </Link>
+    </StyledLink>
   )
 
   return link
 }
 
-Linkto.propTypes = {
+Link.propTypes = {
   to: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
-export default Linkto
+export default Link

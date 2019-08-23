@@ -1,21 +1,21 @@
-import React, { Children } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Wrapper from './Wrapper'
-import Anchor from './Anchor'
+import AnchorLink from './Styles'
 
 function Anchor(props) {
 
   let anchor = (
-    <Anchor href={props.href} onClick={props.onClick}>
-      {Children.toArray(props.children)}
-    </Anchor>
+    <AnchorLink href={props.href} onClick={props.onClick}>
+      {props.children}
+    </AnchorLink>
   );
 
-  return <Wrapper>{anchor}</Wrapper>
+  return anchor
 }
 
 Button.propTypes = {
   href: PropTypes.string,
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired
 }
 

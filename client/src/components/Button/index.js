@@ -1,17 +1,16 @@
 import React, { Children } from 'react'
 import PropTypes from 'prop-types'
-import Wrapper from './Wrapper'
-import Btn from './Button'
+import { NavButton } from './Styles'
 
 function Button(props) {
 
   const button = (
-    <Btn onClick={props.onClick}>
+    <NavButton onClick={props.onClick}>
       {Children.toArray(props.children)}
-    </Btn>
+    </NavButton>
   )
 
-  return <Wrapper>{button}</Wrapper>
+  return button
 }
 
 Button.propTypes = {

@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 
-export const Nav = styled.nav`
-  /* height: 35px; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: center; */
+const Navbar = styled.nav`
+  margin: auto;
+  display: flex;
+  max-width: 75%;
+  flex-direction: column;
 `
+
+export default Navbar

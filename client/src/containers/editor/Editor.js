@@ -1,7 +1,8 @@
-import Errors from './Errors'
 import React from 'react'
-import agent from '../../middleware/agent'
 import { connect } from 'react-redux'
+import Errors from './Errors'
+import agent from '../../middleware/agent'
+
 import {
   ADD_TAG,
   EDITOR_PAGE_LOADED,
@@ -11,9 +12,7 @@ import {
   UPDATE_FIELD_EDITOR
 } from '../../actions/types'
 
-const mapStateToProps = state => ({
-  ...state.editor
-})
+const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onAddTag: () =>
@@ -25,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: payload =>
     dispatch({ type: ARTICLE_SUBMITTED, payload }),
   onUnload: payload =>
-    dispatch({ type: EDITOR_PAGE_UNLOADED }),
+    dispatch({ type: EDITOR_PAGE_UNLOADED, payload }),
   onUpdateField: (key, value) =>
     dispatch({ type: UPDATE_FIELD_EDITOR, key, value })
 })
@@ -34,11 +33,12 @@ class Editor extends React.Component {
   constructor() {
     super()
 
-    const updateFieldEvent =
-      key => ev => this.props.onUpdateField(key, ev.target.value)
+    const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
+
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
+    this.changeMedium = updateFieldEvent('medium')
     this.changeTagInput = updateFieldEvent('tagInput')
 
     this.watchForEnter = ev => {
@@ -54,14 +54,17 @@ class Editor extends React.Component {
 
     this.submitForm = ev => {
       ev.preventDefault()
+
       const article = {
         title: this.props.title,
         description: this.props.description,
         body: this.props.body,
+        medium: this.props.medium,
         tagList: this.props.tagList
       }
 
       const slug = { slug: this.props.articleSlug }
+
       const promise = this.props.articleSlug ?
         agent.Articles.update(Object.assign(article, slug)) :
         agent.Articles.create(article)
@@ -130,6 +133,15 @@ class Editor extends React.Component {
                       onChange={this.changeBody}>
                     </textarea>
                   </fieldset>
+
+                  <select value={this.props.medium}
+                    onChange={this.changeMedium}>
+                    <option value="">Choose Medium</option>
+                    <option value="paint">Paint</option>
+                    <option value="code">Code</option>
+                    <option value="film">Film</option>
+                    <option value="food">Food</option>
+                  </select>
 
                   <fieldset className="form-group">
                     <input

@@ -57,7 +57,6 @@ const Articles = {
   favoritedBy: (author, page) =>
     requests.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
   feed: (page) =>
-    // requests.get(`/articles/feed?limit=10&offset=0`),
     requests.get(`/articles/feed?${limit(10, page)}`),
   get: slug =>
     requests.get(`/articles/${slug}`),
@@ -88,10 +87,6 @@ const Profile = {
 }
 
 export default {
-  Articles,
-  Auth,
-  Comments,
-  Profile,
-  Tags,
+  Auth, Tags, Profile, Articles, Comments,
   setToken: _token => { token = _token }
 }

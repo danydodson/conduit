@@ -27,15 +27,14 @@ const Modal = ({ children }) => {
   }, [])
 
   return createPortal((
-
-    < Provider store={store} >
+    <Provider store={store}>
       <ConnectedRouter history={history}>
         <Article>
           <button onClick={onButtonClick}>CLOSE</button>
           {children}
         </Article>
       </ConnectedRouter>
-    </Provider >
+    </Provider>
   ), elRef.current)
 }
 
