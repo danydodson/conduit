@@ -1,8 +1,5 @@
 import { createAction } from 'redux-actions';
-import {
-  PapiDaBrowseFaceted,
-  PapiRequestDaBrowseFaceted,
-} from '@wix/da-types-papi';
+import { PapiDaBrowseFaceted, PapiRequestDaBrowseFaceted, } from '@wix/da-types-papi';
 import { Pages } from '../../constants';
 
 export const initFacetData = createAction(

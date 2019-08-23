@@ -1,18 +1,18 @@
-import 'react-hot-loader/patch';
-import React from 'react';
-import axios from 'axios';
-import ReactDOM from 'react-dom';
-import { wixAxiosConfig } from '@wix/wix-axios-config';
-import Modal from 'react-modal';
-import initI18n from './i18n/client-i18n';
-import App from './components/App';
-import { AppContainer } from 'react-hot-loader';
-import { configureStore } from './store/configure-store';
-import { getClientInstance } from '@wix/da-ddt';
-import { AppState } from './types/store';
-import { XHR_BASE_PATH } from '../constants';
-import { DaAppWrapper } from '@wix/da-shared-react/pkg/DaApp';
-import { configureHistoryListener } from '@wix/da-shared-react/pkg/redux/routing/history';
+import 'react-hot-loader/patch'
+import React from 'react'
+import axios from 'axios'
+import ReactDOM from 'react-dom'
+import { wixAxiosConfig } from '@wix/wix-axios-config'
+import Modal from 'react-modal'
+import initI18n from './i18n/client-i18n'
+import App from './components/App'
+import { AppContainer } from 'react-hot-loader'
+import { configureStore } from './store/configure-store'
+import { getClientInstance } from '@wix/da-ddt'
+import { AppState } from './types/store'
+import { XHR_BASE_PATH } from '../constants'
+import { DaAppWrapper } from '@wix/da-shared-react/pkg/DaApp'
+import { configureHistoryListener } from '@wix/da-shared-react/pkg/redux/routing/history'
 
 if (window.Sentry && process.env.NODE_ENV === 'production') {
   window.Sentry.onLoad(() => {

@@ -1,9 +1,6 @@
 import reduce from 'lodash/reduce';
 import { Pages, OFFSET_TRACKING_PAGE_SIZE } from '../../../constants';
-import {
-  PapiRequestDaBrowseFaceted,
-  PapiDaBrowseFaceted,
-} from '@wix/da-types-papi';
+import { PapiRequestDaBrowseFaceted, PapiDaBrowseFaceted, } from '@wix/da-types-papi';
 import { DaRequest } from '../../types/da';
 import logger from '../../../client/helpers/logger';
 import { AnyPapiDaBrowseRequest, FacetPageType } from '../../../types/api';
