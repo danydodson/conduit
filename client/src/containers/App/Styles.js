@@ -20,6 +20,18 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
+  .hide-scrollbars {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
+  
+    &::-webkit-scrollbar,
+    ::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+  
   #app {
     min-height: 100%;
     min-width: 100%;
