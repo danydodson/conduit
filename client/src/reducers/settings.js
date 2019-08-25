@@ -1,8 +1,8 @@
 import {
+  ASYNC_START,
   SETTINGS_SAVED,
   SETTINGS_PAGE_UNLOADED,
-  ASYNC_START
-} from '../actions/types'
+} from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {

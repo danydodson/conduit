@@ -1,16 +1,16 @@
 import {
+  SET_PAGE,
+  CHANGE_TAB,
   ARTICLE_FAVORITED,
   ARTICLE_UNFAVORITED,
-  SET_PAGE,
   APPLY_TAG_FILTER,
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,
-  CHANGE_TAB,
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED
-} from '../actions/types'
+} from '../constants/types'
 
 export default (state = {}, action) => {
 

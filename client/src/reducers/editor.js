@@ -1,12 +1,12 @@
 import {
-  EDITOR_PAGE_LOADED,
-  EDITOR_PAGE_UNLOADED,
-  ARTICLE_SUBMITTED,
-  ASYNC_START,
   ADD_TAG,
   REMOVE_TAG,
-  UPDATE_FIELD_EDITOR
-} from '../actions/types'
+  ASYNC_START,
+  ARTICLE_SUBMITTED,
+  EDITOR_PAGE_LOADED,
+  UPDATE_FIELD_EDITOR,
+  EDITOR_PAGE_UNLOADED
+} from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {

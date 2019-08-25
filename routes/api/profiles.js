@@ -1,7 +1,7 @@
 var router = require('express').Router()
 var mongoose = require('mongoose')
 var User = mongoose.model('User')
-var auth = require('../../auth/auth')
+var auth = require('../auth-token')
 
 //-----------------------------------------------------------------------
 
