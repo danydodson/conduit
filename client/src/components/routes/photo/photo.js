@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { Image } from 'cloudinary-react'
-// import agent from '../../../agent'
 
 import {
   PHOTO_PAGE_LOADED,
-  PHOTO_PAGE_UNLOADED
+  PHOTO_PAGE_UNLOADED,
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -34,14 +33,8 @@ class Photo extends Component {
   render() {
     return (
       <div>
-        <Helmet>
-          <title>Photo Page</title>
-          <meta name="description" content="photos homepage" />
-        </Helmet>
-        <Image
-          publicId="sample"
-          width="300"
-          crop="scale" />
+        <Helmet><title>Photo Page</title></Helmet>
+        <Image publicId="sample" width="300" crop="scale" />
       </div>
     )
   }

@@ -5,6 +5,8 @@ import {
   REDIRECT,
   HOME_PAGE_UNLOADED,
   PHOTO_PAGE_UNLOADED,
+  PHOTO_PAGE_LOADED,
+  UPLOADER_PAGE_UNLOADED,
   REGISTER,
   DELETE_USER,
   REGISTER_PAGE_UNLOADED,
@@ -77,6 +79,12 @@ export default (state = defaultState, action) => {
         currentUser: action.error ? null : action.payload.user
       }
 
+    case PHOTO_PAGE_LOADED:
+      return {
+        ...state,
+        photo: action.payload
+      }
+
     case DELETE_ARTICLE:
       return {
         ...state, redirectTo: '/'
@@ -85,6 +93,7 @@ export default (state = defaultState, action) => {
     case ARTICLE_PAGE_UNLOADED:
     case EDITOR_PAGE_UNLOADED:
     case HOME_PAGE_UNLOADED:
+    case UPLOADER_PAGE_UNLOADED:
     case PHOTO_PAGE_UNLOADED:
     case PROFILE_PAGE_UNLOADED:
     case PROFILE_FAVORITES_PAGE_UNLOADED:

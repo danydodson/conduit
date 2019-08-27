@@ -2,9 +2,9 @@ import {
   PHOTOS_FETCHED,
   PHOTOS_UPLOADED,
   DELETE_UPLOADED_PHOTO,
-} from '../constants/types'
+} from '../utils/Constants'
 
-export default (photos = [], action) => {
+const PhotosListReducer = (photos = [], action) => {
   switch (action.type) {
 
     case PHOTOS_FETCHED:
@@ -23,3 +23,5 @@ export default (photos = [], action) => {
       return [...photos]
   }
 }
+
+export default PhotosListReducer
