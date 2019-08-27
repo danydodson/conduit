@@ -47,10 +47,18 @@ const LoggedInView = props => {
           </Link>
         </li>
         <li className="nav-item">
+          <button onClick={props.onClickLogout} className="nav-link">
+            <i className="ion-log-out"></i>&nbsp;Logout
+          </button>
+        </li>
+        <li className="nav-item">
           <Link
             to={`/@${props.currentUser.username}`}
             className="nav-link">
-            <img src={props.currentUser.image} className="user-pic" alt={props.currentUser.username} />
+            <img
+              src={props.currentUser.image}
+              className="user-pic"
+              alt={props.currentUser.username} />
             {props.currentUser.username}
           </Link>
         </li>
@@ -66,9 +74,13 @@ class Header extends React.Component {
     return (
       <nav className="navbar navbar-light">
         <div className="container">
-          <AppName appName={this.props.appName} />
-          <LoggedOutView currentUser={this.props.currentUser} />
-          <LoggedInView currentUser={this.props.currentUser} />
+          <AppName
+            appName={this.props.appName} />
+          <LoggedOutView
+            currentUser={this.props.currentUser} />
+          <LoggedInView
+            currentUser={this.props.currentUser}
+            onClickLogout={this.props.onClickLogout} />
         </div>
       </nav>
     )

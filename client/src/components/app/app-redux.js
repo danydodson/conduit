@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { connect } from 'react-redux'
 import { store } from '../../store'
-import agent from '../../agent'
 
+import agent from '../../agent'
 import Header from '../header'
 import Home from '../routes/home'
 import Article from '../routes/article'
@@ -15,12 +15,9 @@ import Favorites from '../routes/favorites'
 import Register from '../routes/register'
 import Settings from '../routes/settings'
 
-import {
-  APP_LOAD,
-  REDIRECT
-} from '../../constants/types'
-
 import Styles from './app-styles'
+
+import { LOGOUT, APP_LOAD, REDIRECT } from '../../constants/types'
 
 const mapStateToProps = state => {
   return {
@@ -32,6 +29,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  onClickLogout: () =>
+    dispatch({ type: LOGOUT }),
   onLoad: (payload, token) =>
     dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
   onRedirect: () =>
@@ -49,10 +48,7 @@ class App extends React.Component {
 
   UNSAFE_componentWillMount() {
     const token = window.localStorage.getItem('jwt')
-    if (token) {
-      agent.setToken(token)
-    }
-
+    if (token) agent.setToken(token)
     this.props.onLoad(token ? agent.Auth.current() : null, token)
   }
 
@@ -62,7 +58,8 @@ class App extends React.Component {
         <div>
           <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
+            currentUser={this.props.currentUser}
+            onClickLogout={this.props.onClickLogout} />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />

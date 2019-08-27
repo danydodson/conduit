@@ -5,7 +5,7 @@
 
 Write-Host "starting cwebp script..."
 
-$files = Get-ChildItem "C:/Users/Dany/Projects/Working/SeeSe/assets/images/"
+$files = Get-ChildItem "C:/Users/Dany/Projects/Working/SeeSe/public/images/food"
 
 foreach ($f in $files) {
   $outfile = $f.FullName.Replace('.jpg', '') + '.webp' 

@@ -19,6 +19,7 @@ const PROD = 'production'
 mongoose.connect(DBURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
+  useFindAndModify: false
 }).then(() => console.info(chalk.blue(`[mongo] mongo ✓`)))
   .catch(err => console.error(chalk.red(err)))
 

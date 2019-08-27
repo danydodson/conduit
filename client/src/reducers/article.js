@@ -22,8 +22,7 @@ export default (state = {}, action) => {
       return {
         ...state,
         commentErrors: action.error ? action.payload.errors : null,
-        comments: action.error ?
-          null :
+        comments: action.error ? null :
           (state.comments || []).concat([action.payload.comment])
       }
 

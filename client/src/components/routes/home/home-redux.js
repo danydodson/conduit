@@ -7,8 +7,8 @@ import agent from '../../../agent'
 
 import {
   HOME_PAGE_LOADED,
-  HOME_PAGE_UNLOADED,
-  APPLY_TAG_FILTER
+  APPLY_TAG_FILTER,
+  HOME_PAGE_UNLOADED
 } from '../../../constants/types'
 
 const Promise = global.Promise
@@ -30,15 +30,12 @@ const mapDispatchToProps = dispatch => ({
 
 class Home extends React.Component {
 
-  state = { showModal: false }
-
-  toggleModal = () => this.setState({ showModal: !this.state.showModal })
-
   UNSAFE_componentWillMount() {
     const tab = this.props.token ? 'feed' : 'all'
-    const articlesPromise = this.props.token ?
-      agent.Articles.feed :
-      agent.Articles.all
+
+    const articlesPromise = this.props.token
+      ? agent.Articles.feed
+      : agent.Articles.all
 
     this.props.onLoad(
       tab,

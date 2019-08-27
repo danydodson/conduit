@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Errors from '../../helpers/get-errors'
+import Errors from '../../errors'
 import agent from '../../../agent'
 
 import {

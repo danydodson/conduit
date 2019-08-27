@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Errors from '../../helpers/get-errors'
+import Errors from '../../errors'
 import React from 'react'
 import agent from '../../../agent'
 import { connect } from 'react-redux'

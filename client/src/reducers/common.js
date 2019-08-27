@@ -3,18 +3,19 @@ import {
   LOGIN,
   LOGOUT,
   REDIRECT,
+  HOME_PAGE_UNLOADED,
   REGISTER,
+  DELETE_USER,
+  REGISTER_PAGE_UNLOADED,
   ARTICLE_SUBMITTED,
   ARTICLE_PAGE_UNLOADED,
   DELETE_ARTICLE,
   SETTINGS_SAVED,
-  HOME_PAGE_UNLOADED,
+  SETTINGS_PAGE_UNLOADED,
   LOGIN_PAGE_UNLOADED,
   EDITOR_PAGE_UNLOADED,
   PROFILE_PAGE_UNLOADED,
-  SETTINGS_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
-  REGISTER_PAGE_UNLOADED
 } from '../constants/types'
 
 const defaultState = {
@@ -35,14 +36,29 @@ export default (state = defaultState, action) => {
       }
 
     case REDIRECT:
-      return { ...state, redirectTo: null }
+      return {
+        ...state,
+        redirectTo: null
+      }
 
     case LOGOUT:
-      return { ...state, redirectTo: '/', token: null, currentUser: null }
+      return {
+        ...state,
+        redirectTo: '/',
+        token: null,
+        currentUser: null
+      }
 
     case ARTICLE_SUBMITTED:
       const redirectUrl = `/article/${action.payload.article.slug}`
       return { ...state, redirectTo: redirectUrl }
+
+    case DELETE_USER:
+      const userId = action.userId
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== userId)
+      }
 
     case SETTINGS_SAVED:
       return {
@@ -73,7 +89,10 @@ export default (state = defaultState, action) => {
     case SETTINGS_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
     case REGISTER_PAGE_UNLOADED:
-      return { ...state, viewChangeCounter: state.viewChangeCounter + 1 }
+      return {
+        ...state,
+        viewChangeCounter: state.viewChangeCounter + 1
+      }
 
     default:
       return state

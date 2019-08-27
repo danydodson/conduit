@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Errors from '../../helpers/get-errors'
+import Errors from '../../errors'
 import agent from '../../../agent'
 
 import {
-  LOGOUT,
+  DELETE_USER,
   SETTINGS_SAVED,
   SETTINGS_PAGE_UNLOADED
 } from '../../../constants/types'
@@ -131,10 +131,13 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClickLogout: () => dispatch({ type: LOGOUT }),
+  deleteUser: user =>
+    dispatch({ type: DELETE_USER, payload: agent.Auth.delete(user) }),
   onSubmitForm: user =>
     dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
-  onUnload: () => dispatch({ type: SETTINGS_PAGE_UNLOADED })
+  onUnload: () => dispatch({
+    type: SETTINGS_PAGE_UNLOADED
+  })
 })
 
 class Settings extends React.Component {
@@ -144,23 +147,17 @@ class Settings extends React.Component {
         <div className="container page">
           <div className="row">
             <div className="col-md-6 offset-md-3 col-xs-12">
-
               <h1 className="text-xs-center">Your Settings</h1>
-
               <Errors errors={this.props.errors}></Errors>
-
               <SettingsForm
                 currentUser={this.props.currentUser}
                 onSubmitForm={this.props.onSubmitForm} />
-
               <hr />
-
               <button
                 className="btn btn-outline-danger"
-                onClick={this.props.onClickLogout}>
-                Or click here to logout.
+                onClick={this.props.deleteUser}>
+                Or click here to Delete.
               </button>
-
             </div>
           </div>
         </div>

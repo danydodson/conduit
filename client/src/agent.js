@@ -27,6 +27,8 @@ const requests = {
 }
 
 const Auth = {
+  delete: user =>
+    requests.del('/user', { user }),
   current: user =>
     requests.get('/user', { user }),
   login: (email, password) =>

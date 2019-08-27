@@ -20,6 +20,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
+  button {
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+
   .hide-scrollbars {
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
