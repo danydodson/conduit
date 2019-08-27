@@ -4,6 +4,13 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { store } from '../../store'
 
+import Config from '../../config'
+import Styles from './app-styles'
+
+import { CloudinaryContext } from 'cloudinary-react'
+
+import Photo from '../routes/photo'
+
 import agent from '../../agent'
 import Header from '../header'
 import Home from '../routes/home'
@@ -14,8 +21,6 @@ import Profile from '../routes/profile'
 import Favorites from '../routes/favorites'
 import Register from '../routes/register'
 import Settings from '../routes/settings'
-
-import Styles from './app-styles'
 
 import { LOGOUT, APP_LOAD, REDIRECT } from '../../constants/types'
 
@@ -56,21 +61,25 @@ class App extends React.Component {
     if (this.props.appLoaded) {
       return (
         <div>
-          <Header
-            appName={this.props.appName}
-            currentUser={this.props.currentUser}
-            onClickLogout={this.props.onClickLogout} />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/editor/:slug" component={Editor} />
-            <Route path="/editor" component={Editor} />
-            <Route path="/article/:id" component={Article} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/@:username/favorites" component={Favorites} />
-            <Route path="/@:username" component={Profile} />
-          </Switch>
+          <CloudinaryContext
+            cloudName={Config.cloud_name}>
+            <Header
+              appName={this.props.appName}
+              currentUser={this.props.currentUser}
+              onClickLogout={this.props.onClickLogout} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/editor/:slug" component={Editor} />
+              <Route path="/editor" component={Editor} />
+              <Route path="/article/:id" component={Article} />
+              <Route path="/photo/:id" component={Photo} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/@:username/favorites" component={Favorites} />
+              <Route path="/@:username" component={Profile} />
+            </Switch>
+          </CloudinaryContext>
           <Styles />
         </div>
       )

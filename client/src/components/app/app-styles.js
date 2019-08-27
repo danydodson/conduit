@@ -24,6 +24,11 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
     background: transparent;
+    
+  }
+  
+  button:focus {
+    outline:0;
   }
 
   .hide-scrollbars {

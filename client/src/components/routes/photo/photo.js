@@ -1,13 +1,50 @@
 import React, { Component } from 'react'
+import Helmet from 'react-helmet'
+import { connect } from 'react-redux'
+import { Image } from 'cloudinary-react'
+// import agent from '../../../agent'
 
-class PhotoList extends Component {
+import {
+  PHOTO_PAGE_LOADED,
+  PHOTO_PAGE_UNLOADED
+} from '../../../constants/types'
+
+const mapStateToProps = state => ({
+  ...state.photo,
+  currentUser: state.common.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+  onLoad: payload =>
+    dispatch({ type: PHOTO_PAGE_LOADED, payload }),
+  onUnload: () =>
+    dispatch({ type: PHOTO_PAGE_UNLOADED })
+})
+
+class Photo extends Component {
+
+  UNSAFE_componentWillMount() {
+    this.props.onLoad()
+  }
+
+  componentWillUnmount() {
+    this.props.onUnload()
+  }
+
   render() {
     return (
-      <div className="photo">
-        photo
+      <div>
+        <Helmet>
+          <title>Photo Page</title>
+          <meta name="description" content="photos homepage" />
+        </Helmet>
+        <Image
+          publicId="sample"
+          width="300"
+          crop="scale" />
       </div>
     )
   }
 }
 
-export default PhotoList
+export default connect(mapStateToProps, mapDispatchToProps)(Photo)

@@ -1,6 +1,4 @@
 export default {
-  cloud_name: 'scenicloud',
-  upload_preset: 'react-demo',
-  api_key: '282549924735476',
-  api_secret: 'wPcgWSeU64CBBIg9yB1RrIdN_GM'
+  cloud_name: `${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}`,
+  upload_preset: `${process.env.REACT_APP_CLOUDINARY_CLOUD_PRESET}`
 }

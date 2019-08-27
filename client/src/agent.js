@@ -59,7 +59,7 @@ const Articles = {
     requests.post(`/articles/${slug}/favorite`),
   favoritedBy: (author, page) =>
     requests.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
-  feed: (page) =>
+  feed: page =>
     requests.get(`/articles/feed?${limit(10, page)}`),
   get: slug =>
     requests.get(`/articles/${slug}`),
@@ -89,7 +89,12 @@ const Profile = {
     requests.del(`/profiles/${username}/follow`)
 }
 
+const Photos = {
+  get: () =>
+    requests.get(`/photos`),
+}
+
 export default {
-  Auth, Tags, Profile, Articles, Comments,
+  Auth, Tags, Profile, Articles, Comments, Photos,
   setToken: _token => { token = _token }
 }

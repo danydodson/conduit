@@ -7,8 +7,9 @@ import editor from './editor'
 import home from './home'
 import profile from './profile'
 import settings from './settings'
-import photos_list from './photos_list'
-import uploaded_photo from './uploaded_photo'
+import photo_item from './photo_item'
+import photo_feed from './photos_feed'
+import photo_uploaded from './photo_uploaded'
 import { connectRouter } from 'connected-react-router'
 
 export default (history) => combineReducers({
@@ -20,7 +21,8 @@ export default (history) => combineReducers({
   home,
   profile,
   settings,
-  photos_list,
-  uploaded_photo,
+  photo_item,
+  photo_feed,
+  photo_uploaded,
   router: connectRouter(history)
 })
