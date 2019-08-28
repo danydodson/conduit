@@ -12,6 +12,11 @@ const LoggedOutView = props => {
           </Link>
         </li>
         <li className="nav-item">
+          <Link to="/photos" className="nav-link">
+            Photos
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to="/login" className="nav-link">
             Sign in
           </Link>
@@ -31,18 +36,18 @@ const LoggedInView = props => {
   if (props.currentUser) {
     return (
       <ul className="nav navbar-nav pull-xs-right">
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/" className="nav-link">
             Home
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link to="/photos" className="nav-link">
             Photos
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/upload" className="nav-link">
+          <Link to="/uploader" className="nav-link">
             Upload
           </Link>
         </li>

@@ -1,0 +1,47 @@
+.drop-zone-container {
+  width: 100%;
+  height: 4rem;
+  background-color: #e4e4e4;
+  color: #8a8a8a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  border: 1px solid #cccccc;
+  will-change: transform;
+  transition: transform 0.3s;
+}
+
+.drop-zone-container.hover {
+  transform: scale(0.95);
+}
+
+.drop-zone-container:hover {
+  cursor: pointer;
+}
+
+.drop-zone-container input {
+  display: none;
+}
+
+.drop-zone-container svg {
+  fill: #8a8a8a;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.response_wrap{
+  max-width: 500px;
+  position: absolute;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

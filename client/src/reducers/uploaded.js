@@ -7,13 +7,14 @@ export default (uploadedPhotos = [], action) => {
   switch (action.type) {
 
     case UPDATE_UPLOADED_PHOTO: {
+
       let photoIndex = -1
+      
       const updatedPhotos = uploadedPhotos.map((photo, index) => {
         if (photo.id === action.uploadedPhoto.id) {
           photoIndex = index
           return { ...photo, ...action.uploadedPhoto }
         }
-
         return photo
       })
 
@@ -36,3 +37,5 @@ export default (uploadedPhotos = [], action) => {
       return [...uploadedPhotos]
   }
 }
+
+

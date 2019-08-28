@@ -90,12 +90,7 @@ UploadedPhotoStatus.contextTypes = {
   uploadPreset: PropTypes.string,
 }
 
-const UploadedPhotoStatusContainer = connect(
-  state => state,
-  {
-    onDeleteUploadedPhoto: deleteUploadedPhoto,
-  }
-)(UploadedPhotoStatus)
+const UploadedPhotoStatusContainer = connect(state => state, { onDeleteUploadedPhoto: deleteUploadedPhoto, })(UploadedPhotoStatus)
 
 Object.assign(
   UploadedPhotoStatusContainer.contextTypes,

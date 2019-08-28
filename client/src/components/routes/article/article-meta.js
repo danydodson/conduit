@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import ArticleActions from './article-actions'
 
 const ArticleMeta = props => {
+
   const article = props.article
+  
   return (
     <div className="article-meta">
       <Link to={`/@${article.author.username}`}>

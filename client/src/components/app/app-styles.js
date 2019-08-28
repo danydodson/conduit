@@ -76,6 +76,15 @@ const GlobalStyle = createGlobalStyle`
     display: inline-block;
     margin-right: 15px;
   }
+
+  .photo-list {}
+
+  .photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 export default GlobalStyle;

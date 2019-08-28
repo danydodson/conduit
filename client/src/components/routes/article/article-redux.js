@@ -36,12 +36,16 @@ class Article extends React.Component {
   }
 
   render() {
+
     if (!this.props.article) return null
+
     const markup = { __html: marked(this.props.article.body, {}) }
+
     const canModify =
       this.props.currentUser &&
       this.props.currentUser.username ===
       this.props.article.author.username
+
     return (
       <div className="article-page">
         <div className="banner">
@@ -57,17 +61,15 @@ class Article extends React.Component {
             <div className="col-xs-12">
               <div dangerouslySetInnerHTML={markup}></div>
               <ul className="tag-list">
-                {
-                  this.props.article.tagList.map(tag => {
-                    return (
-                      <li
-                        className="tag-default tag-pill tag-outline"
-                        key={tag}>
-                        {tag}
-                      </li>
-                    )
-                  })
-                }
+                {this.props.article.tagList.map(tag => {
+                  return (
+                    <li
+                      className="tag-default tag-pill tag-outline"
+                      key={tag}>
+                      {tag}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>

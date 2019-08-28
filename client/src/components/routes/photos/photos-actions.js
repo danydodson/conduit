@@ -3,7 +3,8 @@ import {
   PHOTOS_UPLOADED,
   DELETE_UPLOADED_PHOTO,
   UPDATE_UPLOADED_PHOTO,
-} from '../constants/types'
+  PHOTOS_UPLOADING
+} from '../../../constants/types'
 
 export const photosFetched = photos => ({
   type: PHOTOS_FETCHED,
@@ -13,6 +14,11 @@ export const photosFetched = photos => ({
 export const photosUploaded = photos => ({
   type: PHOTOS_UPLOADED,
   photos: photos,
+})
+
+export const photosUploading = loading => ({
+  type: PHOTOS_UPLOADING,
+  loading: loading,
 })
 
 export const updateUploadedPhoto = uploadedPhoto => ({

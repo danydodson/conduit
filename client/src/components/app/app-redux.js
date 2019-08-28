@@ -4,15 +4,13 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { store } from '../../store'
 
-import Config from '../../config'
 import Styles from './app-styles'
-
+import Config from '../../config'
 import { CloudinaryContext } from 'cloudinary-react'
 
-import Photo from '../routes/photo'
-import Uploader from '../routes/uploader'
-
 import agent from '../../agent'
+import Photos from '../routes/photos'
+import Uploader from '../routes/uploader'
 import Header from '../header'
 import Home from '../routes/home'
 import Article from '../routes/article'
@@ -64,8 +62,7 @@ class App extends React.Component {
         <div>
           <CloudinaryContext
             cloudName={Config.cloud_name}
-            uploadPreset={Config.upload_preset}>
-            
+            uploadPreset={'seesee'}>
             <Header
               appName={this.props.appName}
               currentUser={this.props.currentUser}
@@ -77,8 +74,8 @@ class App extends React.Component {
               <Route path="/editor/:slug" component={Editor} />
               <Route path="/editor" component={Editor} />
               <Route path="/article/:id" component={Article} />
-              <Route path="/photos" component={Photo} />
-              <Route path="/upload" component={Uploader} />
+              <Route path="/photos" component={Photos} />
+              <Route path="/uploader" component={Uploader} />
               <Route path="/settings" component={Settings} />
               <Route path="/@:username/favorites" component={Favorites} />
               <Route path="/@:username" component={Profile} />

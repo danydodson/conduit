@@ -1,4 +1,4 @@
 export default {
   cloud_name: 'scenicloud',
-  upload_preset: 'seesee-preset'
+  upload_preset: 'seesee'
 }
