@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    "package-lock.json": true,
+    "build": true,
+    ".vscode": true,
+    ".gitignore": true,
+  },
+  "eslint.enable": true
+}
