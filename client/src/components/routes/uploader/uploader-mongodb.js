@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import agent from '../../../agent'
-import { PHOTO_SUBMITTED, EDITOR_PAGE_UNLOADED } from '../../../constants/types'
+import { PHOTOS_SUBMITTED, UPLOADER_PAGE_UNLOADED } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: payload =>
-    dispatch({ type: PHOTO_SUBMITTED, payload }),
+    dispatch({ type: PHOTOS_SUBMITTED, payload }),
   onUnload: payload =>
-    dispatch({ type: EDITOR_PAGE_UNLOADED, payload }),
+    dispatch({ type: UPLOADER_PAGE_UNLOADED, payload }),
 })
 
 class ForMongo extends React.Component {

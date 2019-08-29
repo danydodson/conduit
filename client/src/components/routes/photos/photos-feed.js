@@ -7,8 +7,8 @@ import { photosUploaded, photosFetched } from './photos-actions'
 import Photo from '../photo'
 
 import {
-  PHOTO_PAGE_LOADED,
-  PHOTO_PAGE_UNLOADED,
+  PHOTOS_PAGE_LOADED,
+  PHOTOS_PAGE_UNLOADED,
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -18,9 +18,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: PHOTO_PAGE_LOADED, payload }),
+    dispatch({ type: PHOTOS_PAGE_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: PHOTO_PAGE_UNLOADED })
+    dispatch({ type: PHOTOS_PAGE_UNLOADED })
 })
 
 class PhotoList extends Component {
