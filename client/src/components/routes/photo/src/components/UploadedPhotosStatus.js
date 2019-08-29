@@ -6,10 +6,12 @@ import { deleteUploadedPhoto } from '../actions'
 
 class UploadedPhotoStatus extends Component {
   render() {
+    
     const uploadedPhoto = this.props.uploadedPhoto
     const response = uploadedPhoto.response
     const data = response && response.body
     const percent = Math.floor(uploadedPhoto.progress.percent)
+
     return (
       <div>
         <h3>{uploadedPhoto.fileName}</h3>

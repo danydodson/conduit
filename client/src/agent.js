@@ -95,6 +95,8 @@ const Profile = {
 const Photos = {
   get: () =>
     requests.get(`/photos`),
+  create: photo =>
+    requests.post('/photos', { photo })
 }
 
 export default {

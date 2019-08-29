@@ -44,6 +44,7 @@ app.use(session({
 require('./models/User')
 require('./models/Article')
 require('./models/Comment')
+require('./models/Photo')
 require('./routes/auth-passport')
 
 app.use(require('./routes'))

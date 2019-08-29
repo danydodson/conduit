@@ -1,12 +1,14 @@
 import React, { Component } from "react"
-import PropTypes from "prop-types"
-import Loading from "./uploader-loading"
-import Config from '../../../config'
-import { connect } from 'react-redux'
-import request from 'superagent'
 import { photosUploaded, updateUploadedPhoto } from '../photos/photos-actions'
+import PropTypes from "prop-types"
+import ForMongo from './uploader-mongodb'
+import Loading from "./images/loading"
+import Config from '../../../config'
+import request from 'superagent'
 import UploaderStatus from './uploader-status'
-import "./index.css"
+import { connect } from 'react-redux'
+
+import "./styles/index.css"
 
 class Uploader extends Component {
   constructor(props) {
@@ -21,13 +23,10 @@ class Uploader extends Component {
     this.fileInputRef = React.createRef()
   }
 
-  openFileDialog() {
-    this.fileInputRef.current.click()
-  }
-
   onFilesAdded(event) {
     const { files } = event.target
-    this.props.onFilesAdded(this.fileListToArray(files))
+    this.props.onFilesAdded(this.filesToArray(files))
+    this.fileListToArray(files)
   }
 
   onDragOver(event) {
@@ -43,13 +42,13 @@ class Uploader extends Component {
   onDrop(event) {
     this.stopEvent(event)
     const { files } = event.dataTransfer
+    console.log(files)
     this.props.onFilesAdded(this.fileListToArray(files))
     this.setState({ hover: false })
   }
 
-  stopEvent(event) {
-    event.preventDefault()
-    event.stopPropagation()
+  getRandomInt(max) {
+    Math.floor(Math.random() * Math.floor(max))
   }
 
   fileListToArray(list) {
@@ -59,17 +58,24 @@ class Uploader extends Component {
       const photoId = this.photoId++
       const title = 'title_' + photoId
       const fileName = list.item(i).name
-      //result.push(list.item(i))
       request.post(url)
-        .field('upload_preset', 'seesee')
+        .field('upload_preset', `${Config.upload_preset}`)
         .field('file', list.item(i))
+        .field('public_id', `testing/users_${this.getRandomInt(666)}`)
         .field('multiple', true)
-        .field('public_id', title ? `medium_${title}` : `medium${photoId}`)
-        .field('tags', title ? `seesee,${title}` : 'seesee')
+        .field('tags', title ? `user,${title}` : 'user')
         .field('context', title ? `photo=${title}` : '')
         .on('progress', progress => this.onPhotoUploadProgress(photoId, list.item(i), progress))
         .end((err, res) => this.onPhotoUploaded(photoId, fileName, res))
     }
+  }
+
+  filesToArray(list) {
+    const result = [];
+    for (let i = 0; i < list.length; i++) {
+      result.push(list.item(i));
+    }
+    return result;
   }
 
   onPhotoUploadProgress(id, fileName, progress) {
@@ -88,6 +94,15 @@ class Uploader extends Component {
     })
 
     this.props.onPhotosUploaded([response.body])
+  }
+
+  openFileDialog() {
+    this.fileInputRef.current.click()
+  }
+
+  stopEvent(event) {
+    event.preventDefault()
+    event.stopPropagation()
   }
 
   render() {
@@ -111,7 +126,6 @@ class Uploader extends Component {
             ref={this.fileInputRef}
             type="file"
             multiple
-            //ref={fileInputEl => (this.fileInputEl = fileInputEl)}
             onChange={() => this.onFilesAdded}
           />
           <div className="drag-files">
@@ -119,16 +133,19 @@ class Uploader extends Component {
           </div>
         </div>
         <div className="response_wrap">
-          {
-            this.props.uploaded.map((photo, id) => {
-              return (
-                <UploaderStatus
-                  key={id}
-                  uploadedPhoto={photo} />
-              )
-            })
-          }
+          {this.props.uploaded.map((photo, id) => {
+            return (
+              <UploaderStatus key={id} uploadedPhoto={photo} />
+            )
+          })}
+
+          {this.props.uploaded.map((photo, id) => {
+            return (
+              <ForMongo key={id} uploadedPhoto={photo} />
+            )
+          })}
         </div>
+
       </div>
     )
   }

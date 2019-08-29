@@ -5,6 +5,7 @@ import {
   REDIRECT,
   HOME_PAGE_UNLOADED,
   PHOTO_PAGE_UNLOADED,
+  PHOTO_SUBMITTED,
   UPLOADER_PAGE_UNLOADED,
   REGISTER,
   DELETE_USER,
@@ -54,6 +55,10 @@ export default (state = defaultState, action) => {
     case ARTICLE_SUBMITTED:
       const redirectUrl = `/article/${action.payload.article.slug}`
       return { ...state, redirectTo: redirectUrl }
+
+    case PHOTO_SUBMITTED:
+      //const redirectPhotoUrl = `/photo/${action.payload.article.slug}`
+      return { ...state, redirectTo: '/photos' }
 
     case DELETE_USER:
       const userId = action.userId

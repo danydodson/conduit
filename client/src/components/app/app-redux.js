@@ -75,6 +75,7 @@ class App extends React.Component {
               <Route path="/editor" component={Editor} />
               <Route path="/article/:id" component={Article} />
               <Route path="/photos" component={Photos} />
+              <Route path="/uploader/:slug" component={Uploader} />
               <Route path="/uploader" component={Uploader} />
               <Route path="/settings" component={Settings} />
               <Route path="/@:username/favorites" component={Favorites} />
