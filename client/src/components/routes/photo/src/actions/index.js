@@ -15,12 +15,12 @@ export const photosUploaded = photos => ({
   photos: photos,
 })
 
-export const updateUploadedPhoto = uploadedPhoto => ({
+export const updateUpload = uploadedPhoto => ({
   type: UPDATE_UPLOADED_PHOTO,
   uploadedPhoto: uploadedPhoto,
 })
 
-export const deleteUploadedPhoto = publicId => ({
+export const deleteUpload = publicId => ({
   type: DELETE_UPLOADED_PHOTO,
   publicId: publicId,
 })

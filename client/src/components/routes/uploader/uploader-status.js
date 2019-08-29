@@ -3,15 +3,10 @@ import PropTypes from 'prop-types'
 //import Config from '../../../config'
 import { connect } from 'react-redux'
 import request from 'superagent'
-import { deleteUploadedPhoto } from '../photos/photos-actions'
+import { deleteUpload } from '../photos/actions'
 
-// 200: OK | Success. 
-// 400: Bad request. 
-// 401: Authorization required. 
-// 403: Not allowed. 
-// 404: Not found. 
-// 409: Already exists. 
-// 420: Rate limited. 
+// 200: OK | Success.  400: Bad request.  401: Authorization required. 
+// 403: Not allowed.  404: Not found.  409: Already exists.  420: Rate limited. 
 
 class UploadedStatus extends Component {
 
@@ -25,7 +20,7 @@ class UploadedStatus extends Component {
   }
 
   onDeletePhoto() {
-    this.props.onDeleteUploadedPhoto(
+    this.props.onDeleteUpload(
       this.props.uploadedPhoto.response.body.public_id
     )
   }
@@ -40,12 +35,10 @@ class UploadedStatus extends Component {
     return (
       <div>
 
-        <h3>
-          {data && (
-            <span>filename {uploadedPhoto.fileName}
-              <hr />public_id {data.public_id}
-            </span>
-          )}
+        <h3>{data && (
+          <span>filename {uploadedPhoto.fileName}
+            <hr />public_id {data.public_id}
+          </span>)}
         </h3>
 
         {data && data.delete_token && (
@@ -67,8 +60,8 @@ class UploadedStatus extends Component {
 
         <div className="progress-bar">
           <div
-            className="progress"
             role="progressbar"
+            className="progress"
             style={{ width: percent + '%' }} />
         </div>
 
@@ -88,11 +81,13 @@ class UploadedStatus extends Component {
                 </tbody>
               </table>
             </div>
+
             <div>
               <img src={data.secure_url} alt={data.fileName} height={300} width={300} />
               <li>{data.created_at}</li>
               <li>{data.version}</li>
             </div>
+
           </div>
         )}
       </div>
@@ -102,7 +97,7 @@ class UploadedStatus extends Component {
 
 UploadedStatus.propTypes = {
   uploadedPhoto: PropTypes.object,
-  onDeleteUploadedPhoto: PropTypes.func,
+  onDeleteUpload: PropTypes.func,
 }
 
 UploadedStatus.contextTypes = {
@@ -110,6 +105,6 @@ UploadedStatus.contextTypes = {
   uploadPreset: PropTypes.string,
 }
 
-UploadedStatus = connect(state => state, { onDeleteUploadedPhoto: deleteUploadedPhoto })(UploadedStatus)
+UploadedStatus = connect(state => state, { onDeleteUpload: deleteUpload })(UploadedStatus)
 
 export default UploadedStatus

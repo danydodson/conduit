@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import request from 'superagent'
 import Dropzone from 'react-dropzone'
-import { photosUploaded, updateUploadedPhoto } from '../actions'
+import { photosUploaded, updateUpload } from '../actions'
 import UploadedPhotoStatusContainer from './UploadedPhotosStatus'
 
 class PhotosUploader extends Component {
@@ -86,7 +86,7 @@ class PhotosUploader extends Component {
   }
 
   onPhotoUploadProgress(id, fileName, progress) {
-    this.props.onUpdateUploadedPhoto({
+    this.props.onUpdateUpload({
       id: id,
       fileName: fileName,
       progress: progress,
@@ -94,7 +94,7 @@ class PhotosUploader extends Component {
   }
 
   onPhotoUploaded(id, fileName, response) {
-    this.props.onUpdateUploadedPhoto({
+    this.props.onUpdateUpload({
       id: id,
       fileName: fileName,
       response: response,
@@ -106,7 +106,7 @@ class PhotosUploader extends Component {
 
 PhotosUploader.propTypes = {
   uploadedPhotos: PropTypes.array,
-  onUpdateUploadedPhoto: PropTypes.func,
+  onUpdateUpload: PropTypes.func,
   onPhotosUploaded: PropTypes.func,
 }
 
@@ -118,7 +118,7 @@ PhotosUploader.contextTypes = {
 const PhotosUploaderContainer = connect(
   state => state,
   {
-    onUpdateUploadedPhoto: updateUploadedPhoto,
+    onUpdateUpload: updateUpload,
     onPhotosUploaded: photosUploaded,
   }
 )(PhotosUploader)

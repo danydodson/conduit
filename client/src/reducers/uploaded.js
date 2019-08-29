@@ -1,10 +1,15 @@
 import {
   UPDATE_UPLOADED_PHOTO,
   DELETE_UPLOADED_PHOTO,
+  UPLOADER_FORM_UNLOADED
 } from '../constants/types'
 
 export default (uploadedPhotos = [], action) => {
   switch (action.type) {
+
+    case UPLOADER_FORM_UNLOADED: {
+      return uploadedPhotos = []
+    }
 
     case UPDATE_UPLOADED_PHOTO: {
       let photoIndex = -1

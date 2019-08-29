@@ -2,7 +2,7 @@ import {
   PHOTOS_FETCHED,
   PHOTOS_UPLOADED,
   PHOTOS_PAGE_UNLOADED,
-  DELETE_UPLOADED_PHOTO
+  DELETE_UPLOADED_PHOTO,
 } from '../constants/types'
 
 export default (photos = [], action) => {

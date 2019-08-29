@@ -9,6 +9,21 @@ import {
   SETTINGS_PAGE_UNLOADED
 } from '../../../constants/types'
 
+const mapStateToProps = state => ({
+  ...state.settings,
+  currentUser: state.common.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+  deleteUser: user =>
+    dispatch({ type: DELETE_USER, payload: agent.Auth.delete(user) }),
+  onSubmitForm: user =>
+    dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
+  onUnload: () => dispatch({
+    type: SETTINGS_PAGE_UNLOADED
+  })
+})
+
 class SettingsForm extends React.Component {
   constructor() {
     super()
@@ -124,21 +139,6 @@ class SettingsForm extends React.Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  ...state.settings,
-  currentUser: state.common.currentUser
-})
-
-const mapDispatchToProps = dispatch => ({
-  deleteUser: user =>
-    dispatch({ type: DELETE_USER, payload: agent.Auth.delete(user) }),
-  onSubmitForm: user =>
-    dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
-  onUnload: () => dispatch({
-    type: SETTINGS_PAGE_UNLOADED
-  })
-})
 
 class Settings extends React.Component {
   render() {

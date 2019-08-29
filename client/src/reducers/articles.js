@@ -7,6 +7,7 @@ import {
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,
   PROFILE_PAGE_LOADED,
+  UPLOADER_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED
@@ -73,6 +74,12 @@ export default (state = {}, action) => {
         tab: action.tab,
         currentPage: 0,
         tag: null
+      }
+
+    case UPLOADER_PAGE_LOADED:
+      return {
+        ...state,
+        photo: action.payload
       }
 
     case PROFILE_PAGE_LOADED:

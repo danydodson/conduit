@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import request from 'superagent'
-import { deleteUploadedPhoto } from '../actions'
+import { deleteUpload } from '../actions'
 
 class UploadedPhotoStatus extends Component {
   render() {
@@ -76,7 +76,7 @@ class UploadedPhotoStatus extends Component {
   }
 
   onDeletePhoto() {
-    this.props.onDeleteUploadedPhoto(
+    this.props.onDeleteUpload(
       this.props.uploadedPhoto.response.body.public_id
     )
   }
@@ -84,7 +84,7 @@ class UploadedPhotoStatus extends Component {
 
 UploadedPhotoStatus.propTypes = {
   uploadedPhoto: PropTypes.object,
-  onDeleteUploadedPhoto: PropTypes.func,
+  onDeleteUpload: PropTypes.func,
 }
 
 UploadedPhotoStatus.contextTypes = {
@@ -92,7 +92,7 @@ UploadedPhotoStatus.contextTypes = {
   uploadPreset: PropTypes.string,
 }
 
-const UploadedPhotoStatusContainer = connect(state => state, { onDeleteUploadedPhoto: deleteUploadedPhoto, })(UploadedPhotoStatus)
+const UploadedPhotoStatusContainer = connect(state => state, { onDeleteUpload: deleteUpload, })(UploadedPhotoStatus)
 
 Object.assign(
   UploadedPhotoStatusContainer.contextTypes,

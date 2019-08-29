@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Config from '../../../config'
+//import Config from '../../../config'
 import { NavLink } from 'react-router-dom'
 import { fetchPhotos } from '../../../config/cloudinary'
-import { photosUploaded, photosFetched } from './photos-actions'
+import { photosUploaded, photosFetched } from './actions'
 import Photo from '../photo'
 
 import {
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 
 class PhotoList extends Component {
   componentDidMount() {
-    fetchPhotos(Config.cloud_name)
+    fetchPhotos('scenicloud')
       .then(this.props.onPhotosFetched)
   }
 

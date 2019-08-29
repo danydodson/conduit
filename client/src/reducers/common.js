@@ -7,10 +7,12 @@ import {
   DELETE_USER,
   DELETE_ARTICLE,
   SETTINGS_SAVED,
-  PHOTOS_SUBMITTED,
   ARTICLE_SUBMITTED,
   HOME_PAGE_UNLOADED,
+  PHOTOS_SUBMITTED,
+  //PHOTOS_PAGE_LOADED,
   PHOTO_PAGE_UNLOADED,
+  PHOTOS_PAGE_UNLOADED,
   UPLOADER_PAGE_UNLOADED,
   REGISTER_PAGE_UNLOADED,
   ARTICLE_PAGE_UNLOADED,
@@ -52,12 +54,19 @@ export default (state = defaultState, action) => {
         currentUser: null
       }
 
+    // case PHOTOS_PAGE_LOADED:
+    //   return {
+    //     ...state,
+    //     photos: action.payload.photos
+    //   }
+
     case ARTICLE_SUBMITTED:
       const redirectUrl = `/article/${action.payload.article.slug}`
       return { ...state, redirectTo: redirectUrl }
 
     case PHOTOS_SUBMITTED:
-      return { ...state, redirectTo: '/photos' }
+      const redirectToPhoto = `/photos`
+      return { ...state, redirectTo: redirectToPhoto }
 
     case DELETE_USER:
       const userId = action.userId
@@ -89,6 +98,7 @@ export default (state = defaultState, action) => {
 
     case UPLOADER_PAGE_UNLOADED:
     case PHOTO_PAGE_UNLOADED:
+    case PHOTOS_PAGE_UNLOADED:
     case HOME_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
     case EDITOR_PAGE_UNLOADED:

@@ -133,14 +133,16 @@ class Editor extends React.Component {
                     </textarea>
                   </fieldset>
 
-                  <select value={this.props.medium}
-                    onChange={this.changeMedium}>
-                    <option value="">Choose Medium</option>
-                    <option value="paint">Paint</option>
-                    <option value="code">Code</option>
-                    <option value="film">Film</option>
-                    <option value="food">Food</option>
-                  </select>
+                  <fieldset className="form-group">
+                    <select value={this.props.medium}
+                      onChange={this.changeMedium}>
+                      <option value="">Choose Medium</option>
+                      <option value="paint">Paint</option>
+                      <option value="code">Code</option>
+                      <option value="film">Film</option>
+                      <option value="food">Food</option>
+                    </select>
+                  </fieldset>
 
                   <fieldset className="form-group">
                     <input

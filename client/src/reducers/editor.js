@@ -3,9 +3,11 @@ import {
   REMOVE_TAG,
   ASYNC_START,
   ARTICLE_SUBMITTED,
+  PHOTOS_SUBMITTED,
   EDITOR_PAGE_LOADED,
   UPDATE_FIELD_EDITOR,
-  EDITOR_PAGE_UNLOADED
+  EDITOR_PAGE_UNLOADED,
+  UPDATE_CHECKED_EDITOR
 } from '../constants/types'
 
 export default (state = {}, action) => {
@@ -25,6 +27,7 @@ export default (state = {}, action) => {
     case EDITOR_PAGE_UNLOADED:
       return {}
 
+    case PHOTOS_SUBMITTED:
     case ARTICLE_SUBMITTED:
       return {
         ...state,
@@ -52,6 +55,9 @@ export default (state = {}, action) => {
       }
 
     case UPDATE_FIELD_EDITOR:
+      return { ...state, [action.key]: action.value }
+
+    case UPDATE_CHECKED_EDITOR:
       return { ...state, [action.key]: action.value }
 
     default:
