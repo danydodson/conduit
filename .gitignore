@@ -44,3 +44,4 @@ node_modules
 /.vscode
 /config/dev.js
 /logs/access.log
+/client/.env
