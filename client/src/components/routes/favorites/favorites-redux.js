@@ -18,9 +18,9 @@ const mapDispatchToProps = dispatch => ({
 
 class Favorites extends Profile {
   UNSAFE_componentWillMount() {
-    this.props.onLoad(page => agent.Articles.favoritedBy(this.props.match.params.username, page), Promise.all([
+    this.props.onLoad(page => agent.Posts.favoritedBy(this.props.match.params.username, page), Promise.all([
       agent.Profile.get(this.props.match.params.username),
-      agent.Articles.favoritedBy(this.props.match.params.username)
+      agent.Posts.favoritedBy(this.props.match.params.username)
     ]))
   }
 
@@ -35,7 +35,7 @@ class Favorites extends Profile {
           <Link
             className="nav-link"
             to={`/@${this.props.profile.username}`}>
-            My Articles
+            My Posts
           </Link>
         </li>
 
@@ -43,7 +43,7 @@ class Favorites extends Profile {
           <Link
             className="nav-link active"
             to={`/@${this.props.profile.username}/favorites`}>
-            Favorited Articles
+            Favorited Posts
           </Link>
         </li>
       </ul>

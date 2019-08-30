@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { photosUploaded, updateUpload } from '../photos/actions'
+import { photosUploaded, updateUpload } from './uploader-actions'
 import PropTypes from "prop-types"
 import Data from './uploader-form'
-import Loading from "./status/loading"
+import Loading from "../../global/loading"
 import Config from '../../../config'
 import request from 'superagent'
 import UploaderStatus from './uploader-status'
@@ -12,8 +12,6 @@ import {
   UPLOADER_PAGE_LOADED,
   UPLOADER_PAGE_UNLOADED
 } from '../../../constants/types'
-
-import "./styles/index.css"
 
 const mapStateToProps = state => ({ ...state.editor })
 
@@ -81,14 +79,14 @@ class Uploader extends Component {
   }
 
   fileListToArray(list) {
-    const url = `https://api.cloudinary.com/v1_1/scenicloud/upload`
+    const url = `${Config.cloudPostUrl}`
     // eslint-disable-next-line
     for (let i = 0; i < list.length; i++) {
       const photoId = this.photoId++
       const title = 'title_' + photoId
       const fileName = list.item(i).name
       request.post(url)
-        .field('upload_preset', `${Config.upload_preset}`)
+        .field('upload_preset', `${Config.cloudPreset}`)
         .field('file', list.item(i))
         .field('multiple', true)
         .field('public_id', `users_${this.getRandomInt(666)}`)

@@ -67,7 +67,6 @@ class UploadForm extends React.Component {
         tags: this.props.uploadedPhoto.response.body.tags,
         context: this.props.uploadedPhoto.response.body.context,
         access_mode: this.props.uploadedPhoto.response.body.access_mode,
-        etag: this.props.uploadedPhoto.response.body.etag,
         url: this.props.uploadedPhoto.response.body.url,
         secure_url: this.props.uploadedPhoto.response.body.secure_url,
         existing: this.props.uploadedPhoto.response.body.existing,
@@ -84,8 +83,7 @@ class UploadForm extends React.Component {
         ? agent.Photos.update(Object.assign(photo, slug))
         : agent.Photos.create(photo)
 
-      console.log(photo)
-
+      //console.log(photo)
       this.props.onSubmit(promise)
     }
   }
@@ -93,7 +91,7 @@ class UploadForm extends React.Component {
   UNSAFE_componentWillMount() {
     this.props.onLoad()
   }
-  
+
   componentWillUnmount() {
     this.props.onUnload()
   }
@@ -244,9 +242,6 @@ class UploadForm extends React.Component {
             </label>
             <label htmlFor="secure_url">
               <input placeholder={data && (data.secure_url)} id="secure_url" value={data && (data.secure_url)} />
-            </label>
-            <label htmlFor="etag">
-              <input placeholder={data && (data.etag)} id="etag" value={data && (data.etag)} />
             </label>
             <label htmlFor="existing">
               <input placeholder={data && (data.existing)} id="existing" value={data && (data.existing)} />

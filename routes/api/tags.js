@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const Article = mongoose.model('Article')
+const Post = mongoose.model('Post')
 
 //-----------------------------------------------------------------------
 // return a list of tags
 
 router.get('/', (req, res, next) => {
-  Article.find()
+  Post.find()
     .distinct('tagList')
     .then((tags) => res.json({ tags: tags }))
     .catch(next)

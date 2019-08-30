@@ -8,30 +8,30 @@ var UserSchema = new mongoose.Schema({
   bio: String,
   hash: String,
   salt: String,
-  image: {
-    type: String
-    //required: [true, "can't be blank"],
-  },
+  image: String,
   username: {
     type: String,
+    index: true,
     lowercase: true,
     unique: true,
     required: [true, "can't be blank"],
-    match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-    index: true
+    match: [/^[a-zA-Z0-9]+$/, 'is invalid']
   },
   email: {
     type: String,
-    lowercase: true,
+    index: true,
     unique: true,
+    lowercase: true,
     required: [true, "can't be blank"],
-    match: [/\S+@\S+\.\S+/, 'is invalid'],
-    index: true
+    match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   type: { type: String, default: 'basic' },
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
-}, { timestamps: true })
+  is_new: { type: String, default: true },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+},
+  { timestamps: true }
+)
 
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' })

@@ -5,11 +5,14 @@ import agent from '../../../agent'
 
 import {
   ADD_TAG,
-  EDITOR_PAGE_LOADED,
   REMOVE_TAG,
-  ARTICLE_SUBMITTED,
+  ADD_MEDIUM,
+  REMOVE_MEDIUM,
+  EDITOR_PAGE_LOADED,
+  POST_SUBMITTED,
   EDITOR_PAGE_UNLOADED,
-  UPDATE_FIELD_EDITOR
+  UPDATE_FIELD_EDITOR,
+  UPDATE_CHECKED_EDITOR
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
@@ -17,16 +20,22 @@ const mapStateToProps = state => ({ ...state.editor })
 const mapDispatchToProps = dispatch => ({
   onAddTag: () =>
     dispatch({ type: ADD_TAG }),
+  onAddMedium: () =>
+    dispatch({ type: ADD_MEDIUM }),
   onLoad: payload =>
     dispatch({ type: EDITOR_PAGE_LOADED, payload }),
   onRemoveTag: tag =>
     dispatch({ type: REMOVE_TAG, tag }),
+  onRemoveMedium: medium =>
+    dispatch({ type: REMOVE_MEDIUM, medium }),
   onSubmit: payload =>
-    dispatch({ type: ARTICLE_SUBMITTED, payload }),
+    dispatch({ type: POST_SUBMITTED, payload }),
   onUnload: payload =>
     dispatch({ type: EDITOR_PAGE_UNLOADED, payload }),
   onUpdateField: (key, value) =>
-    dispatch({ type: UPDATE_FIELD_EDITOR, key, value })
+    dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
+  onUpdateChecked: (key, value) =>
+    dispatch({ type: UPDATE_CHECKED_EDITOR, key, value })
 })
 
 class Editor extends React.Component {
@@ -34,17 +43,27 @@ class Editor extends React.Component {
     super()
 
     const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
+    const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
 
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
-    this.changeMedium = updateFieldEvent('medium')
+    this.changeCategory = updateFieldEvent('category')
+    this.changeMediumInput = updateFieldEvent('mediumInput')
+    this.changeShareable = updateCheckEvent('shareable')
+    this.changeAllowComments = updateCheckEvent('allow_comments')
+    this.changePurchasable = updateCheckEvent('purchasable')
+    this.changePrice = updateFieldEvent('price')
     this.changeTagInput = updateFieldEvent('tagInput')
 
     this.watchForEnter = ev => {
       if (ev.keyCode === 13) {
         ev.preventDefault()
-        this.props.onAddTag()
+        if (ev.target.id === 'tagList') {
+          this.props.onAddTag()
+        } if (ev.target.id === 'mediumList') {
+          this.props.onAddMedium()
+        }
       }
     }
 
@@ -52,23 +71,33 @@ class Editor extends React.Component {
       this.props.onRemoveTag(tag)
     }
 
+    this.removeMediumHandler = medium => () => {
+      this.props.onRemoveMedium(medium)
+    }
+
     this.submitForm = ev => {
       ev.preventDefault()
 
-      const article = {
+      const post = {
         title: this.props.title,
         description: this.props.description,
         body: this.props.body,
-        medium: this.props.medium,
-        tagList: this.props.tagList
+        category: this.props.category,
+        mediumList: this.props.mediumList,
+        shareable: this.props.shareable,
+        allow_comments: this.props.allow_comments,
+        purchasable: this.props.purchasable,
+        price: this.props.price,
+        tagList: this.props.tagList,
       }
 
-      const slug = { slug: this.props.articleSlug }
+      const slug = { slug: this.props.postSlug }
 
-      const promise = this.props.articleSlug ?
-        agent.Articles.update(Object.assign(article, slug)) :
-        agent.Articles.create(article)
+      const promise = this.props.postSlug ?
+        agent.Posts.update(Object.assign(post, slug)) :
+        agent.Posts.create(post)
 
+      //console.log(post)
       this.props.onSubmit(promise)
     }
   }
@@ -77,7 +106,7 @@ class Editor extends React.Component {
     if (this.props.match.params.slug !== nextProps.match.params.slug) {
       if (nextProps.match.params.slug) {
         this.props.onUnload()
-        return this.props.onLoad(agent.Articles.get(this.props.match.params.slug))
+        return this.props.onLoad(agent.Posts.get(this.props.match.params.slug))
       }
       this.props.onLoad(null)
     }
@@ -85,7 +114,7 @@ class Editor extends React.Component {
 
   UNSAFE_componentWillMount() {
     if (this.props.match.params.slug) {
-      return this.props.onLoad(agent.Articles.get(this.props.match.params.slug))
+      return this.props.onLoad(agent.Posts.get(this.props.match.params.slug))
     }
     this.props.onLoad(null)
   }
@@ -109,7 +138,7 @@ class Editor extends React.Component {
                     <input
                       className="form-control form-control-lg"
                       type="text"
-                      placeholder="Article Title"
+                      placeholder="Post Title"
                       value={this.props.title}
                       onChange={this.changeTitle} />
                   </fieldset>
@@ -118,7 +147,7 @@ class Editor extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="What's this article about?"
+                      placeholder="What's this post about?"
                       value={this.props.description}
                       onChange={this.changeDescription} />
                   </fieldset>
@@ -127,16 +156,16 @@ class Editor extends React.Component {
                     <textarea
                       className="form-control"
                       rows="8"
-                      placeholder="Write your article (in markdown)"
+                      placeholder="Write your post (in markdown)"
                       value={this.props.body}
                       onChange={this.changeBody}>
                     </textarea>
                   </fieldset>
 
                   <fieldset className="form-group">
-                    <select value={this.props.medium}
-                      onChange={this.changeMedium}>
-                      <option value="">Choose Medium</option>
+                    <select value={this.props.category}
+                      onChange={this.changeCategory}>
+                      <option value="">Choose Category</option>
                       <option value="paint">Paint</option>
                       <option value="code">Code</option>
                       <option value="film">Film</option>
@@ -145,9 +174,79 @@ class Editor extends React.Component {
                   </fieldset>
 
                   <fieldset className="form-group">
+                    shareable
+                    <input
+                      id="shareable"
+                      type="checkbox"
+                      placeholder='shareable'
+                      value={this.props.shareable}
+                      onChange={this.changeShareable} />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    allow_comments
+                    <input
+                      id="allow_comments"
+                      type="checkbox"
+                      placeholder='allow_comments'
+                      value={this.props.allow_comments}
+                      onChange={this.changeAllowComments} />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    purchasable
+                    <input
+                      id="purchasable"
+                      type="checkbox"
+                      placeholder='purchasable'
+                      value={this.props.purchasable}
+                      onChange={this.changePurchasable} />
+                  </fieldset>
+
+                  {
+                    this.props.purchasable ? (
+                      <fieldset className="form-group">
+                        <input
+                          id="price"
+                          type="text"
+                          placeholder='price'
+                          value={this.props.price}
+                          onChange={this.changePrice} />
+                      </fieldset>
+                    ) : null
+                  }
+
+                  <fieldset className="form-group">
                     <input
                       className="form-control"
                       type="text"
+                      id="mediumList"
+                      placeholder="Enter mediums"
+                      value={this.props.mediumInput}
+                      onChange={this.changeMediumInput}
+                      onKeyUp={this.watchForEnter} />
+
+                    <div className="tag-list">
+                      {
+                        (this.props.mediumList || []).map(medium => {
+                          return (
+                            <span className="tag-default tag-pill" key={medium}>
+                              <i className="ion-close-round"
+                                onClick={this.removeMediumHandler(medium)}>
+                              </i>
+                              {medium}
+                            </span>
+                          )
+                        })
+                      }
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="tagList"
                       placeholder="Enter tags"
                       value={this.props.tagInput}
                       onChange={this.changeTagInput}
@@ -174,7 +273,7 @@ class Editor extends React.Component {
                     type="button"
                     disabled={this.props.inProgress}
                     onClick={this.submitForm}>
-                    Publish Article
+                    Publish Post
                   </button>
 
                 </fieldset>

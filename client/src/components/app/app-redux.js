@@ -9,11 +9,10 @@ import Config from '../../config'
 import { CloudinaryContext } from 'cloudinary-react'
 
 import agent from '../../agent'
-import Photos from '../routes/photos'
-import Uploader from '../routes/uploader'
 import Header from '../header'
 import Home from '../routes/home'
-import Article from '../routes/article'
+import Post from '../routes/post'
+import Uploader from '../routes/uploader'
 import Editor from '../routes/editor'
 import Login from '../routes/login'
 import Profile from '../routes/profile'
@@ -73,8 +72,7 @@ class App extends React.Component {
               <Route path="/register" component={Register} />
               <Route path="/editor/:slug" component={Editor} />
               <Route path="/editor" component={Editor} />
-              <Route path="/article/:id" component={Article} />
-              <Route path="/photos" component={Photos} />
+              <Route path="/post/:id" component={Post} />
               <Route path="/uploader/:slug" component={Uploader} />
               <Route path="/uploader" component={Uploader} />
               <Route path="/settings" component={Settings} />

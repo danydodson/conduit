@@ -13,7 +13,7 @@ require('dotenv').config()
 
 const DBURI = require('./config').DBURI
 const SECRET = require('./config').SECRET
-const PORT = require('./config/port')
+const PORT = process.env.PORT || '5001'
 const PROD = 'production'
 
 mongoose.connect(DBURI, {
@@ -42,14 +42,13 @@ app.use(session({
 }))
 
 require('./models/User')
-require('./models/Article')
+require('./models/Post')
 require('./models/Comment')
-require('./models/Photo')
-require('./routes/auth-passport')
+require('./routes/auth/auth-passport')
 
 app.use(require('./routes'))
 
-/// catch 404 and forward to error handler
+// catch 404 and forward to err handler
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
@@ -57,7 +56,7 @@ app.use(function (req, res, next) {
   next(err)
 })
 
-// development error handler will print stacktrace
+// dev err handler prints stacktrace
 
 if (!PROD) {
   app.use(function (err, req, res, next) {
@@ -72,7 +71,7 @@ if (!PROD) {
   })
 }
 
-// production error handler no stacktraces leaked to user
+// prod err handler no stacktraces leaked to user
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 500)

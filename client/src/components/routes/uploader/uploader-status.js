@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
+import { deleteUpload } from './uploader-actions'
+import Config from '../../../config'
 import PropTypes from 'prop-types'
-//import Config from '../../../config'
 import { connect } from 'react-redux'
 import request from 'superagent'
-import { deleteUpload } from '../photos/actions'
-
-// 200: OK | Success.  400: Bad request.  401: Authorization required. 
-// 403: Not allowed.  404: Not found.  409: Already exists.  420: Rate limited. 
 
 class UploadedStatus extends Component {
 
   deletePhoto() {
     request
-      .post(`https://api.cloudinary.com/v1_1/scenicloud/delete_by_token`)
+      .post(`${Config.cloudDeleteUrl}`)
       .set('Content-Type', 'application/json')
       .set('X-Requested-With', 'XMLHttpRequest')
       .send({ token: this.props.uploadedPhoto.response.body.delete_token })

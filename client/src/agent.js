@@ -4,14 +4,15 @@ import config from './config'
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const LOCAL_API_ROOT = config.local_root_url
-//const CLOUD_API_URL_ROOT = config.cloud_root_url
-//const CLOUD_API_LIST_ROOT = config.cloud_list_url
+const API_ROOT = config.localUrl
+//const API_ROOT = config.cloudGetUrl
+//const API_ROOT = config.cloudPostUrl
 
 const encode = encodeURIComponent
 const responseBody = res => res.body
 
 let token = null
+
 const tokenPlugin = req => {
   if (token) {
     req.set('authorization', `Token ${token}`)
@@ -20,13 +21,13 @@ const tokenPlugin = req => {
 
 const requests = {
   del: url =>
-    superagent.del(`${LOCAL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   get: url =>
-    superagent.get(`${LOCAL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.get(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   put: (url, body) =>
-    superagent.put(`${LOCAL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
+    superagent.put(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
   post: (url, body) =>
-    superagent.post(`${LOCAL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
+    superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 }
 
 const Auth = {
@@ -47,40 +48,40 @@ const Tags = {
 }
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`
-const omitSlug = article => Object.assign({}, article, { slug: undefined })
+const omitSlug = post => Object.assign({}, post, { slug: undefined })
 
-const Articles = {
+const Posts = {
   all: page =>
-    requests.get(`/articles?${limit(10, page)}`),
+    requests.get(`/posts?${limit(10, page)}`),
   byAuthor: (author, page) =>
-    requests.get(`/articles?author=${encode(author)}&${limit(5, page)}`),
+    requests.get(`/posts?author=${encode(author)}&${limit(5, page)}`),
   byTag: (tag, page) =>
-    requests.get(`/articles?tag=${encode(tag)}&${limit(10, page)}`),
+    requests.get(`/posts?tag=${encode(tag)}&${limit(10, page)}`),
   del: slug =>
-    requests.del(`/articles/${slug}`),
+    requests.del(`/posts/${slug}`),
   favorite: slug =>
-    requests.post(`/articles/${slug}/favorite`),
+    requests.post(`/posts/${slug}/favorite`),
   favoritedBy: (author, page) =>
-    requests.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
+    requests.get(`/posts?favorited=${encode(author)}&${limit(10, page)}`),
   feed: page =>
-    requests.get(`/articles/feed?${limit(10, page)}`),
+    requests.get(`/posts/feed?${limit(10, page)}`),
   get: slug =>
-    requests.get(`/articles/${slug}`),
+    requests.get(`/posts/${slug}`),
   unfavorite: slug =>
-    requests.del(`/articles/${slug}/favorite`),
-  update: article =>
-    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
-  create: article =>
-    requests.post('/articles', { article })
+    requests.del(`/posts/${slug}/favorite`),
+  update: post =>
+    requests.put(`/posts/${post.slug}`, { post: omitSlug(post) }),
+  create: post =>
+    requests.post('/posts', { post })
 }
 
 const Comments = {
   create: (slug, comment) =>
-    requests.post(`/articles/${slug}/comments`, { comment }),
+    requests.post(`/posts/${slug}/comments`, { comment }),
   delete: (slug, commentId) =>
-    requests.del(`/articles/${slug}/comments/${commentId}`),
-  forArticle: slug =>
-    requests.get(`/articles/${slug}/comments`)
+    requests.del(`/posts/${slug}/comments/${commentId}`),
+  forPost: slug =>
+    requests.get(`/posts/${slug}/comments`)
 }
 
 const Profile = {
@@ -100,6 +101,6 @@ const Photos = {
 }
 
 export default {
-  Auth, Tags, Profile, Articles, Comments, Photos,
+  Auth, Tags, Profile, Posts, Comments, Photos,
   setToken: _token => { token = _token }
 }

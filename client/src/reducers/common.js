@@ -5,9 +5,9 @@ import {
   REDIRECT,
   REGISTER,
   DELETE_USER,
-  DELETE_ARTICLE,
+  DELETE_POST,
   SETTINGS_SAVED,
-  ARTICLE_SUBMITTED,
+  POST_SUBMITTED,
   HOME_PAGE_UNLOADED,
   PHOTOS_SUBMITTED,
   //PHOTOS_PAGE_LOADED,
@@ -15,7 +15,7 @@ import {
   PHOTOS_PAGE_UNLOADED,
   UPLOADER_PAGE_UNLOADED,
   REGISTER_PAGE_UNLOADED,
-  ARTICLE_PAGE_UNLOADED,
+  POST_PAGE_UNLOADED,
   SETTINGS_PAGE_UNLOADED,
   LOGIN_PAGE_UNLOADED,
   EDITOR_PAGE_UNLOADED,
@@ -54,14 +54,8 @@ export default (state = defaultState, action) => {
         currentUser: null
       }
 
-    // case PHOTOS_PAGE_LOADED:
-    //   return {
-    //     ...state,
-    //     photos: action.payload.photos
-    //   }
-
-    case ARTICLE_SUBMITTED:
-      const redirectUrl = `/article/${action.payload.article.slug}`
+    case POST_SUBMITTED:
+      const redirectUrl = `/post/${action.payload.post.slug}`
       return { ...state, redirectTo: redirectUrl }
 
     case PHOTOS_SUBMITTED:
@@ -91,7 +85,7 @@ export default (state = defaultState, action) => {
         currentUser: action.error ? null : action.payload.user
       }
 
-    case DELETE_ARTICLE:
+    case DELETE_POST:
       return {
         ...state, redirectTo: '/'
       }
@@ -102,7 +96,7 @@ export default (state = defaultState, action) => {
     case HOME_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
     case EDITOR_PAGE_UNLOADED:
-    case ARTICLE_PAGE_UNLOADED:
+    case POST_PAGE_UNLOADED:
     case REGISTER_PAGE_UNLOADED:
     case PROFILE_PAGE_UNLOADED:
     case SETTINGS_PAGE_UNLOADED:

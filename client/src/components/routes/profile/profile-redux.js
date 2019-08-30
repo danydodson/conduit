@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import agent from '../../../agent'
-import Articles from '../home/articles/articles-feed'
+import Posts from '../home/posts/posts-feed'
 
 import {
   FOLLOW_USER,
@@ -57,7 +57,7 @@ const FollowUserButton = props => {
 }
 
 const mapStateToProps = state => ({
-  ...state.articles,
+  ...state.posts,
   currentUser: state.common.currentUser,
   profile: state.profile
 })
@@ -85,7 +85,7 @@ class Profile extends React.Component {
   UNSAFE_componentWillMount() {
     this.props.onLoad(Promise.all([
       agent.Profile.get(this.props.match.params.username),
-      agent.Articles.byAuthor(this.props.match.params.username)
+      agent.Posts.byAuthor(this.props.match.params.username)
     ]))
   }
 
@@ -100,14 +100,14 @@ class Profile extends React.Component {
           <Link
             className="nav-link active"
             to={`/@${this.props.profile.username}`}>
-            My Articles
+            My Posts
           </Link>
         </li>
         <li className="nav-item">
           <Link
             className="nav-link"
             to={`/@${this.props.profile.username}/favorites`}>
-            Favorited Articles
+            Favorited Posts
           </Link>
         </li>
       </ul>
@@ -146,10 +146,10 @@ class Profile extends React.Component {
               <div className="articles-toggle">
                 {this.renderTabs()}
               </div>
-              <Articles
+              <Posts
                 pager={this.props.pager}
-                articles={this.props.articles}
-                articlesCount={this.props.articlesCount}
+                posts={this.props.posts}
+                postsCount={this.props.postsCount}
                 state={this.props.currentPage} />
             </div>
           </div>

@@ -1,15 +1,16 @@
 const router = require('express').Router()
 
 //-----------------------------------------------------------------------
+// declare routes
 
 router.use('/', require('./users'))
 router.use('/profiles', require('./profiles'))
-router.use('/articles', require('./articles'))
-router.use('/photos', require('./photos'))
+router.use('/posts', require('./posts'))
 router.use('/tags', require('./tags'))
 
 //-----------------------------------------------------------------------
-
+// throw errs
+ 
 router.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {
     return res.status(422).json({

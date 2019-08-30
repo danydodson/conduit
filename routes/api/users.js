@@ -2,15 +2,7 @@ const mongoose = require('mongoose')
 const router = require('express').Router()
 const passport = require('passport')
 const User = mongoose.model('User')
-const auth = require('../auth-token')
-
-//-----------------------------------------------------------------------
-
-//var cloudinary = require('cloudinary').v2
-
-//cloudinary.uploader.upload("my_picture.jpg", function (er, result) {
-//  console.log(result)
-//})
+const auth = require('../auth/auth-token')
 
 //-----------------------------------------------------------------------
 

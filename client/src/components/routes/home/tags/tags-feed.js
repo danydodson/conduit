@@ -1,16 +1,22 @@
 import React from 'react'
 import agent from '../../../../agent'
+import Loading from '../../../global/loading'
 
 const Tags = props => {
+
   const tags = props.tags
+
   if (tags) {
     return (
       <div className="tag-list">
         {
           tags.map(tag => {
             const handleClick = ev => {
-              ev.preventDefault()
-              props.onClickTag(tag, page => agent.Articles.byTag(tag, page), agent.Articles.byTag(tag))
+              ev.preventDefault()  
+              props.onClickTag(tag, page =>
+                agent.Posts.byTag(tag, page),
+                agent.Posts.byTag(tag)
+              )
             }
             return (
               <button
@@ -26,9 +32,7 @@ const Tags = props => {
       </div>
     )
   } else {
-    return (
-      <div>Loading Tags...</div>
-    )
+    return <Loading />
   }
 }
 

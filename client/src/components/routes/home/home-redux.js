@@ -1,8 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Banner from './banner'
-import MainView from './articles'
+import Posts from './posts'
 import Tags from './tags'
+import { connect } from 'react-redux'
 import agent from '../../../agent'
 
 import {
@@ -32,15 +32,13 @@ class Home extends React.Component {
 
   UNSAFE_componentWillMount() {
     const tab = this.props.token ? 'feed' : 'all'
-
-    const articlesPromise = this.props.token
-      ? agent.Articles.feed
-      : agent.Articles.all
-
+    const postsPromise = this.props.token
+      ? agent.Posts.feed
+      : agent.Posts.all
     this.props.onLoad(
       tab,
-      articlesPromise,
-      Promise.all([agent.Tags.getAll(), articlesPromise()])
+      postsPromise,
+      Promise.all([agent.Tags.getAll(), postsPromise()])
     )
   }
 
@@ -51,10 +49,12 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-page">
-        <Banner token={this.props.token} appName={this.props.appName} />
+        <Banner
+          token={this.props.token}
+          appName={this.props.appName} />
         <div className="container page">
           <div className="row">
-            <MainView />
+            <Posts />
             <div className="col-md-3">
               <div className="sidebar">
                 <p>Popular Tags</p>
