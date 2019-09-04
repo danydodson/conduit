@@ -1,16 +1,16 @@
 import {
-  LOGIN,
-  LOGOUT,
-  REGISTER,
-  ASYNC_START,
-  ASYNC_END,
+  APP_ASYNC_START,
+  APP_ASYNC_END,
+  AUTH_USER_LOGIN,
+  AUTH_USER_LOGOUT,
+  AUTH_USER_REGISTER,
 } from './constants/types'
 
-import agent from './agent'
+import agent from './actions/agent'
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
-    store.dispatch({ type: ASYNC_START, subtype: action.type })
+    store.dispatch({ type: APP_ASYNC_START, subtype: action.type })
 
     const currentView = store.getState().viewChangeCounter
     const skipTracking = action.skipTracking
@@ -23,7 +23,7 @@ const promiseMiddleware = store => next => action => {
         }
         //console.log('[RESULT]', res)
         action.payload = res
-        store.dispatch({ type: ASYNC_END, promise: action.payload })
+        store.dispatch({ type: APP_ASYNC_END, promise: action.payload })
         store.dispatch(action)
       },
         error => {
@@ -35,7 +35,7 @@ const promiseMiddleware = store => next => action => {
           action.error = true
           action.payload = error.response.body
           if (!action.skipTracking) {
-            store.dispatch({ type: ASYNC_END, promise: action.payload })
+            store.dispatch({ type: APP_ASYNC_END, promise: action.payload })
           }
           store.dispatch(action)
         }
@@ -46,12 +46,12 @@ const promiseMiddleware = store => next => action => {
 }
 
 const localStorageMiddleware = store => next => action => {
-  if (action.type === REGISTER || action.type === LOGIN) {
+  if (action.type === AUTH_USER_REGISTER || action.type === AUTH_USER_LOGIN) {
     if (!action.error) {
       window.localStorage.setItem('jwt', action.payload.user.token)
       agent.setToken(action.payload.user.token)
     }
-  } else if (action.type === LOGOUT) {
+  } else if (action.type === AUTH_USER_LOGOUT) {
     window.localStorage.setItem('jwt', '')
     agent.setToken(null)
   }

@@ -1,24 +1,24 @@
 import {
-  ADD_COMMENT,
-  DELETE_COMMENT,
-  POST_LOADED,
-  POST_UNLOADED
+  POST_ITEM_LOADED,
+  POST_ITEM_UNLOADED,
+  POST_ITEM_ADD_COMMENT,
+  POST_ITEM_DELETE_COMMENT,
 } from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case POST_LOADED:
+    case POST_ITEM_LOADED:
       return {
         ...state,
         post: action.payload[0].post,
         comments: action.payload[1].comments
       }
 
-    case POST_UNLOADED:
+    case POST_ITEM_UNLOADED:
       return {}
 
-    case ADD_COMMENT:
+    case POST_ITEM_ADD_COMMENT:
       return {
         ...state,
         commentErrors: action.error ? action.payload.errors : null,
@@ -26,7 +26,7 @@ export default (state = {}, action) => {
           (state.comments || []).concat([action.payload.comment])
       }
 
-    case DELETE_COMMENT:
+    case POST_ITEM_DELETE_COMMENT:
       const commentId = action.commentId
       return {
         ...state,

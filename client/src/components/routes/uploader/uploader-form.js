@@ -1,31 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 
 import {
-  PHOTOS_SUBMITTED,
-  UPLOAD_PREVIEW_LOADED,
+  UPLOADER_FORM_LOADED,
   UPLOADER_FORM_UNLOADED,
-  UPDATE_FIELD_EDITOR,
-  UPDATE_CHECKBOX
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: UPLOAD_PREVIEW_LOADED, payload }),
-  onSubmit: payload =>
-    dispatch({ type: PHOTOS_SUBMITTED, payload }),
+    dispatch({ type: UPLOADER_FORM_LOADED, payload }),
   onUnload: payload =>
     dispatch({ type: UPLOADER_FORM_UNLOADED, payload }),
-  onUpdateField: (key, value) =>
-    dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
-  onUpdateChecked: (key, value) =>
-    dispatch({ type: UPDATE_CHECKBOX, key, value })
 })
-
 
 
 class UploadForm extends React.Component {

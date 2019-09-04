@@ -1,11 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import agent from '../../../../agent'
+import agent from '../../../../actions/agent'
 import Posts from './posts-feed'
 
 import {
-  CHANGE_TAB
+  SET_VIEW_TAB
 } from '../../../../constants/types'
+
+const mapStateToProps = state => ({
+  ...state.posts,
+  tags: state.home.tags,
+  token: state.common.token
+})
+
+const mapDispatchToProps = dispatch => ({
+  onTabClick: (tab, pager, payload) =>
+    dispatch({ type: SET_VIEW_TAB, tab, pager, payload })
+})
 
 const YourFeedTab = props => {
   if (props.token) {
@@ -57,17 +68,6 @@ const TagFilterTab = props => {
     </li>
   )
 }
-
-const mapStateToProps = state => ({
-  ...state.posts,
-  tags: state.home.tags,
-  token: state.common.token
-})
-
-const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, pager, payload) =>
-    dispatch({ type: CHANGE_TAB, tab, pager, payload })
-})
 
 const MainView = props => {
   return (

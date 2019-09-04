@@ -1,42 +1,41 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
-import Uploader from '../uploader'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 
 import {
-  EDITOR_LOADED,
-  ADD_TAG,
-  ADD_MEDIUM,
-  REMOVE_TAG,
-  REMOVE_MEDIUM,
-  UPDATE_FIELD_EDITOR,
-  UPDATE_CHECKBOX,
-  POST_SUBMITTED,
-  EDITOR_UNLOADED,
+  EDITOR_FORM_LOADED,
+  EDITOR_ADD_TAG,
+  EDITOR_ADD_MEDIUM,
+  EDITOR_REMOVE_TAG,
+  EDITOR_REMOVE_MEDIUM,
+  EDITOR_UPDATE_FIELD,
+  EDITOR_UPDATE_CHECKBOX,
+  EDITOR_POST_SUBMITTED,
+  EDITOR_FORM_UNLOADED,
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: EDITOR_LOADED, payload }),
+    dispatch({ type: EDITOR_FORM_LOADED, payload }),
   onAddTag: () =>
-    dispatch({ type: ADD_TAG }),
+    dispatch({ type: EDITOR_ADD_TAG }),
   onAddMedium: () =>
-    dispatch({ type: ADD_MEDIUM }),
+    dispatch({ type: EDITOR_ADD_MEDIUM }),
   onRemoveTag: tag =>
-    dispatch({ type: REMOVE_TAG, tag }),
+    dispatch({ type: EDITOR_REMOVE_TAG, tag }),
   onRemoveMedium: medium =>
-    dispatch({ type: REMOVE_MEDIUM, medium }),
+    dispatch({ type: EDITOR_REMOVE_MEDIUM, medium }),
   onUpdateField: (key, value) =>
-    dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
+    dispatch({ type: EDITOR_UPDATE_FIELD, key, value }),
   onUpdateChecked: (key, value) =>
-    dispatch({ type: UPDATE_CHECKBOX, key, value }),
+    dispatch({ type: EDITOR_UPDATE_CHECKBOX, key, value }),
   onSubmit: payload =>
-    dispatch({ type: POST_SUBMITTED, payload }),
+    dispatch({ type: EDITOR_POST_SUBMITTED, payload }),
   onUnload: payload =>
-    dispatch({ type: EDITOR_UNLOADED, payload })
+    dispatch({ type: EDITOR_FORM_UNLOADED, payload })
 })
 
 class Editor extends React.Component {
@@ -131,22 +130,11 @@ class Editor extends React.Component {
         <div className="container page">
           <div className="row">
             <div className="col-md-10 offset-md-1 col-xs-12">
-
               <Errors errors={this.props.errors}></Errors>
-
               <form>
                 <fieldset>
-
-
                   <fieldset className="form-group">
-
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      value={<Uploader />}
-                      onChange={this.changeMedia} />
                   </fieldset>
-
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
@@ -155,7 +143,6 @@ class Editor extends React.Component {
                       value={this.props.title}
                       onChange={this.changeTitle} />
                   </fieldset>
-
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -164,7 +151,6 @@ class Editor extends React.Component {
                       value={this.props.description}
                       onChange={this.changeDescription} />
                   </fieldset>
-
                   <fieldset className="form-group">
                     <textarea
                       className="form-control"
@@ -174,7 +160,6 @@ class Editor extends React.Component {
                       onChange={this.changeBody}>
                     </textarea>
                   </fieldset>
-
                   <fieldset className="form-group">
                     <select value={this.props.category}
                       onChange={this.changeCategory}>
@@ -185,7 +170,6 @@ class Editor extends React.Component {
                       <option value="food">Food</option>
                     </select>
                   </fieldset>
-
                   <fieldset className="form-group">
                     shareable
                     <input
@@ -195,7 +179,6 @@ class Editor extends React.Component {
                       value={this.props.shareable}
                       onChange={this.changeShareable} />
                   </fieldset>
-
                   <fieldset className="form-group">
                     allow_comments
                     <input
@@ -205,7 +188,6 @@ class Editor extends React.Component {
                       value={this.props.allow_comments}
                       onChange={this.changeAllowComments} />
                   </fieldset>
-
                   <fieldset className="form-group">
                     purchasable
                     <input
@@ -215,7 +197,6 @@ class Editor extends React.Component {
                       value={this.props.purchasable}
                       onChange={this.changePurchasable} />
                   </fieldset>
-
                   {
                     this.props.purchasable ? (
                       <fieldset className="form-group">
@@ -228,7 +209,6 @@ class Editor extends React.Component {
                       </fieldset>
                     ) : null
                   }
-
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -254,7 +234,6 @@ class Editor extends React.Component {
                       }
                     </div>
                   </fieldset>
-
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -264,7 +243,6 @@ class Editor extends React.Component {
                       value={this.props.tagInput}
                       onChange={this.changeTagInput}
                       onKeyUp={this.watchForEnter} />
-
                     <div className="tag-list">
                       {
                         (this.props.tagList || []).map(tag => {
@@ -280,7 +258,6 @@ class Editor extends React.Component {
                       }
                     </div>
                   </fieldset>
-
                   <button
                     className="btn btn-lg pull-xs-right btn-primary"
                     type="button"
@@ -288,10 +265,8 @@ class Editor extends React.Component {
                     onClick={this.submitForm}>
                     Publish Post
                   </button>
-
                 </fieldset>
               </form>
-
             </div>
           </div>
         </div>

@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PostMeta from './post-meta'
 import CommentContainer from './comment'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 import marked from 'marked'
 
 import {
-  POST_LOADED,
-  POST_UNLOADED
+  POST_ITEM_LOADED,
+  POST_ITEM_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -17,9 +17,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: POST_LOADED, payload }),
+    dispatch({ type: POST_ITEM_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: POST_UNLOADED })
+    dispatch({ type: POST_ITEM_UNLOADED })
 })
 
 class Post extends React.Component {

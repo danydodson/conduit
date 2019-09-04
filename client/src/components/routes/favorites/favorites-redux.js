@@ -2,18 +2,18 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Profile, mapStateToProps } from '../profile/profile-redux'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 
 import {
-  PROFILE_LOADED,
-  PROFILE_UNLOADED
+  PROFILE_PAGE_LOADED,
+  PROFILE_PAGE_UNLOADED
 } from '../../../constants/types'
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (pager, payload) =>
-    dispatch({ type: PROFILE_LOADED, pager, payload }),
+    dispatch({ type: PROFILE_PAGE_LOADED, pager, payload }),
   onUnload: () =>
-    dispatch({ type: PROFILE_UNLOADED })
+    dispatch({ type: PROFILE_PAGE_UNLOADED })
 })
 
 class Favorites extends Profile {

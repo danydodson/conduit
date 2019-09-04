@@ -3,12 +3,12 @@ import Banner from './banner'
 import Posts from './posts'
 import Tags from './tags'
 import { connect } from 'react-redux'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 
 import {
-  HOME_LOADED,
-  APPLY_TAG_FILTER,
-  HOME_UNLOADED
+  HOME_PAGE_LOADED,
+  SET_TAG_FILTER,
+  HOME_PAGE_UNLOADED,
 } from '../../../constants/types'
 
 const Promise = global.Promise
@@ -20,12 +20,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClickTag: (tag, pager, payload) =>
-    dispatch({ type: APPLY_TAG_FILTER, tag, pager, payload }),
   onLoad: (tab, pager, payload) =>
-    dispatch({ type: HOME_LOADED, tab, pager, payload }),
+    dispatch({ type: HOME_PAGE_LOADED, tab, pager, payload }),
+  onClickTag: (tag, pager, payload) =>
+    dispatch({ type: SET_TAG_FILTER, tag, pager, payload }),
   onUnload: () =>
-    dispatch({ type: HOME_UNLOADED })
+    dispatch({ type: HOME_PAGE_UNLOADED }),
 })
 
 class Home extends React.Component {

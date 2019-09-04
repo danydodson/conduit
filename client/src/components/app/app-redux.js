@@ -4,11 +4,7 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { store } from '../../store'
 
-import { CloudinaryContext } from 'cloudinary-react'
-import Styles from './app-styles'
-import CONFIG from '../../config'
-
-import agent from '../../agent'
+import agent from '../../actions/agent'
 import Header from '../header'
 import Home from '../routes/home'
 import Post from '../routes/post'
@@ -20,7 +16,13 @@ import Favorites from '../routes/favorites'
 import Register from '../routes/register'
 import Settings from '../routes/settings'
 
-import { LOGOUT, APP_LOAD, REDIRECT } from '../../constants/types'
+import Styles from './app-styles'
+
+import {
+  AUTH_USER_LOGOUT,
+  APP_LOAD,
+  APP_REDIRECT_LOCATION
+} from '../../constants/types'
 
 const mapStateToProps = state => {
   return {
@@ -33,11 +35,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onClickLogout: () =>
-    dispatch({ type: LOGOUT }),
+    dispatch({ type: AUTH_USER_LOGOUT }),
   onLoad: (payload, token) =>
     dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
   onRedirect: () =>
-    dispatch({ type: REDIRECT })
+    dispatch({ type: APP_REDIRECT_LOCATION })
 })
 
 class App extends React.Component {
@@ -59,29 +61,24 @@ class App extends React.Component {
     if (this.props.appLoaded) {
       return (
         <div>
-          <CloudinaryContext
-            cloudName={CONFIG.CLOUD}
-            uploadPreset={CONFIG.PRESET}>
-
-            <Header
-              appName={this.props.appName}
-              currentUser={this.props.currentUser}
-              onClickLogout={this.props.onClickLogout} />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/editor/:slug" component={Editor} />
-              <Route path="/editor" component={Editor} />
-              <Route path="/post/:id" component={Post} />
-              <Route path="/uploader/:slug" component={Uploader} />
-              <Route path="/uploader" component={Uploader} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/@:username/favorites" component={Favorites} />
-              <Route path="/@:username" component={Profile} />
-            </Switch>
-            <Styles />
-          </CloudinaryContext>
+          <Header
+            appName={this.props.appName}
+            currentUser={this.props.currentUser}
+            onClickLogout={this.props.onClickLogout} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/editor/:slug" component={Editor} />
+            <Route path="/editor" component={Editor} />
+            <Route path="/post/:id" component={Post} />
+            <Route path="/uploader/:slug" component={Uploader} />
+            <Route path="/uploader" component={Uploader} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/@:username/favorites" component={Favorites} />
+            <Route path="/@:username" component={Profile} />
+          </Switch>
+          <Styles />
         </div>
       )
     }

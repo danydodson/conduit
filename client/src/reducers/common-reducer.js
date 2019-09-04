@@ -1,21 +1,20 @@
 import {
   APP_LOAD,
-  LOGIN,
-  LOGOUT,
-  REDIRECT,
-  REGISTER,
-  DELETE_USER,
-  DELETE_POST,
-  SETTINGS_SAVED,
-  POST_SUBMITTED,
-  HOME_UNLOADED,
-  REGISTER_UNLOADED,
-  POST_UNLOADED,
-  SETTINGS_UNLOADED,
-  LOGIN_UNLOADED,
-  EDITOR_UNLOADED,
-  PROFILE_UNLOADED,
+  APP_REDIRECT_LOCATION,
+  HOME_PAGE_UNLOADED,
+  PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_UNLOADED,
+  POST_ITEM_UNLOADED,
+  POST_ITEM_DELETE_POST,
+  EDITOR_POST_SUBMITTED,
+  EDITOR_FORM_UNLOADED,
+  SETTINGS_FORM_SAVED,
+  AUTH_USER_LOGIN,
+  AUTH_USER_LOGOUT,
+  AUTH_USER_REGISTER,
+  AUTH_USER_DELETE,
+  LOGIN_FORM_UNLOADED,
+  REGISTER_FORM_UNLOADED,
 } from '../constants/types'
 
 const defaultState = {
@@ -35,13 +34,13 @@ export default (state = defaultState, action) => {
         currentUser: action.payload ? action.payload.user : null
       }
 
-    case REDIRECT:
+    case APP_REDIRECT_LOCATION:
       return {
         ...state,
         redirectTo: null
       }
 
-    case LOGOUT:
+    case AUTH_USER_LOGOUT:
       return {
         ...state,
         redirectTo: '/',
@@ -49,26 +48,26 @@ export default (state = defaultState, action) => {
         currentUser: null
       }
 
-    case POST_SUBMITTED:
+    case EDITOR_POST_SUBMITTED:
       const redirectUrl = `/post/${action.payload.post.slug}`
       return { ...state, redirectTo: redirectUrl }
 
-    case DELETE_USER:
+    case AUTH_USER_DELETE:
       const userId = action.userId
       return {
         ...state,
         users: state.users.filter(user => user.id !== userId)
       }
 
-    case SETTINGS_SAVED:
+    case SETTINGS_FORM_SAVED:
       return {
         ...state,
         redirectTo: action.error ? null : '/',
         currentUser: action.error ? null : action.payload.user
       }
 
-    case LOGIN:
-    case REGISTER:
+    case AUTH_USER_LOGIN:
+    case AUTH_USER_REGISTER:
       return {
         ...state,
         redirectTo: action.error ? null : '/',
@@ -76,18 +75,17 @@ export default (state = defaultState, action) => {
         currentUser: action.error ? null : action.payload.user
       }
 
-    case DELETE_POST:
+    case POST_ITEM_DELETE_POST:
       return {
         ...state, redirectTo: '/'
       }
 
-    case HOME_UNLOADED:
-    case LOGIN_UNLOADED:
-    case EDITOR_UNLOADED:
-    case POST_UNLOADED:
-    case REGISTER_UNLOADED:
-    case PROFILE_UNLOADED:
-    case SETTINGS_UNLOADED:
+    case LOGIN_FORM_UNLOADED:
+    case REGISTER_FORM_UNLOADED:
+    case HOME_PAGE_UNLOADED:
+    case EDITOR_FORM_UNLOADED:
+    case POST_ITEM_UNLOADED:
+    case PROFILE_PAGE_UNLOADED:
     case PROFILE_FAVORITES_UNLOADED:
       return {
         ...state,

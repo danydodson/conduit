@@ -1,21 +1,27 @@
 import React, { Component } from "react"
-import Loading from '../../shared/loading'
+import Loading from '../../shared/loading-image'
 import { connect } from 'react-redux'
 import request from 'superagent'
-import Key from '../../../config'
+import Config from '../../../config'
 
 import {
-  UPLOADER_LOADED,
-  UPLOADER_UNLOADED
+  UPLOADER_FORM_LOADED,
+  UPLOADER_FORM_UNLOADED,
+  UPLOADER_ITEM_UPDATED,
+  UPLOADER_ITEM_UPLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: UPLOADER_LOADED, payload }),
+    dispatch({ type: UPLOADER_FORM_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: UPLOADER_UNLOADED }),
+    dispatch({ type: UPLOADER_FORM_UNLOADED }),
+  onUpdate: () =>
+    dispatch({ type: UPLOADER_ITEM_UPDATED }),
+  onUploaded: () =>
+    dispatch({ type: UPLOADER_ITEM_UPLOADED }),
 })
 
 class Uploader extends Component {
@@ -63,8 +69,8 @@ class Uploader extends Component {
     for (let file of files) {
       const title = `img_${Math.floor(Math.random(999))}`
       const photoId = this.photoId++
-      request.post(Key.POST_URL)
-        .field('upload_preset', Key.PRESET)
+      request.post(Config.CLOUD_POST_URL)
+        .field('upload_preset', Config.CLOUD_PRESET)
         .field('file', file)
         .field('multiple', true)
         .field('public_id', `imgId_${this.getRandomInt(666)}`)
@@ -77,7 +83,7 @@ class Uploader extends Component {
     if (res.body.public_id === title) {
       dtoken = res.body.delete_token
       request
-        .post(Key.DELETE_URL)
+        .post(Config.CLOUD_DELETE_URL)
         .set('Content-Type', 'application/json')
         .set('X-Requested-With', 'XMLHttpRequest')
         .send({ token: dtoken })
@@ -87,12 +93,12 @@ class Uploader extends Component {
 
   onProgress(id, file, progress) {
     console.log(id, file, progress)
-    //this.props.onUpdate({ id: id, fileName: fileName, progress: progress, })
+    //this.props.onUpdate({ id: id, file: file, progress: progress, })
   }
 
-  onUploaded(id, fileName, response) {
-    console.log(id, fileName, response)
-    //this.props.onUpdate({ id: id, fileName: fileName, response: response, })
+  onUploaded(id, file, response) {
+    console.log(id, file, response)
+    //this.props.onUpdate({ id: id, file: file, response: response, })
     //this.props.onUploaded([response.body])
   }
 

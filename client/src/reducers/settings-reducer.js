@@ -1,13 +1,12 @@
 import {
-  ASYNC_START,
-  SETTINGS_SAVED,
-  SETTINGS_UNLOADED,
+  APP_ASYNC_START,
+  SETTINGS_FORM_SAVED,
 } from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case SETTINGS_SAVED:
+    case SETTINGS_FORM_SAVED:
       return {
         ...state,
         inProgress: false,
@@ -15,10 +14,7 @@ export default (state = {}, action) => {
           : null
       }
 
-    case SETTINGS_UNLOADED:
-      return {}
-
-    case ASYNC_START:
+    case APP_ASYNC_START:
       return {
         ...state,
         inProgress: true

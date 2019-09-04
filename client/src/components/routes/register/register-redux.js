@@ -1,30 +1,33 @@
 import { Link } from 'react-router-dom'
 import Errors from '../../errors'
 import React from 'react'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 import { connect } from 'react-redux'
 
 import {
-  REGISTER,
-  UPDATE_FIELD_AUTH,
-  REGISTER_UNLOADED
+  REGISTER_FORM_LOADED,
+  AUTH_USER_REGISTER,
+  AUTH_UPDATE_FIELD,
+  REGISTER_FORM_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.auth })
 
 const mapDispatchToProps = dispatch => ({
+  onLoad: () =>
+    dispatch({ type: REGISTER_FORM_LOADED }),
   onChangeEmail: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value }),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: 'email', value }),
   onChangePassword: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: 'password', value }),
   onChangeUsername: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: 'username', value }),
   onSubmit: (username, email, password) => {
     const payload = agent.Auth.register(username, email, password)
-    dispatch({ type: REGISTER, payload })
+    dispatch({ type: AUTH_USER_REGISTER, payload })
   },
   onUnload: () =>
-    dispatch({ type: REGISTER_UNLOADED })
+    dispatch({ type: REGISTER_FORM_UNLOADED })
 })
 
 class Register extends React.Component {
@@ -39,7 +42,11 @@ class Register extends React.Component {
     }
   }
 
-  UNSAFE_componentWillUnmount() {
+  UNSAFE_componentWillMount() {
+    this.props.onLoad()
+  }
+
+  componentWillUnmount() {
     this.props.onUnload()
   }
 

@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 
 import {
-  DELETE_USER,
-  SETTINGS_SAVED,
-  SETTINGS_UNLOADED
+  AUTH_USER_DELETE,
+  SETTINGS_FORM_SAVED,
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -16,12 +15,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   deleteUser: user =>
-    dispatch({ type: DELETE_USER, payload: agent.Auth.delete(user) }),
+    dispatch({ type: AUTH_USER_DELETE, payload: agent.Auth.delete(user) }),
   onSubmitForm: user =>
-    dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
-  onUnload: () => dispatch({
-    type: SETTINGS_UNLOADED
-  })
+    dispatch({ type: SETTINGS_FORM_SAVED, payload: agent.Auth.save(user) }),
 })
 
 class SettingsForm extends React.Component {
@@ -44,12 +40,8 @@ class SettingsForm extends React.Component {
 
     this.submitForm = ev => {
       ev.preventDefault()
-
       const user = Object.assign({}, this.state)
-      if (!user.password) {
-        delete user.password
-      }
-
+      if (!user.password) delete user.password
       this.props.onSubmitForm(user)
     }
   }

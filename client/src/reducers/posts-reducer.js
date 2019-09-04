@@ -1,13 +1,13 @@
 import {
-  SET_,
-  CHANGE_TAB,
-  POST_FAVORITED,
-  POST_UNFAVORITED,
-  APPLY_TAG_FILTER,
-  HOME_LOADED,
-  HOME_UNLOADED,
-  PROFILE_LOADED,
-  PROFILE_UNLOADED,
+  HOME_PAGE_LOADED,
+  HOME_PAGE_UNLOADED,
+  SET_VIEW_TAB,
+  SET_VIEW_PAGE_,
+  SET_TAG_FILTER,
+  POST_ITEM_FAVORITED,
+  POST_ITEM_UNFAVORITED,
+  PROFILE_PAGE_LOADED,
+  PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_LOADED,
   PROFILE_FAVORITES_UNLOADED
 } from '../constants/types'
@@ -15,8 +15,8 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case POST_FAVORITED:
-    case POST_UNFAVORITED:
+    case POST_ITEM_FAVORITED:
+    case POST_ITEM_UNFAVORITED:
       return {
         ...state,
         posts: state.posts.map(post => {
@@ -31,7 +31,7 @@ export default (state = {}, action) => {
         })
       }
 
-    case SET_:
+    case SET_VIEW_PAGE_:
       return {
         ...state,
         posts: action.payload.posts,
@@ -39,7 +39,7 @@ export default (state = {}, action) => {
         currentPage: action.page
       }
 
-    case APPLY_TAG_FILTER:
+    case SET_TAG_FILTER:
       return {
         ...state,
         pager: action.pager,
@@ -50,7 +50,7 @@ export default (state = {}, action) => {
         currentPage: 0
       }
 
-    case HOME_LOADED:
+    case HOME_PAGE_LOADED:
       return {
         ...state,
         pager: action.pager,
@@ -61,10 +61,10 @@ export default (state = {}, action) => {
         tab: action.tab
       }
 
-    case HOME_UNLOADED:
+    case HOME_PAGE_UNLOADED:
       return {}
 
-    case CHANGE_TAB:
+    case SET_VIEW_TAB:
       return {
         ...state,
         pager: action.pager,
@@ -75,7 +75,7 @@ export default (state = {}, action) => {
         tag: null
       }
 
-    case PROFILE_LOADED:
+    case PROFILE_PAGE_LOADED:
     case PROFILE_FAVORITES_LOADED:
       return {
         ...state,
@@ -85,7 +85,7 @@ export default (state = {}, action) => {
         currentPage: 0
       }
 
-    case PROFILE_UNLOADED:
+    case PROFILE_PAGE_UNLOADED:
     case PROFILE_FAVORITES_UNLOADED:
       return {}
 

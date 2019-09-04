@@ -5,15 +5,15 @@ import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { history, store } from './store'
 import { CloudinaryContext } from 'cloudinary-react'
-import config from './config'
+import Config from './config'
 import App from './components/app'
 
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <CloudinaryContext
-        cloudName={config.cloudName}
-        uploadPreset={config.uploadPreset}>
+        cloudName={Config.CLOUD_NAME}
+        uploadPreset={Config.CLOUD_PRESET}>
         <Switch>
           <Route path="/" component={App} />
         </Switch>

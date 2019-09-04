@@ -1,12 +1,10 @@
 import superagentPromise from 'superagent-promise'
 import _superagent from 'superagent'
-import config from './config'
+import Config from '../config'
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const API_ROOT = config.localUrl
-//const API_ROOT = config.cloudGetUrl
-//const API_ROOT = config.cloudPostUrl
+const API_ROOT = Config.LOCAL_API
 
 const encode = encodeURIComponent
 const responseBody = res => res.body

@@ -1,4 +1,4 @@
-import DeleteButton from './comment-actions'
+import DeleteButton from './comment-delete'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
@@ -6,6 +6,7 @@ const Comment = props => {
   const comment = props.comment
   const show = props.currentUser &&
     props.currentUser.username === comment.author.username
+    
   return (
     <div className="card">
       <div className="card-block">

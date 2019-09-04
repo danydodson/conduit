@@ -1,26 +1,29 @@
 import { Link } from 'react-router-dom'
 import Errors from '../../errors'
 import React from 'react'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 import { connect } from 'react-redux'
 
 import {
-  LOGIN,
-  UPDATE_FIELD_AUTH,
-  LOGIN_UNLOADED
+  LOGIN_FORM_LOADED,
+  AUTH_USER_LOGIN,
+  AUTH_UPDATE_FIELD,
+  LOGIN_FORM_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.auth })
 
 const mapDispatchToProps = dispatch => ({
+  onLoad: () =>
+    dispatch({ type: LOGIN_FORM_LOADED }),
   onChangeEmail: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value }),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: 'email', value }),
   onChangePassword: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: 'password', value }),
   onSubmit: (email, password) =>
-    dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) }),
+    dispatch({ type: AUTH_USER_LOGIN, payload: agent.Auth.login(email, password) }),
   onUnload: () =>
-    dispatch({ type: LOGIN_UNLOADED })
+    dispatch({ type: LOGIN_FORM_UNLOADED }),
 })
 
 class Login extends React.Component {
@@ -32,6 +35,10 @@ class Login extends React.Component {
       ev.preventDefault()
       this.props.onSubmit(email, password)
     }
+  }
+
+  UNSAFE_componentWillMount() {
+    this.props.onLoad()
   }
 
   componentWillUnmount() {

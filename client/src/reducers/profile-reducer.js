@@ -1,21 +1,21 @@
 import {
-  FOLLOW_USER,
-  UNFOLLOW_USER,
-  PROFILE_LOADED,
-  PROFILE_UNLOADED
+  PROFILE_FOLLOW_USER,
+  PROFILE_UNFOLLOW_USER,
+  PROFILE_PAGE_LOADED,
+  PROFILE_PAGE_UNLOADED
 } from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case PROFILE_LOADED:
+    case PROFILE_PAGE_LOADED:
       return { ...action.payload[0].profile }
 
-    case PROFILE_UNLOADED:
+    case PROFILE_PAGE_UNLOADED:
       return {}
 
-    case FOLLOW_USER:
-    case UNFOLLOW_USER:
+    case PROFILE_FOLLOW_USER:
+    case PROFILE_UNFOLLOW_USER:
       return { ...action.payload.profile }
 
     default:

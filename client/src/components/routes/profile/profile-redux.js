@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import agent from '../../../agent'
+import agent from '../../../actions/agent'
 import Posts from '../home/posts/posts-feed'
 
 import {
-  FOLLOW_USER,
-  UNFOLLOW_USER,
-  PROFILE_LOADED,
-  PROFILE_UNLOADED
+  PROFILE_FOLLOW_USER,
+  PROFILE_UNFOLLOW_USER,
+  PROFILE_PAGE_LOADED,
+  PROFILE_PAGE_UNLOADED
 } from '../../../constants/types'
 
 const EditProfileSettings = props => {
@@ -65,20 +65,20 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onFollow: username =>
     dispatch({
-      type: FOLLOW_USER,
+      type: PROFILE_FOLLOW_USER,
       payload: agent.Profile.follow(username)
     }),
   onLoad: payload =>
     dispatch({
-      type: PROFILE_LOADED, payload
+      type: PROFILE_PAGE_LOADED, payload
     }),
   onUnfollow: username =>
     dispatch({
-      type: UNFOLLOW_USER,
+      type: PROFILE_UNFOLLOW_USER,
       payload: agent.Profile.unfollow(username)
     }),
   onUnload: () =>
-    dispatch({ type: PROFILE_UNLOADED })
+    dispatch({ type: PROFILE_PAGE_UNLOADED })
 })
 
 class Profile extends React.Component {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { deleteUpload } from './uploader-actions'
-//import Config from '../../../config'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import request from 'superagent'

@@ -1,20 +1,20 @@
 import {
-  EDITOR_LOADED,
-  ASYNC_START,
-  ADD_TAG,
-  REMOVE_TAG,
-  ADD_MEDIUM,
-  REMOVE_MEDIUM,
-  POST_SUBMITTED,
-  UPDATE_FIELD_EDITOR,
-  UPDATE_CHECKBOX,
-  EDITOR_UNLOADED,
+  APP_ASYNC_START,
+  EDITOR_FORM_LOADED,
+  EDITOR_UPDATE_FIELD,
+  EDITOR_UPDATE_CHECKBOX,
+  EDITOR_ADD_MEDIUM,
+  EDITOR_REMOVE_MEDIUM,
+  EDITOR_ADD_TAG,
+  EDITOR_REMOVE_TAG,
+  EDITOR_POST_SUBMITTED,
+  EDITOR_FORM_UNLOADED,
 } from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case EDITOR_LOADED:
+    case EDITOR_FORM_LOADED:
       return {
         ...state,
         postSlug: action.payload ? action.payload.post.slug : '',
@@ -32,45 +32,45 @@ export default (state = {}, action) => {
         tagList: action.payload ? action.payload.post.tagList : []
       }
 
-    case EDITOR_UNLOADED:
+    case EDITOR_FORM_UNLOADED:
       return {}
 
-    case ASYNC_START:
-      if (action.subtype === POST_SUBMITTED) {
+    case APP_ASYNC_START:
+      if (action.subtype === EDITOR_POST_SUBMITTED) {
         return { ...state, inProgress: true }
       }
       break
 
-    case ADD_TAG:
+    case EDITOR_ADD_TAG:
       return {
         ...state,
         tagList: state.tagList.concat([state.tagInput]),
         tagInput: ''
       }
 
-    case REMOVE_TAG:
+    case EDITOR_REMOVE_TAG:
       return {
         ...state,
         tagList: state.tagList.filter(tag => tag !== action.tag)
       }
 
-    case ADD_MEDIUM:
+    case EDITOR_ADD_MEDIUM:
       return {
         ...state,
         mediumList: state.mediumList.concat([state.mediumInput]),
         mediumInput: ''
       }
 
-    case REMOVE_MEDIUM:
+    case EDITOR_REMOVE_MEDIUM:
       return {
         ...state,
         mediumList: state.mediumList.filter(medium => medium !== action.medium)
       }
 
-    case UPDATE_FIELD_EDITOR:
+    case EDITOR_UPDATE_FIELD:
       return { ...state, [action.key]: action.value }
 
-    case UPDATE_CHECKBOX:
+    case EDITOR_UPDATE_CHECKBOX:
       return { ...state, [action.key]: action.value }
 
     default:
