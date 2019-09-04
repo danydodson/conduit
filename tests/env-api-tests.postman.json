@@ -1,10 +1,10 @@
 {
   "id": "4aa60b52-97fc-456d-4d4f-14a350e95dff",
-  "name": "Conduit API Tests - Environment",
+  "name": "SeeSee API Tests - Environment",
   "values": [{
     "enabled": true,
     "key": "apiUrl",
-    "value": "http://localhost:3000/api",
+    "value": "http://localhost:4100/api",
     "type": "text"
   }],
   "timestamp": 1505871382668,

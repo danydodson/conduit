@@ -4,9 +4,9 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { store } from '../../store'
 
-import Styles from './app-styles'
-import Config from '../../config'
 import { CloudinaryContext } from 'cloudinary-react'
+import Styles from './app-styles'
+import CONFIG from '../../config'
 
 import agent from '../../agent'
 import Header from '../header'
@@ -60,8 +60,9 @@ class App extends React.Component {
       return (
         <div>
           <CloudinaryContext
-            cloudName={Config.cloud_name}
-            uploadPreset={'seesee'}>
+            cloudName={CONFIG.CLOUD}
+            uploadPreset={CONFIG.PRESET}>
+
             <Header
               appName={this.props.appName}
               currentUser={this.props.currentUser}
@@ -79,8 +80,8 @@ class App extends React.Component {
               <Route path="/@:username/favorites" component={Favorites} />
               <Route path="/@:username" component={Profile} />
             </Switch>
+            <Styles />
           </CloudinaryContext>
-          <Styles />
         </div>
       )
     }

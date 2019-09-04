@@ -5,15 +5,15 @@ import { Profile, mapStateToProps } from '../profile/profile-redux'
 import agent from '../../../agent'
 
 import {
-  PROFILE_PAGE_LOADED,
-  PROFILE_PAGE_UNLOADED
+  PROFILE_LOADED,
+  PROFILE_UNLOADED
 } from '../../../constants/types'
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (pager, payload) =>
-    dispatch({ type: PROFILE_PAGE_LOADED, pager, payload }),
+    dispatch({ type: PROFILE_LOADED, pager, payload }),
   onUnload: () =>
-    dispatch({ type: PROFILE_PAGE_UNLOADED })
+    dispatch({ type: PROFILE_UNLOADED })
 })
 
 class Favorites extends Profile {

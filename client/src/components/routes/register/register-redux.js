@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import {
   REGISTER,
   UPDATE_FIELD_AUTH,
-  REGISTER_PAGE_UNLOADED
+  REGISTER_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.auth })
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: REGISTER, payload })
   },
   onUnload: () =>
-    dispatch({ type: REGISTER_PAGE_UNLOADED })
+    dispatch({ type: REGISTER_UNLOADED })
 })
 
 class Register extends React.Component {

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import {
   LOGIN,
   UPDATE_FIELD_AUTH,
-  LOGIN_PAGE_UNLOADED
+  LOGIN_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.auth })
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: (email, password) =>
     dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) }),
   onUnload: () =>
-    dispatch({ type: LOGIN_PAGE_UNLOADED })
+    dispatch({ type: LOGIN_UNLOADED })
 })
 
 class Login extends React.Component {

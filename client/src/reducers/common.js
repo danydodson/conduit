@@ -8,19 +8,14 @@ import {
   DELETE_POST,
   SETTINGS_SAVED,
   POST_SUBMITTED,
-  HOME_PAGE_UNLOADED,
-  PHOTOS_SUBMITTED,
-  //PHOTOS_PAGE_LOADED,
-  PHOTO_PAGE_UNLOADED,
-  PHOTOS_PAGE_UNLOADED,
-  UPLOADER_PAGE_UNLOADED,
-  REGISTER_PAGE_UNLOADED,
-  POST_PAGE_UNLOADED,
-  SETTINGS_PAGE_UNLOADED,
-  LOGIN_PAGE_UNLOADED,
-  EDITOR_PAGE_UNLOADED,
-  PROFILE_PAGE_UNLOADED,
-  PROFILE_FAVORITES_PAGE_UNLOADED,
+  HOME_UNLOADED,
+  REGISTER_UNLOADED,
+  POST_UNLOADED,
+  SETTINGS_UNLOADED,
+  LOGIN_UNLOADED,
+  EDITOR_UNLOADED,
+  PROFILE_UNLOADED,
+  PROFILE_FAVORITES_UNLOADED,
 } from '../constants/types'
 
 const defaultState = {
@@ -58,10 +53,6 @@ export default (state = defaultState, action) => {
       const redirectUrl = `/post/${action.payload.post.slug}`
       return { ...state, redirectTo: redirectUrl }
 
-    case PHOTOS_SUBMITTED:
-      const redirectToPhoto = `/photos`
-      return { ...state, redirectTo: redirectToPhoto }
-
     case DELETE_USER:
       const userId = action.userId
       return {
@@ -90,17 +81,14 @@ export default (state = defaultState, action) => {
         ...state, redirectTo: '/'
       }
 
-    case UPLOADER_PAGE_UNLOADED:
-    case PHOTO_PAGE_UNLOADED:
-    case PHOTOS_PAGE_UNLOADED:
-    case HOME_PAGE_UNLOADED:
-    case LOGIN_PAGE_UNLOADED:
-    case EDITOR_PAGE_UNLOADED:
-    case POST_PAGE_UNLOADED:
-    case REGISTER_PAGE_UNLOADED:
-    case PROFILE_PAGE_UNLOADED:
-    case SETTINGS_PAGE_UNLOADED:
-    case PROFILE_FAVORITES_PAGE_UNLOADED:
+    case HOME_UNLOADED:
+    case LOGIN_UNLOADED:
+    case EDITOR_UNLOADED:
+    case POST_UNLOADED:
+    case REGISTER_UNLOADED:
+    case PROFILE_UNLOADED:
+    case SETTINGS_UNLOADED:
+    case PROFILE_FAVORITES_UNLOADED:
       return {
         ...state,
         viewChangeCounter: state.viewChangeCounter + 1

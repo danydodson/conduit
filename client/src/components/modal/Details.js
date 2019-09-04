@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import Modal from "."
 
 import {
-  MODAL_PAGE_LOADED,
-  MODAL_PAGE_UNLOADED,
-  MODAL_PAGE_REDIRECTED
+  MODAL_LOADED,
+  MODAL_UNLOADED,
+  MODAL_REDIRECTED
 } from '../../constants/types'
 
 const mapStateToProps = state => {
@@ -19,11 +19,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
-    dispatch({ type: MODAL_PAGE_LOADED, payload }),
+    dispatch({ type: MODAL_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: MODAL_PAGE_UNLOADED }),
+    dispatch({ type: MODAL_UNLOADED }),
   onRedirect: () =>
-    dispatch({ type: MODAL_PAGE_REDIRECTED })
+    dispatch({ type: MODAL_REDIRECTED })
 })
 
 class Details extends React.Component {

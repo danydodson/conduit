@@ -1,41 +1,42 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
+import Uploader from '../uploader'
 import agent from '../../../agent'
 
 import {
+  EDITOR_LOADED,
   ADD_TAG,
-  REMOVE_TAG,
   ADD_MEDIUM,
+  REMOVE_TAG,
   REMOVE_MEDIUM,
-  EDITOR_PAGE_LOADED,
-  POST_SUBMITTED,
-  EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR,
-  UPDATE_CHECKED_EDITOR
+  UPDATE_CHECKBOX,
+  POST_SUBMITTED,
+  EDITOR_UNLOADED,
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
+  onLoad: payload =>
+    dispatch({ type: EDITOR_LOADED, payload }),
   onAddTag: () =>
     dispatch({ type: ADD_TAG }),
   onAddMedium: () =>
     dispatch({ type: ADD_MEDIUM }),
-  onLoad: payload =>
-    dispatch({ type: EDITOR_PAGE_LOADED, payload }),
   onRemoveTag: tag =>
     dispatch({ type: REMOVE_TAG, tag }),
   onRemoveMedium: medium =>
     dispatch({ type: REMOVE_MEDIUM, medium }),
-  onSubmit: payload =>
-    dispatch({ type: POST_SUBMITTED, payload }),
-  onUnload: payload =>
-    dispatch({ type: EDITOR_PAGE_UNLOADED, payload }),
   onUpdateField: (key, value) =>
     dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
   onUpdateChecked: (key, value) =>
-    dispatch({ type: UPDATE_CHECKED_EDITOR, key, value })
+    dispatch({ type: UPDATE_CHECKBOX, key, value }),
+  onSubmit: payload =>
+    dispatch({ type: POST_SUBMITTED, payload }),
+  onUnload: payload =>
+    dispatch({ type: EDITOR_UNLOADED, payload })
 })
 
 class Editor extends React.Component {
@@ -80,6 +81,7 @@ class Editor extends React.Component {
 
       const post = {
         title: this.props.title,
+        media: this.props.media,
         description: this.props.description,
         body: this.props.body,
         category: this.props.category,
@@ -134,6 +136,17 @@ class Editor extends React.Component {
 
               <form>
                 <fieldset>
+
+
+                  <fieldset className="form-group">
+
+                    <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      value={<Uploader />}
+                      onChange={this.changeMedia} />
+                  </fieldset>
+
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"

@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 import agent from '../../../agent'
 
 import {
-  HOME_PAGE_LOADED,
+  HOME_LOADED,
   APPLY_TAG_FILTER,
-  HOME_PAGE_UNLOADED
+  HOME_UNLOADED
 } from '../../../constants/types'
 
 const Promise = global.Promise
@@ -23,9 +23,9 @@ const mapDispatchToProps = dispatch => ({
   onClickTag: (tag, pager, payload) =>
     dispatch({ type: APPLY_TAG_FILTER, tag, pager, payload }),
   onLoad: (tab, pager, payload) =>
-    dispatch({ type: HOME_PAGE_LOADED, tab, pager, payload }),
+    dispatch({ type: HOME_LOADED, tab, pager, payload }),
   onUnload: () =>
-    dispatch({ type: HOME_PAGE_UNLOADED })
+    dispatch({ type: HOME_UNLOADED })
 })
 
 class Home extends React.Component {

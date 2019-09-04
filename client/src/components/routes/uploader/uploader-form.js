@@ -8,7 +8,7 @@ import {
   UPLOAD_PREVIEW_LOADED,
   UPLOADER_FORM_UNLOADED,
   UPDATE_FIELD_EDITOR,
-  UPDATE_CHECKED_EDITOR
+  UPDATE_CHECKBOX
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateField: (key, value) =>
     dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
   onUpdateChecked: (key, value) =>
-    dispatch({ type: UPDATE_CHECKED_EDITOR, key, value })
+    dispatch({ type: UPDATE_CHECKBOX, key, value })
 })
 
 
@@ -83,7 +83,8 @@ class UploadForm extends React.Component {
         ? agent.Photos.update(Object.assign(photo, slug))
         : agent.Photos.create(photo)
 
-      //console.log(photo)
+      console.log(photo)
+
       this.props.onSubmit(promise)
     }
   }

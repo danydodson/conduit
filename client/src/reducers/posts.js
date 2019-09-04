@@ -1,16 +1,15 @@
 import {
-  SET_PAGE,
+  SET_,
   CHANGE_TAB,
   POST_FAVORITED,
   POST_UNFAVORITED,
   APPLY_TAG_FILTER,
-  HOME_PAGE_LOADED,
-  HOME_PAGE_UNLOADED,
-  PROFILE_PAGE_LOADED,
-  UPLOADER_PAGE_LOADED,
-  PROFILE_PAGE_UNLOADED,
-  PROFILE_FAVORITES_PAGE_LOADED,
-  PROFILE_FAVORITES_PAGE_UNLOADED
+  HOME_LOADED,
+  HOME_UNLOADED,
+  PROFILE_LOADED,
+  PROFILE_UNLOADED,
+  PROFILE_FAVORITES_LOADED,
+  PROFILE_FAVORITES_UNLOADED
 } from '../constants/types'
 
 export default (state = {}, action) => {
@@ -32,7 +31,7 @@ export default (state = {}, action) => {
         })
       }
 
-    case SET_PAGE:
+    case SET_:
       return {
         ...state,
         posts: action.payload.posts,
@@ -51,7 +50,7 @@ export default (state = {}, action) => {
         currentPage: 0
       }
 
-    case HOME_PAGE_LOADED:
+    case HOME_LOADED:
       return {
         ...state,
         pager: action.pager,
@@ -62,7 +61,7 @@ export default (state = {}, action) => {
         tab: action.tab
       }
 
-    case HOME_PAGE_UNLOADED:
+    case HOME_UNLOADED:
       return {}
 
     case CHANGE_TAB:
@@ -76,14 +75,8 @@ export default (state = {}, action) => {
         tag: null
       }
 
-    case UPLOADER_PAGE_LOADED:
-      return {
-        ...state,
-        photo: action.payload
-      }
-
-    case PROFILE_PAGE_LOADED:
-    case PROFILE_FAVORITES_PAGE_LOADED:
+    case PROFILE_LOADED:
+    case PROFILE_FAVORITES_LOADED:
       return {
         ...state,
         pager: action.pager,
@@ -92,8 +85,8 @@ export default (state = {}, action) => {
         currentPage: 0
       }
 
-    case PROFILE_PAGE_UNLOADED:
-    case PROFILE_FAVORITES_PAGE_UNLOADED:
+    case PROFILE_UNLOADED:
+    case PROFILE_FAVORITES_UNLOADED:
       return {}
 
     default:

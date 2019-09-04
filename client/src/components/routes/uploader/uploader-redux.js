@@ -1,76 +1,56 @@
 import React, { Component } from "react"
-import { photosUploaded, updateUpload } from './uploader-actions'
-import PropTypes from "prop-types"
-import Data from './uploader-form'
-import Loading from "../../global/loading"
-import Config from '../../../config'
-import request from 'superagent'
-import UploaderStatus from './uploader-status'
+import Loading from '../../shared/loading'
 import { connect } from 'react-redux'
+import request from 'superagent'
+import Key from '../../../config'
 
 import {
-  UPLOADER_PAGE_LOADED,
-  UPLOADER_PAGE_UNLOADED
+  UPLOADER_LOADED,
+  UPLOADER_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({ ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: UPLOADER_PAGE_LOADED, payload }),
+    dispatch({ type: UPLOADER_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: UPLOADER_PAGE_UNLOADED }),
+    dispatch({ type: UPLOADER_UNLOADED }),
 })
-
-// onFilesAdded(files) 
-// Triggered after files are uploaded.
 
 class Uploader extends Component {
   constructor(props) {
     super(props)
     this.photoId = 1
-    this.state = { uploaded: [], hover: false }
+    this.state = { uploads: [], hover: false }
+    this.onDrop = this.onDrop.bind(this)
     this.onDragOver = this.onDragOver.bind(this)
     this.onDragLeave = this.onDragLeave.bind(this)
-    this.onDrop = this.onDrop.bind(this)
     this.openFileDialog = this.openFileDialog.bind(this)
-    this.onFilesAdded = this.onFilesAdded.bind(this)
     this.fileInputRef = React.createRef()
   }
 
+  openFileDialog() { }
 
-  // Handle adding files through file dialog
-
-  onFilesAdded(event) {
-    const { files } = event.target
-    this.props.onFilesAdded(this.filesToArray(files))
-    this.fileListToArray(files)
+  stopEvent(event) {
+    event.preventDefault()
+    event.stopPropagation()
   }
-
-
-  // Handle file being dragged over drag area
 
   onDragOver(event) {
     this.stopEvent(event)
     this.setState({ hover: true })
   }
 
-
-  // Handle file being dragged out of drag area
-
   onDragLeave(event) {
     this.stopEvent(event)
     this.setState({ hover: false })
   }
 
-
-  // Handle file dropped into drag area
-
   onDrop(event) {
     this.stopEvent(event)
     const { files } = event.dataTransfer
-    console.log(files)
-    this.props.onFilesAdded(this.fileListToArray(files))
+    this.onMediaSelect(files)
     this.setState({ hover: false })
   }
 
@@ -78,69 +58,58 @@ class Uploader extends Component {
     Math.floor(Math.random() * Math.floor(max))
   }
 
-  fileListToArray(list) {
-    const url = `${Config.cloudPostUrl}`
+  onMediaSelect = files => {
     // eslint-disable-next-line
-    for (let i = 0; i < list.length; i++) {
+    for (let file of files) {
+      const title = `img_${Math.floor(Math.random(999))}`
       const photoId = this.photoId++
-      const title = 'title_' + photoId
-      const fileName = list.item(i).name
-      request.post(url)
-        .field('upload_preset', `${Config.cloudPreset}`)
-        .field('file', list.item(i))
+      request.post(Key.POST_URL)
+        .field('upload_preset', Key.PRESET)
+        .field('file', file)
         .field('multiple', true)
-        .field('public_id', `users_${this.getRandomInt(666)}`)
-        .field('tags', title ? `seesee,${title}` : 'seesee')
-        .field('context', title ? `photo=${title}` : '')
-        .on('progress', progress => this.onPhotoUploadProgress(photoId, list.item(i), progress))
-        .end((err, res) => this.onPhotoUploaded(photoId, fileName, res))
+        .field('public_id', `imgId_${this.getRandomInt(666)}`)
+        .on('progress', (prog) => this.onProgress(photoId, file, prog))
+        .end((err, res) => this.onUploaded(photoId, title, res))
     }
   }
 
-  onPhotoUploadProgress(id, fileName, progress) {
-    this.props.onUpdateUpload({
-      id: id,
-      fileName: fileName,
-      progress: progress,
-    })
+  sendDeleteToken = (res, title, dtoken) => {
+    if (res.body.public_id === title) {
+      dtoken = res.body.delete_token
+      request
+        .post(Key.DELETE_URL)
+        .set('Content-Type', 'application/json')
+        .set('X-Requested-With', 'XMLHttpRequest')
+        .send({ token: dtoken })
+        .then(res => res)
+    }
   }
 
-  onPhotoUploaded(id, fileName, response) {
-    this.props.onUpdateUpload({
-      id: id,
-      fileName: fileName,
-      response: response,
-    })
-
-    this.props.onPhotosUploaded([response.body])
+  onProgress(id, file, progress) {
+    console.log(id, file, progress)
+    //this.props.onUpdate({ id: id, fileName: fileName, progress: progress, })
   }
 
-  // Opens file system dialog
-
-  openFileDialog() {
-    this.fileInputRef.current.click()
+  onUploaded(id, fileName, response) {
+    console.log(id, fileName, response)
+    //this.props.onUpdate({ id: id, fileName: fileName, response: response, })
+    //this.props.onUploaded([response.body])
   }
 
+  componentWillUnmount() { this.props.onUnload() }
 
-  // Prevent default event
-
-  stopEvent(event) {
-    event.preventDefault()
-    event.stopPropagation()
-  }
-
-  UNSAFE_componentWillMount() {
-    this.props.onLoad()
-  }
-
-  componentWillUnmount() {
-    this.props.onUnload()
-  }
+  UNSAFE_componentWillMount() { this.props.onLoad() }
 
   render() {
 
     const { hover } = this.state
     const { loading } = this.props
+    //const { upload } = this.props.upload
+
+    //console.log(upload)
+    //const upload = this.props.upload
+    //const response = upload.response
+    //const data = response && response.body
 
     return (
       <div>
@@ -152,60 +121,72 @@ class Uploader extends Component {
           className={hover
             ? "drop-zone-container hover"
             : "drop-zone-container"}>
-
-          <input type="text"
-            ref={title => (this.title = title)}
-            className="form-control"
-            placeholder="Title" />
-
           <input
-            ref={this.fileInputRef}
-            type="file"
             multiple
-            onChange={() => this.onFilesAdded} />
-
+            type="file"
+            //ref={this.fileInputRef}
+            onChange={() => this.onMediaSelect} />
           <div className="drag-files">
             {loading ? <Loading /> : "Drag files to upload"}
           </div>
         </div>
-
         <div className="response_wrap">
-          {this.props.uploaded.map((photo, id) => {
+          {/* {this.props.upload.map((photo, id) => {
             return (
-              <UploaderStatus key={id} uploadedPhoto={photo} />
+              <UploadContainer key={id} upload={photo} />
             )
-          })}
-
-          {this.props.uploaded.map((photo, id) => {
-            return (
-              <Data key={id} uploadedPhoto={photo} />
-            )
-          })}
+          })} */}
         </div>
+
+        <form>
+          <label htmlFor="public_id">
+            <input id="public_id" value={this.props.public_id} onChange={this.changePublicId} />
+          </label>
+          <label htmlFor="version">
+            <input id="version" value={''} />
+          </label>
+          <label htmlFor="format">
+            <input id="format" value={''} />
+          </label>
+          <label htmlFor="width">
+            <input id="width" value={''} />
+          </label>
+          <label htmlFor="height">
+            <input id="height" value={''} />
+          </label>
+          <label htmlFor="type">
+            <input id="type" value={''} />
+          </label>
+          <label htmlFor="created_at">
+            <input id="created_at" value={''} />
+          </label>
+          <label htmlFor="url">
+            <input id="url" value={''} />
+          </label>
+          <label htmlFor="secure_url">
+            <input id="secure_url" value={''} />
+          </label>
+          <label htmlFor="colors">
+            <input id="colors" value={''} />
+          </label>
+          <label htmlFor="predominant">
+            <input id="predominant" value={''} />
+          </label>
+          <label htmlFor="phash">
+            <input id="phash" value={''} />
+          </label>
+          <label htmlFor="original_filename">
+            <input id="original_filename" value={''} />
+          </label>
+          <label htmlFor="delete_token">
+            <input id="delete_token" value={''} />
+          </label>
+          <button type="button" onClick={this.submitForm}>{'Submit'}</button>
+        </form>
 
       </div>
     )
   }
 }
 
-Uploader.propTypes = {
-  uploadedPhotos: PropTypes.array,
-  onUpdateUpload: PropTypes.func,
-  onPhotosUploaded: PropTypes.func,
-  onFilesAdded: PropTypes.func,
-  loading: PropTypes.bool
-}
-
-Uploader.defaultProps = {
-  cloudName: PropTypes.string,
-  uploadPreset: PropTypes.string,
-  onFilesAdded: () => null,
-  loading: false
-}
-
-Uploader = connect(state => state, { onUpdateUpload: updateUpload, onPhotosUploaded: photosUploaded, })(Uploader)
-
-Uploader = connect(mapStateToProps, mapDispatchToProps)(Uploader)
-
-export default Uploader
-
+export default Uploader = connect(mapStateToProps, mapDispatchToProps)(Uploader)

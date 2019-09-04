@@ -93,14 +93,7 @@ const Profile = {
     requests.del(`/profiles/${username}/follow`)
 }
 
-const Photos = {
-  get: () =>
-    requests.get(`/photos`),
-  create: photo =>
-    requests.post('/photos', { photo })
-}
-
 export default {
-  Auth, Tags, Profile, Posts, Comments, Photos,
+  Auth, Tags, Profile, Posts, Comments,
   setToken: _token => { token = _token }
 }

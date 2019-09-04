@@ -1,6 +1,6 @@
 import React from 'react'
 import agent from '../../../../agent'
-import Loading from '../../../global/loading'
+import Loading from '../../../shared/loading'
 
 const Tags = props => {
 

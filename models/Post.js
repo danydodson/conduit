@@ -106,7 +106,7 @@ PostSchema.methods.toJSONFor = function (user) {
     phash: this.phash,
     original_filename: this.original_filename,
     delete_token: this.delete_token,
-
+    
     title: this.title,
     description: this.description,
     body: this.body,

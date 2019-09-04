@@ -5,7 +5,7 @@ import home from './home'
 import profile from './profile'
 import posts from './posts'
 import post from './post'
-import uploads from './uploads'
+//import uploads from './uploads'
 import editor from './editor'
 import settings from './settings'
 import { connectRouter } from 'connected-react-router'
@@ -17,7 +17,7 @@ export default (history) => combineReducers({
   profile: profile,
   posts: posts,
   post: post,
-  uploads: uploads,
+  //uploads: uploads,
   editor: editor,
   settings: settings,
   router: connectRouter(history)

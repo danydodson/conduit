@@ -41,10 +41,13 @@ const PostPreview = props => {
     <div className="article-preview">
       <div className="article-meta">
         <Link to={`/@${post.author.username}`}>
-          <img src={post.author.image} alt={post.author.username} />
+          <img
+            src={post.author.image}
+            alt={post.author.username} />
         </Link>
         <div className="info">
-          <Link className="author" to={`/@${post.author.username}`}>
+          <Link className="author"
+            to={`/@${post.author.username}`}>
             {post.author.username}
           </Link>
           <span className="date">
@@ -52,11 +55,15 @@ const PostPreview = props => {
           </span>
         </div>
         <div className="pull-xs-right">
-          <button className={favoriteButtonClass} onClick={handleClick}>
-            <i className="ion-heart"></i> {post.favoritesCount}
+          <button
+            className={favoriteButtonClass}
+            onClick={handleClick}>
+            <i className="ion-heart"></i>
+            {post.favoritesCount}
           </button>
         </div>
       </div>
+
       <Link to={`/post/${post.slug}`} className="preview-link">
 
         <h1>{post.title}</h1>

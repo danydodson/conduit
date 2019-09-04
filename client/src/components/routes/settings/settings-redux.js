@@ -6,7 +6,7 @@ import agent from '../../../agent'
 import {
   DELETE_USER,
   SETTINGS_SAVED,
-  SETTINGS_PAGE_UNLOADED
+  SETTINGS_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   onSubmitForm: user =>
     dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
   onUnload: () => dispatch({
-    type: SETTINGS_PAGE_UNLOADED
+    type: SETTINGS_UNLOADED
   })
 })
 

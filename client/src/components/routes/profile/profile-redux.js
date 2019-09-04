@@ -7,8 +7,8 @@ import Posts from '../home/posts/posts-feed'
 import {
   FOLLOW_USER,
   UNFOLLOW_USER,
-  PROFILE_PAGE_LOADED,
-  PROFILE_PAGE_UNLOADED
+  PROFILE_LOADED,
+  PROFILE_UNLOADED
 } from '../../../constants/types'
 
 const EditProfileSettings = props => {
@@ -70,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
     }),
   onLoad: payload =>
     dispatch({
-      type: PROFILE_PAGE_LOADED, payload
+      type: PROFILE_LOADED, payload
     }),
   onUnfollow: username =>
     dispatch({
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => ({
       payload: agent.Profile.unfollow(username)
     }),
   onUnload: () =>
-    dispatch({ type: PROFILE_PAGE_UNLOADED })
+    dispatch({ type: PROFILE_UNLOADED })
 })
 
 class Profile extends React.Component {

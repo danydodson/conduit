@@ -1,21 +1,20 @@
 import {
+  EDITOR_LOADED,
+  ASYNC_START,
   ADD_TAG,
   REMOVE_TAG,
   ADD_MEDIUM,
   REMOVE_MEDIUM,
-  ASYNC_START,
   POST_SUBMITTED,
-  PHOTOS_SUBMITTED,
-  EDITOR_PAGE_LOADED,
   UPDATE_FIELD_EDITOR,
-  EDITOR_PAGE_UNLOADED,
-  UPDATE_CHECKED_EDITOR
+  UPDATE_CHECKBOX,
+  EDITOR_UNLOADED,
 } from '../constants/types'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case EDITOR_PAGE_LOADED:
+    case EDITOR_LOADED:
       return {
         ...state,
         postSlug: action.payload ? action.payload.post.slug : '',
@@ -33,16 +32,8 @@ export default (state = {}, action) => {
         tagList: action.payload ? action.payload.post.tagList : []
       }
 
-    case EDITOR_PAGE_UNLOADED:
+    case EDITOR_UNLOADED:
       return {}
-
-    case PHOTOS_SUBMITTED:
-    case POST_SUBMITTED:
-      return {
-        ...state,
-        inProgress: null,
-        errors: action.error ? action.payload.errors : null
-      }
 
     case ASYNC_START:
       if (action.subtype === POST_SUBMITTED) {
@@ -79,7 +70,7 @@ export default (state = {}, action) => {
     case UPDATE_FIELD_EDITOR:
       return { ...state, [action.key]: action.value }
 
-    case UPDATE_CHECKED_EDITOR:
+    case UPDATE_CHECKBOX:
       return { ...state, [action.key]: action.value }
 
     default:

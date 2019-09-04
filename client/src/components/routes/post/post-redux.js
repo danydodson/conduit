@@ -6,8 +6,8 @@ import agent from '../../../agent'
 import marked from 'marked'
 
 import {
-  POST_PAGE_LOADED,
-  POST_PAGE_UNLOADED
+  POST_LOADED,
+  POST_UNLOADED
 } from '../../../constants/types'
 
 const mapStateToProps = state => ({
@@ -17,9 +17,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: POST_PAGE_LOADED, payload }),
+    dispatch({ type: POST_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: POST_PAGE_UNLOADED })
+    dispatch({ type: POST_UNLOADED })
 })
 
 class Post extends React.Component {

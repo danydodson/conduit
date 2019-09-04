@@ -1,44 +1,49 @@
 import {
-  UPDATE_UPLOADED_PHOTO,
-  DELETE_UPLOADED_PHOTO,
-  UPLOADER_FORM_UNLOADED
+  // UPLOADER_LOADED,
+  // UPLOADER_UNLOADED,
+  UPDATE_UPLOADS,
+  DELETE_UPLOADS
 } from '../constants/types'
 
-export default (uploadedPhotos = [], action) => {
+export default (state = {}, uploads = [], action) => {
   switch (action.type) {
 
-    case UPLOADER_FORM_UNLOADED: {
-      return uploadedPhotos = []
-    }
+    // case UPLOADER_LOADED:
+    //   return uploads = []
 
-    case UPDATE_UPLOADED_PHOTO: {
-      let photoIndex = -1
-      const updatedPhotos = uploadedPhotos.map((photo, index) => {
-        if (photo.id === action.uploadedPhoto.id) {
-          photoIndex = index
+    // case UPLOADER_UNLOADED: {
+    //   return uploads = []
+    // }
+
+    case UPDATE_UPLOADS: {
+      let uploadId = -1
+      const updatedUploads = uploads.map((upload, index) => {
+        if (upload.id === action.upload.id) {
+          uploadId = index
           return {
-            ...photo, ...action.uploadedPhoto
+            ...upload, ...action.upload
           }
         }
-        return photo
+        return upload
       })
-      return photoIndex !== -1 ? updatedPhotos
-        : [action.uploadedPhoto, ...uploadedPhotos]
+      return uploadId !== -1
+        ? updatedUploads
+        : [action.upload, ...uploads]
     }
 
-    case DELETE_UPLOADED_PHOTO: {
-      const index = uploadedPhotos.findIndex(
+    case DELETE_UPLOADS: {
+      const index = uploads.findIndex(
         current =>
           current.response.body.public_id === action.publicId
       )
       return [
-        ...uploadedPhotos.slice(0, index),
-        ...uploadedPhotos.slice(index + 1),
+        ...uploads.slice(0, index),
+        ...uploads.slice(index + 1),
       ]
     }
 
     default:
-      return [...uploadedPhotos]
+      return [...uploads]
   }
 }
 

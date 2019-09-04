@@ -1,7 +1,7 @@
 import {
   ASYNC_START,
   SETTINGS_SAVED,
-  SETTINGS_PAGE_UNLOADED,
+  SETTINGS_UNLOADED,
 } from '../constants/types'
 
 export default (state = {}, action) => {
@@ -15,7 +15,7 @@ export default (state = {}, action) => {
           : null
       }
 
-    case SETTINGS_PAGE_UNLOADED:
+    case SETTINGS_UNLOADED:
       return {}
 
     case ASYNC_START:
