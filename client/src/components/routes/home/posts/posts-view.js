@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import agent from '../../../../actions/agent'
+import agent from '../../../../actions/actions-agent'
 import Posts from './posts-feed'
 
 import {
   SET_VIEW_TAB
-} from '../../../../constants/types'
+} from '../../../../actions/actions-types'
 
 const mapStateToProps = state => ({
   ...state.posts,

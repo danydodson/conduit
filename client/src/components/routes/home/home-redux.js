@@ -3,13 +3,13 @@ import Banner from './banner'
 import Posts from './posts'
 import Tags from './tags'
 import { connect } from 'react-redux'
-import agent from '../../../actions/agent'
+import agent from '../../../actions/actions-agent'
 
 import {
   HOME_PAGE_LOADED,
   SET_TAG_FILTER,
   HOME_PAGE_UNLOADED,
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
 const Promise = global.Promise
 

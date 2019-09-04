@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
-import agent from '../../../actions/agent'
+import Uploader from './uploader/uploader-redux'
+import agent from '../../../actions/actions-agent'
 
 import {
   EDITOR_FORM_LOADED,
@@ -13,9 +14,9 @@ import {
   EDITOR_UPDATE_CHECKBOX,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
-const mapStateToProps = state => ({ ...state.editor })
+const mapStateToProps = state => ({ ...state.editor, ...state })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
@@ -39,8 +40,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Editor extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
     const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
@@ -80,7 +81,7 @@ class Editor extends React.Component {
 
       const post = {
         title: this.props.title,
-        media: this.props.media,
+        uploads: this.props.uploader,
         description: this.props.description,
         body: this.props.body,
         category: this.props.category,
@@ -98,7 +99,6 @@ class Editor extends React.Component {
         agent.Posts.update(Object.assign(post, slug)) :
         agent.Posts.create(post)
 
-      //console.log(post)
       this.props.onSubmit(promise)
     }
   }
@@ -125,16 +125,20 @@ class Editor extends React.Component {
   }
 
   render() {
+
     return (
       <div className="editor-page">
+        <Uploader />
         <div className="container page">
           <div className="row">
             <div className="col-md-10 offset-md-1 col-xs-12">
               <Errors errors={this.props.errors}></Errors>
               <form>
                 <fieldset>
+
                   <fieldset className="form-group">
                   </fieldset>
+
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
@@ -143,6 +147,7 @@ class Editor extends React.Component {
                       value={this.props.title}
                       onChange={this.changeTitle} />
                   </fieldset>
+
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -151,6 +156,7 @@ class Editor extends React.Component {
                       value={this.props.description}
                       onChange={this.changeDescription} />
                   </fieldset>
+
                   <fieldset className="form-group">
                     <textarea
                       className="form-control"
@@ -160,6 +166,7 @@ class Editor extends React.Component {
                       onChange={this.changeBody}>
                     </textarea>
                   </fieldset>
+
                   <fieldset className="form-group">
                     <select value={this.props.category}
                       onChange={this.changeCategory}>
@@ -170,6 +177,7 @@ class Editor extends React.Component {
                       <option value="food">Food</option>
                     </select>
                   </fieldset>
+
                   <fieldset className="form-group">
                     shareable
                     <input
@@ -179,6 +187,7 @@ class Editor extends React.Component {
                       value={this.props.shareable}
                       onChange={this.changeShareable} />
                   </fieldset>
+
                   <fieldset className="form-group">
                     allow_comments
                     <input
@@ -188,6 +197,7 @@ class Editor extends React.Component {
                       value={this.props.allow_comments}
                       onChange={this.changeAllowComments} />
                   </fieldset>
+
                   <fieldset className="form-group">
                     purchasable
                     <input
@@ -197,6 +207,7 @@ class Editor extends React.Component {
                       value={this.props.purchasable}
                       onChange={this.changePurchasable} />
                   </fieldset>
+
                   {
                     this.props.purchasable ? (
                       <fieldset className="form-group">
@@ -209,6 +220,7 @@ class Editor extends React.Component {
                       </fieldset>
                     ) : null
                   }
+
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -234,6 +246,7 @@ class Editor extends React.Component {
                       }
                     </div>
                   </fieldset>
+
                   <fieldset className="form-group">
                     <input
                       className="form-control"
@@ -258,6 +271,7 @@ class Editor extends React.Component {
                       }
                     </div>
                   </fieldset>
+
                   <button
                     className="btn btn-lg pull-xs-right btn-primary"
                     type="button"
@@ -265,7 +279,9 @@ class Editor extends React.Component {
                     onClick={this.submitForm}>
                     Publish Post
                   </button>
+
                 </fieldset>
+
               </form>
             </div>
           </div>

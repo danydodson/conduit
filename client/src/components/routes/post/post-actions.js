@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import agent from '../../../actions/agent'
+import agent from '../../../actions/actions-agent'
 
 import {
   POST_ITEM_DELETE_POST
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
 const mapDispatchToProps = dispatch => ({
   onClickDelete: payload =>

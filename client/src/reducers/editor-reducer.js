@@ -9,7 +9,7 @@ import {
   EDITOR_REMOVE_TAG,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
-} from '../constants/types'
+} from '../actions/actions-types'
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -21,7 +21,7 @@ export default (state = {}, action) => {
         title: action.payload ? action.payload.post.title : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
-        MediumInput: '',
+        mediumInput: '',
         mediumList: action.payload ? action.payload.post.mediumList : [],
         category: action.payload ? action.payload.post.category : '',
         shareable: action.payload ? true : false,

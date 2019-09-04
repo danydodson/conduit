@@ -1,5 +1,5 @@
 export default {
-  LOCAL_API: `${process.env.REACT_APP_LOCAL_API}`,
+  LOCAL_API: 'http://localhost:4100/api',
   CLOUD_NAME: `${process.env.REACT_APP_CLOUD_NAME}`,
   CLOUD_PRESET: `${process.env.REACT_APP_CLOUD_PRESET}`,
   CLOUD_GET_URL: `${process.env.REACT_APP_CLOUD_GET_URL}`,

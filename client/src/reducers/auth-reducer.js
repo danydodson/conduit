@@ -7,7 +7,7 @@ import {
   REGISTER_FORM_LOADED,
   LOGIN_FORM_UNLOADED,
   REGISTER_FORM_UNLOADED,
-} from '../constants/types'
+} from '../actions/actions-types'
 
 export default (state = {}, action) => {
   switch (action.type) {

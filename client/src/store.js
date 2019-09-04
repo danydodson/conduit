@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
-import { promiseMiddleware, localStorageMiddleware } from './middle'
+import { promiseMiddleware, localStorageMiddleware } from './actions/actions-middle'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import { createBrowserHistory } from 'history'
 import { createLogger } from 'redux-logger'

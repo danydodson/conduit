@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PostMeta from './post-meta'
 import CommentContainer from './comment'
-import agent from '../../../actions/agent'
+import agent from '../../../actions/actions-agent'
 import marked from 'marked'
 
 import {
   POST_ITEM_LOADED,
   POST_ITEM_UNLOADED
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
 const mapStateToProps = state => ({
   ...state.post,

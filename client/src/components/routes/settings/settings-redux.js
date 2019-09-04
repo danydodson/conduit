@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Errors from '../../errors'
-import agent from '../../../actions/agent'
+import agent from '../../../actions/actions-agent'
 
 import {
   AUTH_USER_DELETE,
   SETTINGS_FORM_SAVED,
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
 const mapStateToProps = state => ({
   ...state.settings,

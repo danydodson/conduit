@@ -4,7 +4,7 @@ import Config from '../config'
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const API_ROOT = Config.LOCAL_API
+const LOCAL_API = Config.LOCAL_API
 
 const encode = encodeURIComponent
 const responseBody = res => res.body
@@ -12,20 +12,18 @@ const responseBody = res => res.body
 let token = null
 
 const tokenPlugin = req => {
-  if (token) {
-    req.set('authorization', `Token ${token}`)
-  }
+  if (token) req.set('authorization', `Token ${token}`)
 }
 
 const requests = {
   del: url =>
-    superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.del(`${LOCAL_API}${url}`).use(tokenPlugin).then(responseBody),
   get: url =>
-    superagent.get(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.get(`${LOCAL_API}${url}`).use(tokenPlugin).then(responseBody),
   put: (url, body) =>
-    superagent.put(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
+    superagent.put(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody),
   post: (url, body) =>
-    superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
+    superagent.post(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody)
 }
 
 const Auth = {

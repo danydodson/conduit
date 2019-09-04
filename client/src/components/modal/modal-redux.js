@@ -6,7 +6,7 @@ import {
   MODAL_ITEM_LOADED,
   MODAL_ITEM_UNLOADED,
   MODAL_ITEM_REDIRECT
-} from '../../constants/types'
+} from '../../actions/actions-types'
 
 const mapStateToProps = state => {
   return {

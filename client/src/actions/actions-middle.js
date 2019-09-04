@@ -4,9 +4,9 @@ import {
   AUTH_USER_LOGIN,
   AUTH_USER_LOGOUT,
   AUTH_USER_REGISTER,
-} from './constants/types'
+} from './actions-types'
 
-import agent from './actions/agent'
+import agent from './actions-agent'
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {

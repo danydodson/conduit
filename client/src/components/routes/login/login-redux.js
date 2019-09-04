@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Errors from '../../errors'
 import React from 'react'
-import agent from '../../../actions/agent'
+import agent from '../../../actions/actions-agent'
 import { connect } from 'react-redux'
 
 import {
@@ -9,7 +9,7 @@ import {
   AUTH_USER_LOGIN,
   AUTH_UPDATE_FIELD,
   LOGIN_FORM_UNLOADED
-} from '../../../constants/types'
+} from '../../../actions/actions-types'
 
 const mapStateToProps = state => ({ ...state.auth })
 
