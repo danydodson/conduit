@@ -113,12 +113,12 @@ const GlobalStyle = createGlobalStyle`
   transition: transform 0.3s;
 }
 
-.preview-box {
-
+.preview {
+  width: 10rem
 }
 
-.preview {
-  width: 33%
+.preview:hover{
+  opacity: .5;
 }
 
 .progress-bar {

@@ -63,8 +63,8 @@ class App extends React.Component {
       return (
         <div className='App'>
           <CloudinaryContext
-            cloudName={process.env.REACT_APP_CLOUD_NAME}
-            uploadPreset={process.env.REACT_APP_CLOUD_PRESET}>
+            cloudName={process.env.REACT_APP_CL_NAME}
+            uploadPreset={process.env.REACT_APP_CL_PRESET}>
             <Header
               appName={this.props.appName}
               currentUser={this.props.currentUser}

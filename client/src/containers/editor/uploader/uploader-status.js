@@ -40,13 +40,16 @@ class UploaderStatus extends Component {
     const percent = Math.floor(upload.progress.percent)
 
     return (
-      <div className='container preview-box'>
+      <div className='container'>
 
         {data && data.delete_token && (
           <button
             className="delete-image"
             onClick={this.deleteUpload.bind(this)}>
-            <h3>X</h3>
+            {data && <img
+              className='preview'
+              alt={data.fileName}
+              src={data.secure_url} />}
           </button>
         )}
 
@@ -57,17 +60,14 @@ class UploaderStatus extends Component {
               <div
                 role="progressbar"
                 className="progress progress-bar"
-                style={{ width: percent + '%' }}
-              />
+                style={{ width: percent + '%' }}>
+              </div>
             </div>
           }
         </div>
 
         <div>
-          {data && <img
-            className='preview'
-            alt={data.fileName}
-            src={data.secure_url} />}
+
         </div>
 
       </div>

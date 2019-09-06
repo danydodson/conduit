@@ -77,13 +77,12 @@ class Uploader extends Component {
   }
 
   onUploaded(id, fileName, response) {
+    // this.setState({ uploaded: [...this.state.uploaded, response] })
     this.props.onUpdate({ id: id, fileName: fileName, response: response, })
     this.props.onUploaded([response.body])
   }
 
   handleUploads(files) {
-
-
     for (let file of files) {
       const uid = this.uid++
       const title = this.props.title
@@ -93,6 +92,7 @@ class Uploader extends Component {
         .field('upload_preset', preset)
         .field('file', file)
         .field('name', file)
+        
         .field('public_id', `${category}/${name}`)
         .field('multiple', true)
         .field('tags', [`${category},${title}`])
