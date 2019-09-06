@@ -6,7 +6,7 @@ import {
   MODAL_ITEM_LOADED,
   MODAL_ITEM_UNLOADED,
   MODAL_ITEM_REDIRECT
-} from '../../actions/actions-types'
+} from '../../agent'
 
 const mapStateToProps = state => {
   return {
@@ -30,9 +30,7 @@ class Details extends React.Component {
 
   state = { loading: true, showModal: false }
 
-  componentDidMount() { 
-
-  }
+  componentDidMount() { }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal })
 

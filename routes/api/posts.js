@@ -162,17 +162,18 @@ router.get('/:post', auth.optional, (req, res, next) => {
 router.put('/:post', auth.required, (req, res, next) => {
   User.findById(req.payload.id).then(user => {
     if (req.post.author._id.toString() === req.payload.id.toString()) {
+
+      if (typeof req.body.post.uploads !== 'undefined') {
+        req.post.uploads = req.body.post.uploads
+      }
       if (typeof req.body.post.title !== 'undefined') {
         req.post.title = req.body.post.title
       }
       if (typeof req.body.post.description !== 'undefined') {
         req.post.description = req.body.post.description
       }
-      if (typeof req.body.post.content !== 'undefined') {
-        req.post.content = req.body.post.content
-      }
-      if (typeof req.body.post.mediums !== 'undefined') {
-        req.post.mediums = req.body.post.mediums
+      if (typeof req.body.post.body !== 'undefined') {
+        req.post.body = req.body.post.body
       }
       if (typeof req.body.post.category !== 'undefined') {
         req.post.category = req.body.post.category
@@ -188,6 +189,9 @@ router.put('/:post', auth.required, (req, res, next) => {
       }
       if (typeof req.body.post.price !== 'undefined') {
         req.post.price = req.body.post.price
+      }
+      if (typeof req.body.post.mediums !== 'undefined') {
+        req.post.mediums = req.body.post.mediums
       }
       if (typeof req.body.post.tagList !== 'undefined') {
         req.post.tagList = req.body.post.tagList
