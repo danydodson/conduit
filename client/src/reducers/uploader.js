@@ -1,5 +1,5 @@
 import {
-  UPLOADER_FORM_LOADED,
+  //UPLOADER_FORM_LOADED,
   UPLOADER_ITEMS_UPLOADED,
   UPLOADER_DELETE_UPLOAD,
   UPLOADER_FORM_UNLOADED,
@@ -8,7 +8,6 @@ import {
 export default (uploads = [], action) => {
   switch (action.type) {
 
-    case UPLOADER_FORM_LOADED:
     case UPLOADER_FORM_UNLOADED:
       return uploads = []
 

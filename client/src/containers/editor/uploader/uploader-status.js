@@ -6,7 +6,7 @@ import {
   UPLOADER_DELETE_UPLOAD
 } from '../../../utilities/constants'
 
-const cname = process.env.REACT_APP_CLOUD_NAME
+const cname = process.env.REACT_APP_CL_NAME
 
 const mapStateToProps = state => ({ ...state })
 
@@ -40,24 +40,35 @@ class UploaderStatus extends Component {
     const percent = Math.floor(upload.progress.percent)
 
     return (
-      <div className='container'>
+      <div className='container preview-box'>
 
         {data && data.delete_token && (
-          <button className="delete-image" onClick={this.deleteUpload.bind(this)}>Delete image</button>
+          <button
+            className="delete-image"
+            onClick={this.deleteUpload.bind(this)}>
+            <h3>X</h3>
+          </button>
         )}
 
         <div className="status">
-          {!response && <span>{percent}%...</span>}
-          {response && (
-            <div className="status-code">Upload completed with status code{' '}{response.status}</div>
-          )}
+          {!response &&
+            <div>
+              {percent}{'%...'}
+              <div
+                role="progressbar"
+                className="progress progress-bar"
+                style={{ width: percent + '%' }}
+              />
+            </div>
+          }
         </div>
 
-        <div className="progress-bar">
-          <div role="progressbar" className="progress" style={{ width: percent + '%' }} />
+        <div>
+          {data && <img
+            className='preview'
+            alt={data.fileName}
+            src={data.secure_url} />}
         </div>
-
-        {data && <img width={200} height={200} alt={data.fileName} src={data.secure_url} />}
 
       </div>
     )

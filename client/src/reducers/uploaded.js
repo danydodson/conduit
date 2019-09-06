@@ -1,54 +1,43 @@
 import {
-  UPLOADER_FORM_LOADED,
-  UPLOADER_FORM_UNLOADED,
+  //UPLOADER_FORM_LOADED,
   UPLOADER_UPDATE_UPLOAD,
-  UPLOADER_DELETE_UPLOAD
+  UPLOADER_DELETE_UPLOAD,
+  UPLOADER_FORM_UNLOADED,
 } from '../utilities/constants'
 
-export default (uploadedItems = [], action) => {
+export default (uploaded = [], action) => {
   switch (action.type) {
 
-    case UPLOADER_FORM_LOADED:
     case UPLOADER_FORM_UNLOADED:
-      return uploadedItems = []
+       return uploaded = []
 
     case UPLOADER_UPDATE_UPLOAD: {
 
-      let uploadIndex = -1
+      let upIndex = -1
 
-      const updatedUploads = uploadedItems.map((uploadItem, id) => {
-
+      const updatedUploads = uploaded.map((uploadItem, index) => {
         if (uploadItem.id === action.upload.id) {
-          uploadIndex = id
-
-          return {
-            ...uploadItem,
-            ...action.upload
-          }
+          upIndex = index
+          return { ...uploadItem, ...action.upload }
         }
 
         return uploadItem
       })
 
-      return uploadIndex !== -1
-        ? updatedUploads
-        : [action.upload, ...uploadedItems]
+      return upIndex !== -1 ? updatedUploads
+        : [action.upload, ...uploaded]
     }
 
     case UPLOADER_DELETE_UPLOAD: {
 
-      const index = uploadedItems.findIndex(
-        current =>
-          current.response.body.public_id === action.publicId
+      const index = uploaded.findIndex(current =>
+        current.response.body.public_id === action.publicId
       )
 
-      return [
-        ...uploadedItems.slice(0, index),
-        ...uploadedItems.slice(index + 1),
-      ]
+      return [...uploaded.slice(0, index), ...uploaded.slice(index + 1)]
     }
 
     default:
-      return [...uploadedItems]
+      return [...uploaded]
   }
 }

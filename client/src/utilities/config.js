@@ -1,8 +1,9 @@
 export default {
   LOCAL_API: 'http://localhost:4100/api',
-  CLOUD_NAME: `${process.env.REACT_APP_CLOUD_NAME}`,
-  CLOUD_PRESET: `${process.env.REACT_APP_CLOUD_PRESET}`,
-  CLOUD_GET: `${process.env.REACT_APP_CLOUD_GET_URL}`,
-  CLOUD_POST: `${process.env.REACT_APP_CLOUD_POST_URL}`,
-  CLOUD_DELETE: `${process.env.REACT_APP_CLOUD_DELETE_URL}`,
+  CL_NAME: `${process.env.REACT_APP_CL_NAME}`,
+  CL_PRESET: `${process.env.REACT_APP_CL_PRESET}`,
+  CL_BASE: `${process.env.REACT_APP_CL_BASE}`,
+  CL_GET: `${process.env.REACT_APP_CL_GET}`,
+  CL_POST: `${process.env.REACT_APP_CL_POST}`,
+  CL_DELETE: `${process.env.REACT_APP_CL_DELETE}`,
 }

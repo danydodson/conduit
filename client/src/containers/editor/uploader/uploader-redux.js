@@ -1,11 +1,9 @@
 /* eslint no-unused-vars: "off"*/
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import UploaderStatus from './uploader-status'
 import Loading from '../../../components/loading'
-import Errors from '../../../components/errors'
+import UploaderStatus from './uploader-status'
 import request from 'superagent'
-import crypto from 'crypto'
 
 import {
   UPLOADER_FORM_LOADED,
@@ -14,13 +12,8 @@ import {
   UPLOADER_FORM_UNLOADED,
 } from '../../../utilities/constants'
 
-const preset = process.env.REACT_APP_CLOUD_PRESET
-const upload = process.env.REACT_APP_CLOUD_POST_URL
-const ckey = process.env.REACT_APP_CLOUD_KEY
-const csecret = process.env.REACT_APP_CLOUD_SECRET
-const cresources = process.env.REACT_APP_CLOUD_RESOURCES
-// const cl = new cloud.Cloudinary({ cloud_name: 'scenicloud' })
-// <img alt='user' src={cl.url('sample')} />
+const upload = process.env.REACT_APP_CL_POST
+const preset = process.env.REACT_APP_CL_PRESET
 
 const mapStateToProps = state => ({ ...state })
 
@@ -38,107 +31,83 @@ const mapDispatchToProps = dispatch => ({
 class Uploader extends Component {
   constructor(props) {
     super(props)
-    this.upid = 1
-    this.state = { uploadedItems: [], hover: false }
+    this.uid = 1
+    this.state = { uploaded: [], hover: false }
     this.onDrop = this.onDrop.bind(this)
     this.onDragOver = this.onDragOver.bind(this)
     this.onDragLeave = this.onDragLeave.bind(this)
   }
 
-  stopEvent = ev => {
-    ev.preventDefault()
-    ev.stopPropagation()
+  stopEvent(e) {
+    e.preventDefault()
+    e.stopPropagation()
   }
 
-  onDragOver = ev => {
-    this.stopEvent(ev)
+  onDragOver(e) {
+    this.stopEvent(e)
     this.setState({ hover: true })
   }
 
-  onDragLeave = ev => {
-    this.stopEvent(ev)
+  onDragLeave(e) {
+    this.stopEvent(e)
     this.setState({ hover: false })
   }
 
-  onDrop = ev => {
-    this.stopEvent(ev)
-    const { files } = ev.dataTransfer
-    this.handleFiles(files)
+  onDrop(e) {
+    this.stopEvent(e)
+    const { files } = e.dataTransfer
+    this.handleUploads(files)
     this.setState({ hover: false })
   }
 
-  componentDidMount = () => {
+  UNSAFE_componentWillMount() {
     this.props.onLoad()
   }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.props.onUnload()
   }
 
-  getRandomInt = max => {
+  getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max))
   }
 
-  onProgress = (id, fileName, progress) => {
+  onProgress(id, fileName, progress) {
     this.props.onUpdate({ id: id, fileName: fileName, progress: progress })
   }
 
-  onUploaded = (id, fileName, response) => {
+  onUploaded(id, fileName, response) {
     this.props.onUpdate({ id: id, fileName: fileName, response: response, })
     this.props.onUploaded([response.body])
   }
 
-  handleFiles = files => {
+  handleUploads(files) {
+
+
     for (let file of files) {
-      const upid = this.upid++
+      const uid = this.uid++
       const title = this.props.title
       const category = this.props.category
       const name = `${title}-${this.getRandomInt(999)}`
       request.post(upload)
-        .field('public_id', `${category}/${name}`)
         .field('upload_preset', preset)
         .field('file', file)
         .field('name', file)
+        .field('public_id', `${category}/${name}`)
         .field('multiple', true)
-        .field('tags', [`${category},${title}`,])
-        .field('context', `title=${title}.webp|category=${category}`)
-        .on('progress', (prog) => this.onProgress(upid, name, prog))
-        .end((err, res) => {
-          //console.log(file)
-          this.onUploaded(upid, name, res)
-        })
+        .field('tags', [`${category},${title}`])
+        .field('context', `title=${title}|category=${category}`)
+        .on('progress', prog => this.onProgress(uid, name, prog))
+        .end((err, res) => this.onUploaded(uid, name, res))
     }
   }
-
-  renameUpload() {
-    const body = this.props.uploaded.response.body
-    const signurl = `from_public_id=${body.public_id}&timestamp=${body.version}&to_public_id=${this.props.editor.title}${csecret}`
-    let shasum = crypto.createHash('sha1')
-    shasum.update(`${signurl}`)
-    let sig = shasum.digest('hex')
-    console.log(sig)
-    request
-      .post(`${cresources}/image/rename`)
-      .set('from_public_id', `${body.public_id}`)
-      .set('to_public_id', `${this.props.editor.title}`)
-      .set('timestamp', `${body.version}`)
-      .set('api_key', `${ckey}`)
-      .set('signature', `${sig}`)
-      //.set('signature', `${sig}`)
-      .then(res => console.log(res))
-  }
-
 
   render() {
     const { hover } = this.state
     const { loading } = this.props
 
-    console.log('title' + this.props.editor.title)
-
     return (
       <div>
-
-        <Errors errors={this.props.errors} />
 
         <div
           onDrop={this.onDrop}
@@ -148,18 +117,27 @@ class Uploader extends Component {
 
           <input
             type="file"
-            onChange={() => this.handleFiles} />
+            id="fileupload"
+            accept="image/*"
+            multiple="multiple"
+            ref={fileInputEl => this.fileInputEl = fileInputEl}
+            onChange={() => this.handleUploads(this.fileInputEl.files)} />
 
-          <div className="drag-files">
-            {loading ? <Loading /> : "Drag files to upload"}
+          <div className='container'>
+
+            <div className="drag-files">
+              {loading ? <Loading /> : "Drag files to upload"}
+            </div>
+
+            <div className="response_wrap">
+              {this.props.uploaded.map((upload, index) => {
+                return (<UploaderStatus key={index} upload={upload} />)
+              })}
+            </div>
+
           </div>
         </div>
 
-        <div className="response_wrap">
-          {this.props.uploaded.map((upload, index) => {
-            return <UploaderStatus key={index} upload={upload} />
-          })}
-        </div>
 
       </div>
     )

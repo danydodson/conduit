@@ -97,7 +97,7 @@ const GlobalStyle = createGlobalStyle`
 
   .drop-container {
   width: 100%;
-  height: 20rem;
+  height: 40rem;
   display: flex;
   color: #8a8a8a;
   font-size: 18px;
@@ -111,6 +111,24 @@ const GlobalStyle = createGlobalStyle`
   border: 1px solid #eee;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   transition: transform 0.3s;
+}
+
+.preview-box {
+
+}
+
+.preview {
+  width: 33%
+}
+
+.progress-bar {
+  height: 1rem;
+  background-color: orangered;
+}
+
+.response_wrap {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .drop-container.hover {

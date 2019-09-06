@@ -32,9 +32,15 @@ export default (state = {}, action) => {
         tagInput: '',
         tagList: action.payload ? action.payload.post.tagList : []
       }
-
     case EDITOR_FORM_UNLOADED:
       return {}
+      
+    case EDITOR_POST_SUBMITTED:
+      return {
+        ...state,
+        inProgress: null,
+        errors: action.error ? action.payload.errors : null
+      }
 
     case APP_ASYNC_START:
       if (action.subtype === EDITOR_POST_SUBMITTED) {

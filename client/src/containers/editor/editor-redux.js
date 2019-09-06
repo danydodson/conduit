@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Errors from '../../components/errors'
 import Uploader from './uploader/uploader-redux'
 import agent from '../../agent'
 
@@ -133,7 +132,9 @@ class Editor extends React.Component {
           <div className="row">
             <div className="col-md-10 offset-md-1 col-xs-12">
 
-              <Errors errors={this.props.errors} />
+              <Uploader
+                title={this.props.title}
+                category={this.props.category} />
 
               <form>
                 <fieldset>
@@ -148,10 +149,7 @@ class Editor extends React.Component {
                   </fieldset>
 
                   <fieldset className="form-group">
-                    <Uploader
-                      tags={this.props.tagList}
-                      title={this.props.title}
-                      category={this.props.category} />
+
                   </fieldset>
 
                   <fieldset className="form-group">

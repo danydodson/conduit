@@ -8,6 +8,7 @@ import {
   POST_ITEM_DELETE_POST,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
+  //UPLOADER_FORM_UNLOADED,
   SETTINGS_FORM_SAVED,
   AUTH_USER_LOGIN,
   AUTH_USER_LOGOUT,
@@ -35,29 +36,15 @@ export default (state = defaultState, action) => {
       }
 
     case APP_REDIRECT_LOCATION:
-      return {
-        ...state,
-        redirectTo: null
-      }
+      return { ...state, redirectTo: null }
 
     case AUTH_USER_LOGOUT:
-      return {
-        ...state,
-        redirectTo: '/',
-        token: null,
-        currentUser: null
-      }
+      return { ...state, redirectTo: '/', token: null, currentUser: null }
 
     case EDITOR_POST_SUBMITTED:
       const redirectUrl = `/post/${action.payload.post.slug}`
       return { ...state, redirectTo: redirectUrl }
 
-    case AUTH_USER_DELETE:
-      const userId = action.userId
-      return {
-        ...state,
-        users: state.users.filter(user => user.id !== userId)
-      }
 
     case SETTINGS_FORM_SAVED:
       return {
@@ -73,6 +60,13 @@ export default (state = defaultState, action) => {
         redirectTo: action.error ? null : '/',
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
+      }
+
+    case AUTH_USER_DELETE:
+      const userId = action.userId
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== userId)
       }
 
     case POST_ITEM_DELETE_POST:
