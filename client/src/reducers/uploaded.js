@@ -3,7 +3,7 @@ import {
   UPLOADER_UPDATE_UPLOAD,
   UPLOADER_DELETE_UPLOAD,
   UPLOADER_FORM_UNLOADED,
-} from '../utilities/constants'
+} from '../constants'
 
 export default (uploaded = [], action) => {
   switch (action.type) {

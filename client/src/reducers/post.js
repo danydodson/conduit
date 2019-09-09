@@ -3,7 +3,7 @@ import {
   POST_ITEM_UNLOADED,
   POST_ITEM_ADD_COMMENT,
   POST_ITEM_DELETE_COMMENT,
-} from '../utilities/constants'
+} from '../constants'
 
 export default (state = {}, action) => {
   switch (action.type) {

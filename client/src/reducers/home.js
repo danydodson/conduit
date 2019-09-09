@@ -1,7 +1,7 @@
 import {
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,
-} from '../utilities/constants'
+} from '../constants'
 
 export default (state = {}, action) => {
   switch (action.type) {

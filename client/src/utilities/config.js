@@ -1,9 +1,9 @@
-export default {
+module.exports = {
   LOCAL_API: 'http://localhost:4100/api',
-  CL_NAME: `${process.env.REACT_APP_CL_NAME}`,
-  CL_PRESET: `${process.env.REACT_APP_CL_PRESET}`,
-  CL_BASE: `${process.env.REACT_APP_CL_BASE}`,
-  CL_GET: `${process.env.REACT_APP_CL_GET}`,
-  CL_POST: `${process.env.REACT_APP_CL_POST}`,
-  CL_DELETE: `${process.env.REACT_APP_CL_DELETE}`,
+  cl_name: `${process.env.REACT_APP_CL_NAME}`,
+  cl_preset: `${process.env.REACT_APP_CL_PRESET}`,
+  cl_base: `${process.env.REACT_APP_CL_BASE}`,
+  cl_get: `${process.env.REACT_APP_CL_GET}`,
+  cl_post: `${process.env.REACT_APP_CL_POST}`,
+  cl_delete: `${process.env.REACT_APP_CL_DELETE}`,
 }

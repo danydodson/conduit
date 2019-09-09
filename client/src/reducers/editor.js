@@ -9,7 +9,7 @@ import {
   EDITOR_REMOVE_TAG,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
-} from '../utilities/constants'
+} from '../constants'
 
 export default (state = {}, action) => {
   switch (action.type) {

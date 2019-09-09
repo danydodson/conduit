@@ -16,7 +16,7 @@ import {
   AUTH_USER_DELETE,
   LOGIN_FORM_UNLOADED,
   REGISTER_FORM_UNLOADED,
-} from '../utilities/constants'
+} from '../constants'
 
 const defaultState = {
   appName: 'SeeSee',

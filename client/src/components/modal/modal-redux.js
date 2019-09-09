@@ -6,7 +6,7 @@ import {
   MODAL_ITEM_LOADED,
   MODAL_ITEM_UNLOADED,
   MODAL_ITEM_REDIRECT
-} from '../../agent'
+  import agent from '../../middleware/middle-agent'
 
 const mapStateToProps = state => {
   return {
