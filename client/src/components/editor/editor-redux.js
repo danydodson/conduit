@@ -2,14 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Uploader from './uploader/uploader-redux'
 import agent from '../../middleware/middle-agent'
-import Dropdown from './dropdown'
+import Mediums from './mediums'
 
 import {
   EDITOR_FORM_LOADED,
   EDITOR_UPDATE_FIELD,
   EDITOR_UPDATE_CHECKBOX,
-  EDITOR_ADD_MEDIUM,
-  EDITOR_REMOVE_MEDIUM,
   EDITOR_ADD_TAG,
   EDITOR_REMOVE_TAG,
   EDITOR_POST_SUBMITTED,
@@ -25,10 +23,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: EDITOR_UPDATE_FIELD, key, value }),
   onUpdateChecked: (key, value) =>
     dispatch({ type: EDITOR_UPDATE_CHECKBOX, key, value }),
-  onAddMedium: () =>
-    dispatch({ type: EDITOR_ADD_MEDIUM }),
-  onRemoveMedium: medium =>
-    dispatch({ type: EDITOR_REMOVE_MEDIUM, medium }),
   onAddTag: () =>
     dispatch({ type: EDITOR_ADD_TAG }),
   onRemoveTag: tag =>
@@ -43,29 +37,13 @@ class Editor extends React.Component {
   constructor() {
     super()
 
-    this.state = {
-      nodda: null
-      // uploads: [],
-      // title: '',
-      // description: '',
-      // body: '',
-      // category: '',
-      // shareable: true,
-      // allow_comments: true,
-      // purchasable: false,
-      // price: '',
-      // mediumList: [],
-      // tagList: [],
-    }
-
     const updateFieldEvent = key => e => this.props.onUpdateField(key, e.target.value)
     const updateCheckEvent = key => e => this.props.onUpdateChecked(key, e.target.checked)
 
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
-    this.changeCategory = updateFieldEvent('category')
-    this.changeMediumInput = updateFieldEvent('mediumInput')
+    this.changeMedium = updateFieldEvent('medium')
     this.changeShareable = updateCheckEvent('shareable')
     this.changeAllowComments = updateCheckEvent('allow_comments')
     this.changePurchasable = updateCheckEvent('purchasable')
@@ -75,20 +53,12 @@ class Editor extends React.Component {
     this.watchForEnter = e => {
       if (e.keyCode === 13) {
         e.preventDefault()
-        if (e.target.id === 'tagList') {
-          this.props.onAddTag()
-        } if (e.target.id === 'mediumList') {
-          this.props.onAddMedium()
-        }
+        this.props.onAddTag()
       }
     }
 
     this.removeTagHandler = tag => () => {
       this.props.onRemoveTag(tag)
-    }
-
-    this.removeMediumHandler = medium => () => {
-      this.props.onRemoveMedium(medium)
     }
 
     this.submitForm = e => {
@@ -99,12 +69,11 @@ class Editor extends React.Component {
         title: this.props.title,
         description: this.props.description,
         body: this.props.body,
-        category: this.props.category,
+        medium: this.props.medium,
         shareable: this.props.shareable,
         allow_comments: this.props.allow_comments,
         purchasable: this.props.purchasable,
         price: this.props.price,
-        mediumList: this.props.mediumList,
         tagList: this.props.tagList,
       }
 
@@ -135,14 +104,9 @@ class Editor extends React.Component {
     this.props.onLoad(null)
   }
 
-  componentWillUnmount() {
-    this.props.onUnload()
-  }
+  componentWillUnmount() { this.props.onUnload() }
 
   render() {
-
-    console.log(this.props)
-
     return (
       <div className="editor-page">
 
@@ -150,23 +114,32 @@ class Editor extends React.Component {
           <div className="row">
             <div className="col-md-10 offset-md-1 col-xs-12">
 
-              {this.props.category === '' ? null : (
+              {this.props.medium === '' ? null : (
                 <Uploader
                   title={this.props.title}
-                  category={this.props.category} />
+                  medium={this.props.medium} />
               )}
 
               <form>
 
                 <fieldset className="form-group">
-                  {/* <select value={this.props.category}
-                    onChange={this.changeCategory}>
-                    <option value="">Category</option>
-                    <option value="paint">Paint</option>
-                    <option value="code">Code</option>
-                    <option value="film">Film</option>
-                    <option value="food">Food</option>
-                  </select> */}
+
+                  <select
+                    className='select'
+                    onChange={this.changeMedium}>
+                    {Mediums.map(medium => {
+                      return (
+                        <option
+                          key={medium}
+                          value={medium}
+                          className='select-option'>
+                          {medium}
+                        </option>
+                      )
+                    })}
+
+                  </select>
+
                 </fieldset>
 
                 <fieldset className="form-group">
@@ -237,28 +210,6 @@ class Editor extends React.Component {
                       onChange={this.changePrice} />
                   </fieldset>
                 ) : null} */}
-
-                <fieldset className="form-group">
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="mediumList"
-                    placeholder="Enter mediums"
-                    value={this.props.mediumInput}
-                    onChange={this.changeMediumInput}
-                    onKeyUp={this.watchForEnter} />
-                  <div className="tag-list">
-                    {(this.props.mediumList || []).map(medium => {
-                      return (
-                        <span className="tag-default tag-pill" key={medium}>
-                          <i className="ion-close-round"
-                            onClick={this.removeMediumHandler(medium)} />
-                          {medium}
-                        </span>
-                      )
-                    })}
-                  </div>
-                </fieldset>
 
                 <fieldset className="form-group">
                   <input

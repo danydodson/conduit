@@ -28,7 +28,7 @@ const LoggedInView = props => {
       <ul className="nav navbar-nav pull-xs-right">
         <li className="nav-item">
           <Link to="/" className="nav-link">
-            Home
+            {'Home'}
           </Link>
         </li>
         <li className="nav-item">
@@ -67,17 +67,17 @@ const LoggedInView = props => {
 class Header extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-light">
-        <div className="container">
-          <AppName
-            appName={this.props.appName} />
-          <LoggedOutView
-            currentUser={this.props.currentUser} />
-          <LoggedInView
-            currentUser={this.props.currentUser}
-            onClickLogout={this.props.onClickLogout} />
-        </div>
-      </nav>
+      <header className="navbar navbar-light">
+
+        <AppName
+          appName={this.props.appName} />
+        <LoggedOutView
+          currentUser={this.props.currentUser} />
+        <LoggedInView
+          currentUser={this.props.currentUser}
+          onClickLogout={this.props.onClickLogout} />
+          
+      </header>
     )
   }
 }

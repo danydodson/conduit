@@ -3,8 +3,6 @@ import {
   EDITOR_FORM_LOADED,
   EDITOR_UPDATE_FIELD,
   EDITOR_UPDATE_CHECKBOX,
-  EDITOR_ADD_MEDIUM,
-  EDITOR_REMOVE_MEDIUM,
   EDITOR_ADD_TAG,
   EDITOR_REMOVE_TAG,
   EDITOR_POST_SUBMITTED,
@@ -22,9 +20,7 @@ export default (state = {}, action) => {
         title: action.payload ? action.payload.post.title : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
-        mediumInput: '',
-        mediumList: action.payload ? action.payload.post.mediumList : [],
-        category: action.payload ? action.payload.post.category : '',
+        medium: action.payload ? action.payload.post.medium : '',
         shareable: action.payload ? true : false,
         allow_comments: action.payload ? true : false,
         purchasable: action.payload ? true : false,
@@ -47,19 +43,6 @@ export default (state = {}, action) => {
         return { ...state, inProgress: true }
       }
       break
-
-    case EDITOR_ADD_MEDIUM:
-      return Object.assign({}, state,
-        {
-          mediumList: state.mediumList.concat([state.mediumInput]),
-          mediumInput: ''
-        }
-      )
-
-    case EDITOR_REMOVE_MEDIUM:
-      return Object.assign({}, state,
-        { mediumList: state.mediumList.filter(medium => medium !== action.medium), }
-      )
 
     case EDITOR_ADD_TAG:
       return Object.assign({}, state,

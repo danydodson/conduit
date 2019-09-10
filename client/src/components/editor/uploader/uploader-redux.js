@@ -85,17 +85,17 @@ class Uploader extends Component {
   handleUploads(files) {
     for (let file of files) {
       const uid = this.uid++
-      const title = this.props.title
-      const category = this.props.category
+      const title = this.props.title || 'media'
+      const medium = this.props.medium
       const name = `${title}-${this.getRandomInt(999)}`
       request.post(post)
         .field('upload_preset', preset)
         .field('file', file)
         .field('name', file)
-        .field('public_id', `${category}/${name}`)
+        .field('public_id', `${medium}/${name}`)
         .field('multiple', true)
-        .field('tags', [`${category},${title}`])
-        .field('context', `title=${title}|category=${category}`)
+        .field('tags', [`${medium},${title}`])
+        .field('context', `title=${title}|medium=${medium}`)
         .on('progress', prog => this.onProgress(uid, name, prog))
         .end((err, res) => this.onUploaded(uid, name, res))
     }

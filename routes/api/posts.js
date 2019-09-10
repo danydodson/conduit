@@ -175,8 +175,8 @@ router.put('/:post', auth.required, (req, res, next) => {
       if (typeof req.body.post.body !== 'undefined') {
         req.post.body = req.body.post.body
       }
-      if (typeof req.body.post.category !== 'undefined') {
-        req.post.category = req.body.post.category
+      if (typeof req.body.post.medium !== 'undefined') {
+        req.post.medium = req.body.post.medium
       }
       if (typeof req.body.post.shareable !== 'undefined') {
         req.post.shareable = req.body.post.shareable
@@ -189,9 +189,6 @@ router.put('/:post', auth.required, (req, res, next) => {
       }
       if (typeof req.body.post.price !== 'undefined') {
         req.post.price = req.body.post.price
-      }
-      if (typeof req.body.post.mediums !== 'undefined') {
-        req.post.mediums = req.body.post.mediums
       }
       if (typeof req.body.post.tagList !== 'undefined') {
         req.post.tagList = req.body.post.tagList

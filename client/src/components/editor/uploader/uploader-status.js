@@ -41,7 +41,6 @@ class UploaderStatus extends Component {
 
     return (
       <div className='container'>
-
         {data && data.delete_token && (
           <button
             className="delete-image"
@@ -52,7 +51,6 @@ class UploaderStatus extends Component {
               src={data.secure_url} />}
           </button>
         )}
-
         <div className="status">
           {!response &&
             <div>
@@ -62,14 +60,8 @@ class UploaderStatus extends Component {
                 className="progress progress-bar"
                 style={{ width: percent + '%' }}>
               </div>
-            </div>
-          }
+            </div>}
         </div>
-
-        <div>
-
-        </div>
-
       </div>
     )
   }
