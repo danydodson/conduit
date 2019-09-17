@@ -45,3 +45,5 @@ node_modules
 /config/dev.js
 /logs/access.log
 /client/.env
+/assets/samples
+/assets/users
