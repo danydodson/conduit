@@ -24,7 +24,7 @@ mongoose.connect(DBURI, {
   .catch(err => console.error(chalk.red(err)))
 
 // const mongooselogs = require('./logs/mongoose')
-// mongoose.set('debug', mongooselogs)
+// Smongoose.set('debug', mongooselogs)
 
 app.use(cors())
 app.use(logger())
