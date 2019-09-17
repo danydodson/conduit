@@ -13,19 +13,21 @@ const NOT_FAVORITED_CLASS = 'post-btn-faved'
 
 const mapDispatchToProps = dispatch => ({
   favorite: slug => dispatch({
-    type: POST_ITEM_FAVORITED, payload: agent.Posts.favorite(slug)
+    type: POST_ITEM_FAVORITED,
+    payload: agent.Posts.favorite(slug)
   }),
   unfavorite: slug => dispatch({
-    type: POST_ITEM_UNFAVORITED, payload: agent.Posts.unfavorite(slug)
+    type: POST_ITEM_UNFAVORITED,
+    payload: agent.Posts.unfavorite(slug)
   }),
 })
 
 const PostPreview = props => {
 
   const post = props.post
-  const favoriteButtonClass = post.favorited
-    ? FAVORITED_CLASS
-    : NOT_FAVORITED_CLASS
+  const favoriteButtonClass = post.favorited ?
+    FAVORITED_CLASS :
+    NOT_FAVORITED_CLASS
 
   const handleClick = ev => {
     ev.preventDefault()
@@ -63,8 +65,8 @@ const PostPreview = props => {
         className='post-author-img-link'>
         <img
           src={post.author.image}
-          alt={post.author.username}
-          className='post-author-img' />
+          className='post-author-img'
+          alt={post.author.username} />
       </Link>
 
       <Link

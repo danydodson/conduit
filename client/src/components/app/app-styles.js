@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle `
   *, 
   *::before, 
   *::after {
@@ -155,8 +155,9 @@ const GlobalStyle = createGlobalStyle`
 
   img.post-preview-img {
     width: 100%;
-    height: 100%;
-    /* z-index: 10; */
+    height: auto;
+    display: block;
+    max-height: 100%;
   }
   
   img.post-author-img {
