@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const AppName = ({ appName }) => {
   return (
-    <Link to="/" className="navbar-brand">
+    <Link to="/" className='nav-item'>
       {appName.toLowerCase()}
     </Link>
   )

@@ -3,6 +3,7 @@ module.exports = [
   'Architecture',
   'Carpentry',
   'Ceramics',
+  'Code',
   'Collage',
   'Conceptual',
   'Decorative',

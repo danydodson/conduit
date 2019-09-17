@@ -8,8 +8,8 @@ import {
   POST_ITEM_UNFAVORITED
 } from '../../../constants'
 
-const FAVORITED_CLASS = 'btn btn-sm btn-primary'
-const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'
+const FAVORITED_CLASS = 'post-btn-faved is-faved'
+const NOT_FAVORITED_CLASS = 'post-btn-faved'
 
 const mapDispatchToProps = dispatch => ({
   favorite: slug => dispatch({
@@ -36,51 +36,53 @@ const PostPreview = props => {
   }
 
   return (
-    <div className="article-preview">
-      <div className="article-meta">
-        <Link to={`/@${post.author.username}`}>
-          <img src={post.author.image} alt={post.author.username} />
-        </Link>
-        <div className="info">
-          <Link className="author" to={`/@${post.author.username}`}>
-            {post.author.username}
-          </Link>
-          <span className="date">
-            {new Date(post.createdAt).toDateString()}
-          </span>
-        </div>
-        <div className="pull-xs-right">
-          <button className={favoriteButtonClass} onClick={handleClick}>
-            <i className="ion-heart"></i> {post.favoritesCount}
-          </button>
-        </div>
-      </div>
-      <Link to={`/post/${post.slug}`} className="preview-link">
+    <li className='post-preview'>
 
-        <h1>{post.title}</h1>
-        <p>{post.description}</p>
-        <span>Read more...</span>
-
+      <Link
+        to={`/post/${post.slug}`}
+        className='post-preview-link'>
+        {/* <h1>{post.title}</h1> */}
+        {/* <p>{post.description}</p> */}
+        {/* <span>Read more...</span>  */}
         {post.uploads.map((upload, fileName) => {
           return (
             <img
-              width='50'
-              key={fileName}
+              className='post-preview-img'
               src={upload.response.body.secure_url}
-              alt={upload.fileName} />)
+              alt={upload.fileName}
+              key={fileName}
+              width='100%'
+              height='100%' />
+          )
         })}
 
-        <ul className="tag-list">
-          {post.tagList.map(tag => {
-            return (
-              <li className="tag-default tag-pill tag-outline" key={tag}>
-                {tag}
-              </li>
-            )
-          })}
-        </ul>
       </Link>
-    </div>
+
+      <Link to={`/@${post.author.username}`} className='post-author-link'>
+        <img
+          src={post.author.image}
+          alt={post.author.username}
+          className='post-author-img' />
+      </Link>
+
+      <Link to={`/@${post.author.username}`} className="post-author" >
+        {post.author.username}
+      </Link>
+
+      <button onClick={handleClick} className={favoriteButtonClass}>
+        <i className="ion-heart"></i> {post.favoritesCount}
+      </button>
+
+
+
+      {/* <ul className='post-tag-list'>
+        {post.tagList.map(tag => {
+          return <li className='' key={tag}>{tag}</li>
+        })}
+      </ul> */}
+
+
+    </li>
   )
 }
 

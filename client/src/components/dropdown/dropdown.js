@@ -44,7 +44,7 @@ class Dropdown extends Component {
   render() {
     const { list } = this.props
     const { listOpen, headerTitle } = this.state
-    console.log(this.state)
+
     return (
       <div className="dd-wrapper">
         <div className="dd-header" onClick={() => this.toggleList()}>
@@ -73,5 +73,4 @@ class Dropdown extends Component {
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Dropdown)
 export default Dropdown

@@ -21,6 +21,7 @@
     "react-dropzone": "^10.1.7",
     "react-fontawesome": "^1.6.1",
     "react-helmet": "^5.2.1",
+    "react-masonry-component": "^6.2.1",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.4",

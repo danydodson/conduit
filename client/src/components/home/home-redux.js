@@ -47,24 +47,21 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="home-page">
+      <main className="home-page">
+
         <Banner
           token={this.props.token}
           appName={this.props.appName} />
-        <div className="container page">
-          <div className="row">
-            <Posts />
-            <div className="col-md-3">
-              <div className="sidebar">
-                <p>Popular Tags</p>
-                <Tags
-                  tags={this.props.tags}
-                  onClickTag={this.props.onClickTag} />
-              </div>
-            </div>
-          </div>
+
+        <Tags
+          tags={this.props.tags}
+          onClickTag={this.props.onClickTag} />
+
+        <div className='main'>
+          <Posts />
         </div>
-      </div>
+        
+      </main>
     )
   }
 }

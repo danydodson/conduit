@@ -1,19 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import AppName from './title'
+import Searchbox from '../searchbox'
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
     return (
-      <ul className="nav navbar-nav pull-xs-right">
-        <li className="nav-item">
+      <ul className='nav-list'>
+        <li className='nav-item'>
           <Link to="/login" className="nav-link">
-            Sign in
+            {`Sign in`}
           </Link>
         </li>
-        <li className="nav-item">
+        <li className='nav-item'>
           <Link to="/register" className="nav-link">
-            Sign up
+            {`Sign up`}
           </Link>
         </li>
       </ul>
@@ -25,36 +26,39 @@ const LoggedOutView = props => {
 const LoggedInView = props => {
   if (props.currentUser) {
     return (
-      <ul className="nav navbar-nav pull-xs-right">
+      <ul className='nav-list'>
         <li className="nav-item">
           <Link to="/" className="nav-link">
             {'Home'}
           </Link>
         </li>
-        <li className="nav-item">
+        <li className='nav-item'>
           <Link to="/editor" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;New Post
+            {`Collections`}
           </Link>
         </li>
-        <li className="nav-item">
+        <li className='nav-item'>
+          <Link to="/editor" className="nav-link">
+            {`Create Post`}
+          </Link>
+        </li>
+        <li className='nav-item'>
           <Link to="/settings" className="nav-link">
-            <i className="ion-gear-a"></i>&nbsp;Settings
+            <i className="ion-gear-a"></i>
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className='nav-item'>
           <button onClick={props.onClickLogout} className="nav-link">
-            <i className="ion-log-out"></i>&nbsp;Logout
+            <i className="ion-log-out"></i>&nbsp;{'Logout'}
           </button>
-        </li>
-        <li className="nav-item">
+        </li> */}
+        <li className='nav-item'>
           <Link
             to={`/@${props.currentUser.username}`}
             className="nav-link">
-            <img
+            <img className='user-img'
               src={props.currentUser.image}
-              className="user-pic"
               alt={props.currentUser.username} />
-            {props.currentUser.username}
           </Link>
         </li>
       </ul>
@@ -65,18 +69,20 @@ const LoggedInView = props => {
 }
 
 class Header extends React.Component {
+
   render() {
     return (
-      <header className="navbar navbar-light">
-
-        <AppName
-          appName={this.props.appName} />
-        <LoggedOutView
-          currentUser={this.props.currentUser} />
-        <LoggedInView
-          currentUser={this.props.currentUser}
-          onClickLogout={this.props.onClickLogout} />
-          
+      <header className='header'>
+        <nav>
+          <AppName
+            appName={this.props.appName} />
+          <Searchbox />
+          <LoggedOutView
+            currentUser={this.props.currentUser} />
+          <LoggedInView
+            currentUser={this.props.currentUser}
+            onClickLogout={this.props.onClickLogout} />
+        </nav>
       </header>
     )
   }

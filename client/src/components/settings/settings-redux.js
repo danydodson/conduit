@@ -81,7 +81,7 @@ class SettingsForm extends React.Component {
               onDrop={this.onDrop}
               onDragOver={this.onDragOver}
               onDragLeave={this.onDragLeave}
-              className={hover ? "drop-container hover" : "drop-container"}>
+              className={hover ? "dropzone hover" : "dropzone"}>
               <input
                 type="file"
                 id="fileupload"

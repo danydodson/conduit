@@ -3,9 +3,7 @@ import agent from '../../../middleware/middle-agent'
 import Loading from '../../loading'
 
 const Tags = props => {
-
   const tags = props.tags
-
   if (tags) {
     return (
       <div className="tag-list">

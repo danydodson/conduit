@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Uploader from './uploader/uploader-redux'
+import Dropzone from './dropzone/dropzone-redux'
 import agent from '../../middleware/middle-agent'
 import Mediums from './mediums'
 
@@ -115,7 +115,7 @@ class Editor extends React.Component {
             <div className="col-md-10 offset-md-1 col-xs-12">
 
               {this.props.medium === '' ? null : (
-                <Uploader
+                <Dropzone
                   title={this.props.title}
                   medium={this.props.medium} />
               )}

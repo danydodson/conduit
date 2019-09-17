@@ -26,28 +26,26 @@ const ListPagination = props => {
   }
 
   return (
-    <nav>
-      <ul className="pagination">
-        {
-          range.map(v => {
-            const isCurrent = v === props.currentPage
-            const onClick = ev => {
-              ev.preventDefault()
-              setPage(v)
-              window.scrollTo(0, 0)
-            }
-            return (
-              <li
-                className={isCurrent ? 'page-item active' : 'page-item'}
-                onClick={onClick}
-                key={v.toString()}>
-                <button className="page-link" href="">{v + 1}</button>
-              </li>
-            )
-          })
+
+    <ul className="pagination">
+      {range.map(v => {
+        const isCurrent = v === props.currentPage
+        const onClick = ev => {
+          ev.preventDefault()
+          setPage(v)
+          window.scrollTo(0, 0)
         }
-      </ul>
-    </nav>
+        return (
+          <li
+            className={isCurrent ? 'page-item active' : 'page-item'}
+            onClick={onClick}
+            key={v.toString()}>
+            <button className="page-link" href="">{v + 1}</button>
+          </li>
+        )
+      })}
+    </ul>
+
   )
 }
 

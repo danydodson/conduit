@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPLOADER_DELETE_UPLOAD, publicId }),
 })
 
-class UploaderStatus extends Component {
+class DropzoneStatus extends Component {
 
   deleteUpload() {
     request
@@ -67,4 +67,4 @@ class UploaderStatus extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploaderStatus)
+export default connect(mapStateToProps, mapDispatchToProps)(DropzoneStatus)

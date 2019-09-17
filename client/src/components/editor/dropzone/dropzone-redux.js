@@ -2,7 +2,7 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux'
 import Loading from '../../loading'
-import UploaderStatus from './uploader-status'
+import DropzoneStatus from './dropzone-status'
 import request from 'superagent'
 
 import {
@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPLOADER_FORM_UNLOADED }),
 })
 
-class Uploader extends Component {
+class Dropzone extends Component {
   constructor(props) {
     super(props)
     this.uid = 1
@@ -106,41 +106,40 @@ class Uploader extends Component {
     const { loading } = this.props
 
     return (
-      <div>
 
-        <div
-          onDrop={this.onDrop}
-          onDragOver={this.onDragOver}
-          onDragLeave={this.onDragLeave}
-          className={hover ? "drop-container hover" : "drop-container"}>
 
-          <input
-            type="file"
-            id="fileupload"
-            accept="image/*"
-            multiple="multiple"
-            ref={fileInputEl => this.fileInputEl = fileInputEl}
-            onChange={() => this.handleUploads(this.fileInputEl.files)} />
+      <div
+        onDrop={this.onDrop}
+        onDragOver={this.onDragOver}
+        onDragLeave={this.onDragLeave}
+        className={hover ? "dropzone hover" : "dropzone"}>
 
-          <div className='container'>
+        <input
+          type="file"
+          id="fileupload"
+          accept="image/*"
+          multiple="multiple"
+          ref={fileInputEl => this.fileInputEl = fileInputEl}
+          onChange={() => this.handleUploads(this.fileInputEl.files)} />
 
-            <div className="drag-files">
-              {loading ? <Loading /> : "Drag files to upload"}
-            </div>
+        <div className='container'>
 
-            <div className="response_wrap">
-              {this.props.uploaded.map((upload, index) => {
-                return (<UploaderStatus key={index} upload={upload} />)
-              })}
-            </div>
-
+          <div className="drag-files">
+            {loading ? <Loading /> : "Drag files to upload"}
           </div>
+
+          <div className="response_wrap">
+            {this.props.uploaded.map((upload, index) => {
+              return (<DropzoneStatus key={index} upload={upload} />)
+            })}
+          </div>
+
         </div>
-
-
       </div>
+
+
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Uploader)
+export default connect(mapStateToProps, mapDispatchToProps)(Dropzone)

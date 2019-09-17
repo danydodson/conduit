@@ -61,7 +61,7 @@ class App extends React.Component {
   render() {
     if (this.props.appLoaded) {
       return (
-        <div className='App'>
+        <div className='app'>
           <CloudinaryContext
             cloudName={process.env.REACT_APP_CL_NAME}
             uploadPreset={process.env.REACT_APP_CL_PRESET}>
@@ -86,7 +86,7 @@ class App extends React.Component {
       )
     }
     return (
-      <div className='App'>
+      <div className='app'>
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
