@@ -4,12 +4,11 @@ const GlobalStyle = createGlobalStyle`
   *, 
   *::before, 
   *::after {
-    box-sizing: inherit;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
     text-rendering: optimizeLegibility;
   }
 
@@ -41,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     text-decoration: none;
     background: transparent;
-    
+    cursor: pointer;
   }
   
   a {
@@ -122,29 +121,42 @@ const GlobalStyle = createGlobalStyle`
   li.post-preview {
     width: 30%;
     margin: 1rem;
-    position: relative;
-    /* background-color: black; */
 
-    :hover>a.post-author {
-      opacity: 1;
+    :hover>a.post-preview-link>figure.post-preview-tint:before { 
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: .6;
+      content: "";
+      position: absolute;
+      background: rgba(0,0,0);
     }
     
-    :hover>a.post-preview-link {
-      opacity: .5;
-    }
-
-    :hover>a.post-author-link { 
-      opacity: 1; 
-    }
+    :hover>a.post-author-img-link>img.post-author-img { opacity: 1; }
     
-    :hover>button.post-btn-faved { 
-      opacity: 1; 
-    }
-  
+    :hover>a.post-author-username {  opacity: 1; }
+    
+    :hover>button.post-btn-faved { opacity: 1; }
   }
   
   a.post-preview-link {
-    transition: .1s
+    transition: .1s 
+  }
+
+  figure.post-preview-tint {
+    opacity: 1;
+    position: relative;
+    background: rgba(0,0,0,0);
+    transition: .3s;
+    /* z-index: 1; */
+  }
+
+
+  img.post-preview-img {
+    width: 100%;
+    height: 100%;
+    /* z-index: 10; */
   }
   
   img.post-author-img {
@@ -154,39 +166,51 @@ const GlobalStyle = createGlobalStyle`
     height: 30px;
     position: absolute;
     border-radius: 100px;
-    transition: .1s
+    transition: .1s;
+    /* z-index: 10; */
   }
   
-  a.post-author-link {
+  a.post-author-username {
     opacity: 0;
-    bottom: 10%;
     left: 60%;
+    bottom: 10%;
+    color: #ffffff;
     position: absolute;
-    transition: .1s
+    transition: .1s;
+    /* z-index: 10; */
   }
   
   button.post-btn-faved {
     opacity: 0;
     left: 70%;
     bottom: 30px;
+    color: #ffffff;
     position: absolute;
     transition: .1s;
     cursor: pointer;
+    /* z-index: 20; */
   }
   
-  button.is-faved {
-    color: red;
+  button.is-faved { 
+    color: red; 
+    /* z-index: 20; */
   }
   
   /* ul.post-tag-list {
     position: absolute;
   } */
 
-  /** Dropzone ------------------------------------------------*/
+  /** Editor Form Page -------------------------------------------------*/
+
+  .editor-form {
+    padding-top: 60px;
+  }
+
+  /** Dropzone ------------------------*/
 
   .dropzone {
     width: 100%;
-    height: 20rem;
+    height: 30rem;
     display: flex;
     color: #8a8a8a;
     font-size: 18px;
@@ -201,6 +225,19 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       cursor: default;
     }
+  }
+
+  .dropzone.hover {
+    transform: scale(0.95);
+  }
+  
+  .dropzone input {
+    display: none;
+  }
+  
+  .dropzone svg {
+    fill: #8a8a8a;
+    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
 
   .preview {
@@ -220,20 +257,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-wrap: wrap;
   }
-  
-  .dropzone.hover {
-    transform: scale(0.95);
-  }
-  
-  .dropzone input {
-    display: none;
-  }
-  
-  .dropzone svg {
-    fill: #8a8a8a;
-    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  }
-
+    
   .photos {
     display: flex;
     flex-wrap: wrap;

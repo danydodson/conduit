@@ -7,12 +7,10 @@ const Posts = props => {
 
   if (!props.posts) {
     return <div className='post-preview'>Loading...</div>
-
   }
 
   if (props.posts.length === 0) {
     return <div className='post-preview'>No posts are here... yet.</div>
-
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import Dropzone from './dropzone/dropzone-redux'
 import agent from '../../middleware/middle-agent'
@@ -108,146 +108,133 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div className="editor-page">
+      <Fragment>
 
-        <div className="container page">
-          <div className="row">
-            <div className="col-md-10 offset-md-1 col-xs-12">
+        {this.props.medium === '' ? null : (
+          <Dropzone
+            title={this.props.title}
+            medium={this.props.medium} />
+        )}
 
-              {this.props.medium === '' ? null : (
-                <Dropzone
-                  title={this.props.title}
-                  medium={this.props.medium} />
-              )}
+        <form className='editor-form'>
+          <fieldset className='form-group'>
+            <select
+              className='select'
+              onChange={this.changeMedium}>
+              {Mediums.map(medium => {
+                return (
+                  <option
+                    key={medium}
+                    value={medium}
+                    className='select-option'>
+                    {medium}
+                  </option>
+                )
+              })}
+            </select>
+          </fieldset>
 
-              <form>
+          <fieldset className='form-group'>
+            <input
+              className='form-control form-control-lg'
+              type='text'
+              placeholder='Post Title'
+              value={this.props.title}
+              onChange={this.changeTitle} />
+          </fieldset>
 
-                <fieldset className="form-group">
+          <fieldset className='form-group'>
+            <input
+              className='form-control'
+              type='text'
+              placeholder="What's this post about?"
+              value={this.props.description}
+              onChange={this.changeDescription} />
+          </fieldset>
 
-                  <select
-                    className='select'
-                    onChange={this.changeMedium}>
-                    {Mediums.map(medium => {
-                      return (
-                        <option
-                          key={medium}
-                          value={medium}
-                          className='select-option'>
-                          {medium}
-                        </option>
-                      )
-                    })}
+          <fieldset className='form-group'>
+            <textarea
+              className='form-control'
+              rows='8'
+              placeholder='Write your post (in markdown)'
+              value={this.props.body}
+              onChange={this.changeBody}>
+            </textarea>
+          </fieldset>
 
-                  </select>
-
-                </fieldset>
-
-                <fieldset className="form-group">
-                  <input
-                    className="form-control form-control-lg"
-                    type="text"
-                    placeholder="Post Title"
-                    value={this.props.title}
-                    onChange={this.changeTitle} />
-                </fieldset>
-
-                <fieldset className="form-group">
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="What's this post about?"
-                    value={this.props.description}
-                    onChange={this.changeDescription} />
-                </fieldset>
-
-                <fieldset className="form-group">
-                  <textarea
-                    className="form-control"
-                    rows="8"
-                    placeholder="Write your post (in markdown)"
-                    value={this.props.body}
-                    onChange={this.changeBody}>
-                  </textarea>
-                </fieldset>
-
-                {/* <fieldset className="form-group">
+          {/* <fieldset className='form-group'>
                   shareable
-                    <input
-                    id="shareable"
-                    type="checkbox"
-                    placeholder='shareable'
-                    value={this.props.shareable}
-                    onChange={this.changeShareable} />
-                </fieldset>
-
-                <fieldset className="form-group">
-                  allow_comments
-                    <input
-                    id="allow_comments"
-                    type="checkbox"
-                    placeholder='allow_comments'
-                    value={this.props.allow_comments}
-                    onChange={this.changeAllowComments} />
-                </fieldset>
-
-                <fieldset className="form-group">
-                  purchasable
-                    <input
-                    id="purchasable"
-                    type="checkbox"
-                    placeholder='purchasable'
-                    value={this.props.purchasable}
-                    onChange={this.changePurchasable} />
-                </fieldset>
-
-                {this.props.purchasable ? (
-                  <fieldset className="form-group">
-                    <input
-                      id="price"
-                      type="text"
-                      placeholder='price'
-                      value={this.props.price}
-                      onChange={this.changePrice} />
-                  </fieldset>
-                ) : null} */}
-
-                <fieldset className="form-group">
                   <input
-                    className="form-control"
-                    type="text"
-                    id="tagList"
-                    placeholder="Enter tags"
-                    value={this.props.tagInput}
-                    onChange={this.changeTagInput}
-                    onKeyUp={this.watchForEnter} />
-                  <div className="tag-list">
-                    {(this.props.tagList || []).map(tag => {
-                      return (
-                        <span className="tag-default tag-pill" key={tag}>
-                          <i className="ion-close-round"
-                            onClick={this.removeTagHandler(tag)} />
-                          {tag}
-                        </span>
-                      )
-                    })}
-                  </div>
-                </fieldset>
+                  id='shareable'
+                  type='checkbox'
+                  placeholder='shareable'
+                  value={this.props.shareable}
+                  onChange={this.changeShareable} />
+                  </fieldset>
+                  
+                  <fieldset className='form-group'>
+                  allow_comments
+                  <input
+                  id='allow_comments'
+                  type='checkbox'
+                  placeholder='allow_comments'
+                  value={this.props.allow_comments}
+                  onChange={this.changeAllowComments} />
+                  </fieldset>
+                  
+                  <fieldset className='form-group'>
+                  purchasable
+                  <input
+                  id='purchasable'
+                  type='checkbox'
+                  placeholder='purchasable'
+                  value={this.props.purchasable}
+                  onChange={this.changePurchasable} />
+                  </fieldset>
+                  
+                  {this.props.purchasable ? (
+                    <fieldset className='form-group'>
+                    <input
+                    id='price'
+                    type='text'
+                    placeholder='price'
+                    value={this.props.price}
+                    onChange={this.changePrice} />
+                    </fieldset>
+                  ) : null} */}
 
-                <button
-                  className="btn btn-lg pull-xs-right btn-primary"
-                  type="button"
-                  disabled={this.props.inProgress}
-                  onClick={this.submitForm}>
-                  {'Publish Post'}
-                </button>
-
-
-
-              </form>
+          <fieldset className='form-group'>
+            <input
+              className='form-control'
+              type='text'
+              id='tagList'
+              placeholder='Enter tags'
+              value={this.props.tagInput}
+              onChange={this.changeTagInput}
+              onKeyUp={this.watchForEnter} />
+            <div className='tag-list'>
+              {(this.props.tagList || []).map(tag => {
+                return (
+                  <span className='tag-default tag-pill' key={tag}>
+                    <i className='ion-close-round'
+                      onClick={this.removeTagHandler(tag)} />
+                    {tag}
+                  </span>
+                )
+              })}
             </div>
-          </div>
-        </div>
-      </div>
+          </fieldset>
+
+          <button
+            className='btn btn-lg pull-xs-right btn-primary'
+            type='button'
+            disabled={this.props.inProgress}
+            onClick={this.submitForm}>
+            {'Publish Post'}
+          </button>
+        </form>
+
+      </Fragment>
     )
   }
 }

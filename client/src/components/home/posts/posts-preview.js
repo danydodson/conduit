@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const PostPreview = props => {
+
   const post = props.post
   const favoriteButtonClass = post.favorited
     ? FAVORITED_CLASS
@@ -46,41 +47,37 @@ const PostPreview = props => {
         {/* <span>Read more...</span>  */}
         {post.uploads.map((upload, fileName) => {
           return (
-            <img
-              className='post-preview-img'
-              src={upload.response.body.secure_url}
-              alt={upload.fileName}
-              key={fileName}
-              width='100%'
-              height='100%' />
+            <figure class='post-preview-tint'>
+              <img
+                src={upload.response.body.secure_url}
+                className='post-preview-img'
+                alt={upload.fileName}
+                key={fileName} />
+            </figure>
           )
         })}
-
       </Link>
 
-      <Link to={`/@${post.author.username}`} className='post-author-link'>
+      <Link
+        to={`/@${post.author.username}`}
+        className='post-author-img-link'>
         <img
           src={post.author.image}
           alt={post.author.username}
           className='post-author-img' />
       </Link>
 
-      <Link to={`/@${post.author.username}`} className="post-author" >
+      <Link
+        to={`/@${post.author.username}`}
+        className="post-author-username" >
         {post.author.username}
       </Link>
 
-      <button onClick={handleClick} className={favoriteButtonClass}>
+      <button
+        onClick={handleClick}
+        className={favoriteButtonClass}>
         <i className="ion-heart"></i> {post.favoritesCount}
       </button>
-
-
-
-      {/* <ul className='post-tag-list'>
-        {post.tagList.map(tag => {
-          return <li className='' key={tag}>{tag}</li>
-        })}
-      </ul> */}
-
 
     </li>
   )

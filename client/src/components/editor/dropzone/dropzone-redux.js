@@ -104,40 +104,28 @@ class Dropzone extends Component {
   render() {
     const { hover } = this.state
     const { loading } = this.props
-
     return (
-
-
       <div
         onDrop={this.onDrop}
         onDragOver={this.onDragOver}
         onDragLeave={this.onDragLeave}
-        className={hover ? "dropzone hover" : "dropzone"}>
-
+        className={hover ? 'dropzone hover' : 'dropzone'}>
         <input
-          type="file"
-          id="fileupload"
-          accept="image/*"
-          multiple="multiple"
+          type='file'
+          id='fileupload'
+          accept='image/*'
+          multiple='multiple'
           ref={fileInputEl => this.fileInputEl = fileInputEl}
           onChange={() => this.handleUploads(this.fileInputEl.files)} />
-
-        <div className='container'>
-
-          <div className="drag-files">
-            {loading ? <Loading /> : "Drag files to upload"}
-          </div>
-
-          <div className="response_wrap">
-            {this.props.uploaded.map((upload, index) => {
-              return (<DropzoneStatus key={index} upload={upload} />)
-            })}
-          </div>
-
+        <div className='drag-files'>
+          {loading ? <Loading /> : 'Drag files to upload'}
+        </div>
+        <div className='response_wrap'>
+          {this.props.uploaded.map((upload, index) => {
+            return (<DropzoneStatus key={index} upload={upload} />)
+          })}
         </div>
       </div>
-
-
     )
   }
 }
