@@ -75,6 +75,7 @@ class Editor extends React.Component {
         purchasable: this.props.purchasable,
         price: this.props.price,
         tagList: this.props.tagList,
+        author_name: this.props.common.currentUser.username,
       }
 
       const slug = { slug: this.props.postSlug }
@@ -163,45 +164,45 @@ class Editor extends React.Component {
           </fieldset>
 
           {/* <fieldset className='form-group'>
-                  shareable
+            shareable
                   <input
-                  id='shareable'
-                  type='checkbox'
-                  placeholder='shareable'
-                  value={this.props.shareable}
-                  onChange={this.changeShareable} />
-                  </fieldset>
-                  
-                  <fieldset className='form-group'>
-                  allow_comments
+              id='shareable'
+              type='checkbox'
+              placeholder='shareable'
+              value={this.props.shareable}
+              onChange={this.changeShareable} />
+          </fieldset>
+
+          <fieldset className='form-group'>
+            allow_comments
                   <input
-                  id='allow_comments'
-                  type='checkbox'
-                  placeholder='allow_comments'
-                  value={this.props.allow_comments}
-                  onChange={this.changeAllowComments} />
-                  </fieldset>
-                  
-                  <fieldset className='form-group'>
-                  purchasable
+              id='allow_comments'
+              type='checkbox'
+              placeholder='allow_comments'
+              value={this.props.allow_comments}
+              onChange={this.changeAllowComments} />
+          </fieldset>
+
+          <fieldset className='form-group'>
+            purchasable
                   <input
-                  id='purchasable'
-                  type='checkbox'
-                  placeholder='purchasable'
-                  value={this.props.purchasable}
-                  onChange={this.changePurchasable} />
-                  </fieldset>
-                  
-                  {this.props.purchasable ? (
-                    <fieldset className='form-group'>
-                    <input
-                    id='price'
-                    type='text'
-                    placeholder='price'
-                    value={this.props.price}
-                    onChange={this.changePrice} />
-                    </fieldset>
-                  ) : null} */}
+              id='purchasable'
+              type='checkbox'
+              placeholder='purchasable'
+              value={this.props.purchasable}
+              onChange={this.changePurchasable} />
+          </fieldset>
+
+          {this.props.purchasable ? (
+            <fieldset className='form-group'>
+              <input
+                id='price'
+                type='text'
+                placeholder='price'
+                value={this.props.price}
+                onChange={this.changePrice} />
+            </fieldset>
+          ) : null} */}
 
           <fieldset className='form-group'>
             <input

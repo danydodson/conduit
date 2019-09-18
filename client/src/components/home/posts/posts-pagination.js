@@ -12,7 +12,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const ListPagination = props => {
-  if (props.postsCount <= 10) return null
+  // if (props.postsCount <= 10) return null
+  if (props.postsCount <= 30) return null
   const range = []
   for (let i = 0; i < Math.ceil(props.postsCount / 10); ++i) {
     range.push(i)

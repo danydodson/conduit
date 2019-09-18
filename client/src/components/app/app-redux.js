@@ -1,13 +1,12 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { CloudinaryContext } from 'cloudinary-react'
+// import { CloudinaryContext } from 'cloudinary-react'
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { store } from '../../store'
 import agent from '../../middleware/middle-agent'
 
 import Header from '../header'
-
 import Home from '../home'
 import Post from '../post'
 import Editor from '../editor'
@@ -62,27 +61,24 @@ class App extends React.Component {
     if (this.props.appLoaded) {
       return (
         <div className='app'>
-          <CloudinaryContext
-            cloudName={process.env.REACT_APP_CL_NAME}
-            uploadPreset={process.env.REACT_APP_CL_PRESET}>
-            <Header
-              appName={this.props.appName}
-              currentUser={this.props.currentUser}
-              onClickLogout={this.props.onClickLogout} />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/editor/:slug" component={Editor} />
-              <Route path="/editor" component={Editor} />
-              <Route path="/post/:id" component={Post} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/@:username/favorites" component={Favorites} />
-              <Route path="/@:username" component={Profile} />
-            </Switch>
-            <Styles />
-          </CloudinaryContext>
+          <Header
+            appName={this.props.appName}
+            currentUser={this.props.currentUser}
+            onClickLogout={this.props.onClickLogout} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/editor/:slug" component={Editor} />
+            <Route path="/editor" component={Editor} />
+            <Route path="/post/:id" component={Post} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/@:username/favorites" component={Favorites} />
+            <Route path="/@:username" component={Profile} />
+          </Switch>
+          <Styles />
         </div>
+
       )
     }
     return (

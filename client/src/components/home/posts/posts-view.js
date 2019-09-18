@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import { ViewTabs } from './posts-styles'
 import agent from '../../../middleware/middle-agent'
 import PostsFeed from './posts-feed'
+
 
 import {
   SET_VIEW_TAB
@@ -71,15 +73,17 @@ const TagFilterTab = props => {
 const MainView = props => {
   return (
     <Fragment>
-      <ul className="nav nav-pills outline-active">
+      <ViewTabs>
         <YourFeedTab
           token={props.token}
           tab={props.tab}
           onTabClick={props.onTabClick} />
-        <GlobalFeedTab tab={props.tab}
+        <GlobalFeedTab
+          tab={props.tab}
           onTabClick={props.onTabClick} />
-        <TagFilterTab tag={props.tag} />
-      </ul>
+        <TagFilterTab
+          tag={props.tag} />
+      </ViewTabs>
       <PostsFeed
         pager={props.pager}
         posts={props.posts}

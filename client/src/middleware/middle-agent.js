@@ -47,11 +47,13 @@ const omitSlug = post => Object.assign({}, post, { slug: undefined })
 
 const Posts = {
   all: page =>
-    requests.get(`/posts?${limit(10, page)}`),
+    // requests.get(`/posts?${limit(10, page)}`),
+    requests.get(`/posts?${limit(30, page)}`),
   byAuthor: (author, page) =>
     requests.get(`/posts?author=${encode(author)}&${limit(5, page)}`),
   byTag: (tag, page) =>
-    requests.get(`/posts?tag=${encode(tag)}&${limit(10, page)}`),
+    // requests.get(`/posts?tag=${encode(tag)}&${limit(10, page)}`),
+    requests.get(`/posts?tag=${encode(tag)}&${limit(30, page)}`),
   del: slug =>
     requests.del(`/posts/${slug}`),
   favorite: slug =>
@@ -59,7 +61,8 @@ const Posts = {
   favoritedBy: (author, page) =>
     requests.get(`/posts?favorited=${encode(author)}&${limit(10, page)}`),
   feed: page =>
-    requests.get(`/posts/feed?${limit(10, page)}`),
+    // requests.get(`/posts/feed?${limit(10, page)}`),
+    requests.get(`/posts/feed?${limit(30, page)}`),
   get: slug =>
     requests.get(`/posts/${slug}`),
   unfavorite: slug =>

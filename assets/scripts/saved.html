@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>seesee</title>
+    <meta charset="utf-8">
+    <!-- <meta name="description" content="the latest hearsay in tech"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+
+    <!-- <meta property="og:title" content="hearsay"> -->
+    <!-- <meta property="og:description" content="the latest hearsay in tech"> -->
+    <!-- <meta property="og:type" content="website"> -->
+    <!-- <meta property="og:image" content="/favicon-196x196.png"> -->
+
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-57x57.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-114x114.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-144x144.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-60x60.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-120x120.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-76x76.png"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon-152x152.png"> -->
+
+    <!-- <link rel="icon" type="image/png" href="/favicon-196x196.png"> -->
+    <!-- <link rel="icon" type="image/png" href="/favicon-160x160.png"> -->
+    <!-- <link rel="icon" type="image/png" href="/favicon-96x96.png"> -->
+    <!-- <link rel="icon" type="image/png" href="/favicon-16x16.png"> -->
+    <!-- <link rel="icon" type="image/png" href="/favicon-32x32.png"> -->
+
+    <!-- <meta name="msapplication-TileColor" content="#2b5797"> -->
+    <!-- <meta name="msapplication-TileImage" content="/mstile-144x144.png"> -->
+    <!-- <meta name="mobile-web-app-capable" content="yes"> -->
+
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+
+    <!-- <link rel="stylesheet" href="//demo.productionready.io/main.css"> -->
+
+  </head>
+
+  <body>
+    <div id="modal"></div>
+    <div id="root"></div>
+
+  <!-- <img sizes="(min-width: 1335px) 416px,
+              (min-width: 992px) calc(calc(100vw - 72px) / 3),
+              (min-width: 768px) calc(calc(100vw - 48px) / 2), 
+              100vw" 
+
+       srcset=`https://res.cloudinary.com/seesee/c_fit,q_80,w_100/${upload.response.body.public_id}.webp 100w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_200/${upload.response.body.public_id}.webp 200w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_300/${upload.response.body.public_id}.webp 300w,
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_400/${upload.response.body.public_id}.webp 400w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_500/${upload.response.body.public_id}.webp 500w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_600/${upload.response.body.public_id}.webp 600w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_700/${upload.response.body.public_id}.webp 700w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_800/${upload.response.body.public_id}.webp 800w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_900/${upload.response.body.public_id}.webp 900w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1000/${upload.response.body.public_id}.webp 1000w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1100/${upload.response.body.public_id}.webp 1100w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1200/${upload.response.body.public_id}.webp 1200w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1296/${upload.response.body.public_id}.webp 1296w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1400/${upload.response.body.public_id}.webp 1400w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1600/${upload.response.body.public_id}.webp 1600w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_1800/${upload.response.body.public_id}.webp 1800w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_2000/${upload.response.body.public_id}.webp 2000w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_2200/${upload.response.body.public_id}.webp 2200w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_2400/${upload.response.body.public_id}.webp 2400w, 
+               https://res.cloudinary.com/seesee/c_fit,q_80,w_2592/${upload.response.body.public_id}.webp 2592w`
+    
+       src='https://res.cloudinary.com/seesee/q_80,w_1000/`${upload.response.body.public_id}`.webp'
+       itemprop="thumbnailUrl" 
+       data-test="photo-grid-multi-col-img" 
+       data-perf="eager-loaded-img" > -->
+
+  <!-- <img sizes="(min-width: 1335px) 416px,
+              (min-width: 992px) calc(calc(100vw - 72px) / 3),
+              (min-width: 768px) calc(calc(100vw - 48px) / 2), 
+              100vw" 
+       srcset="https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100&q=60 100w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=60 200w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60 300w,
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60 400w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60 500w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60 600w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60 700w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60 800w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60 900w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60 1000w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=60 1100w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60 1200w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1296&q=60 1296w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=60 1400w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=60 1600w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1800&q=60 1800w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=60 2000w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2200&q=60 2200w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2400&q=60 2400w, 
+               https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2592&q=60 2592w" 
+    
+       src="https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" 
+       itemprop="thumbnailUrl" 
+       data-test="photo-grid-multi-col-img" 
+       data-perf="eager-loaded-img" > -->
+
+  </body>
+</html>

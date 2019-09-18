@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Banner from './banner'
 import Posts from './posts'
 import Tags from './tags'
+// import Mediums from './mediums'
 import agent from '../../middleware/middle-agent'
 
 import {
@@ -48,7 +49,6 @@ class Home extends React.Component {
   render() {
     return (
       <main className="home-page">
-
         <Banner
           token={this.props.token}
           appName={this.props.appName} />
@@ -57,10 +57,9 @@ class Home extends React.Component {
           tags={this.props.tags}
           onClickTag={this.props.onClickTag} />
 
-        <div className='main'>
-          <Posts />
-        </div>
-        
+        {/* <Mediums /> */}
+
+        <Posts />
       </main>
     )
   }
