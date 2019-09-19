@@ -41,96 +41,95 @@ const PostPreview = props => {
     }
   }
 
-  // const sizes = '(min-width: 1335px) 416px, (min-width: 992px) calc(calc(100vw - 72px) / 3), (min-width: 768px) calc(calc(100vw - 48px) / 2), 100vw'
-  // const sizes = '(min-width: 1335px) 416px, (min-width: 992px) calc(calc(100vw - 72px) / 3), (min-width: 768px) calc(calc(100vw - 48px) / 2), 100vw'
+  const options = 'c_fit,q_80,'
+  const medium = `${props.post.medium}`
+  const BASE = `${process.env.REACT_APP_CL_BASE}`
+  const fileName = `${props.post.uploads[0].fileName}`
+  const type = `${props.post.uploads[0].response.body.type}`
+  const format = `${props.post.uploads[0].response.body.format}`
+  const version = `v${props.post.uploads[0].response.body.version}`
+  const resource_type = `${props.post.uploads[0].response.body.resource_type}`
 
-  // const src = `https://res.cloudinary.com/seesee/q_80,w_1000/v${props.post.uploads[0].response.body.version}/${props.post.medium}/${props.post.uploads[0].fileName}`
+  const sizes = `
+  (min-width: 1335px) 416px, 
+  (min-width: 992px) calc(calc(100vw - 72px) / 3), 
+  (min-width: 768px) calc(calc(100vw - 48px) / 2), 
+  100vw`
 
-  const s1 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_100/v${props.post.uploads[0].response.body.version}/${props.post.medium}/${props.post.uploads[0].fileName}`
-  const s2 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_200/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s3 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_300/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s4 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_400/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s5 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_500/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s6 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_600/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s7 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_700/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s8 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_800/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s9 = `https://res.cloudinary.com/seesee/image/upload/c_fit,q_80,w_900/v${props.post.uploads[0].response.body.version}/${props.post.uploads[0].response.body.public_id}`
-  const s10 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1000/${props.post.uploads[0].response.body.public_id}`
-  const s11 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1100/${props.post.uploads[0].response.body.public_id}`
-  const s12 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1200/${props.post.uploads[0].response.body.public_id}`
-  const s13 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1296/${props.post.uploads[0].response.body.public_id}`
-  const s14 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1400/${props.post.uploads[0].response.body.public_id}`
-  const s15 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1600/${props.post.uploads[0].response.body.public_id}`
-  const s16 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_1800/${props.post.uploads[0].response.body.public_id}`
-  const s17 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_2000/${props.post.uploads[0].response.body.public_id}`
-  const s18 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_2200/${props.post.uploads[0].response.body.public_id}`
-  const s19 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_2400/${props.post.uploads[0].response.body.public_id}`
-  // const s20 = `https://res.cloudinary.com/seesee/c_fit,q_80,w_2592/${props.post.uploads[0].response.body.public_id}.webp`
+  const s01 = `${BASE}/${resource_type}/${type}/${options}w_100/${version}/${medium}/${fileName}.${format}`
+  const s02 = `${BASE}/${resource_type}/${type}/${options}w_200/${version}/${medium}/${fileName}.${format}`
+  const s03 = `${BASE}/${resource_type}/${type}/${options}w_300/${version}/${medium}/${fileName}.${format}`
+  const s04 = `${BASE}/${resource_type}/${type}/${options}w_400/${version}/${medium}/${fileName}.${format}`
+  const s05 = `${BASE}/${resource_type}/${type}/${options}w_500/${version}/${medium}/${fileName}.${format}`
+  const s06 = `${BASE}/${resource_type}/${type}/${options}w_600/${version}/${medium}/${fileName}.${format}`
+  const s07 = `${BASE}/${resource_type}/${type}/${options}w_700/${version}/${medium}/${fileName}.${format}`
+  const s08 = `${BASE}/${resource_type}/${type}/${options}w_800/${version}/${medium}/${fileName}.${format}`
+  const s09 = `${BASE}/${resource_type}/${type}/${options}w_900/${version}/${medium}/${fileName}.${format}`
+  const s10 = `${BASE}/${resource_type}/${type}/${options}w_1000/${version}/${medium}/${fileName}.${format}`
+  const s11 = `${BASE}/${resource_type}/${type}/${options}w_1100/${version}/${medium}/${fileName}.${format}`
+  const s12 = `${BASE}/${resource_type}/${type}/${options}w_1200/${version}/${medium}/${fileName}.${format}`
+  const s13 = `${BASE}/${resource_type}/${type}/${options}w_1296/${version}/${medium}/${fileName}.${format}`
+  const s14 = `${BASE}/${resource_type}/${type}/${options}w_1400/${version}/${medium}/${fileName}.${format}`
+  const s15 = `${BASE}/${resource_type}/${type}/${options}w_1600/${version}/${medium}/${fileName}.${format}`
+  const s16 = `${BASE}/${resource_type}/${type}/${options}w_1800/${version}/${medium}/${fileName}.${format}`
+  const s17 = `${BASE}/${resource_type}/${type}/${options}w_2000/${version}/${medium}/${fileName}.${format}`
+  const s18 = `${BASE}/${resource_type}/${type}/${options}w_2200/${version}/${medium}/${fileName}.${format}`
+  const s19 = `${BASE}/${resource_type}/${type}/${options}w_2400/${version}/${medium}/${fileName}.${format}`
+  const s20 = `${BASE}/${resource_type}/${type}/${options}w_2592/${version}/${medium}/${fileName}.${format}`
 
   return (
     <Preview
       itemScope
       itemProp='image'
-      itemType='http://schema.org/ImageObject'
-    >
+      itemType='http://schema.org/ImageObject'>
 
       <PrevLink
         to={`/post/${post.slug}`}
-        title={`View the photo by ${post.author_name}`}
-        itemProp="contentUrl"
-      >
+        title={`view the ${resource_type} by ${post.author.username}`}
+        itemProp="contentUrl">
+
         <PrevTint>
           {post.uploads.map((upload, fileName) => {
             return (
-              <PrevImg
-                key={fileName}
-                // src={`${src}`}
-                // src={upload.response.body.secure_url}
-                sizes='(min-width: 1335px) 416px, (min-width: 992px) calc(calc(100vw - 72px) / 3), (min-width: 768px) calc(calc(100vw - 48px) / 2), 100vw'
-                srcSet={`
-                ${s1} 100w,
-                ${s2} 200w, 
-                ${s3} 300w,
-                ${s4} 400w,
-                ${s5} 500w,
-                ${s6} 600w,
-                ${s7} 700w,
-                ${s8} 800w,
-                ${s9} 900w,
-                ${s10} 1000w,
-                ${s11} 1100w,
-                ${s12} 1200w,
-                ${s13} 1296w,
-                ${s14} 1400w,
-                ${s15} 1600w,
-                ${s16} 1800w,
-                ${s17} 2000w, 
-                ${s18} 2200w,
-                ${s19} 2400w`}
-                alt={upload.fileName}
-                itemProp="thumbnailUrl"
-              />
+              resource_type === 'video' ? null : (
+                <PrevImg
+                  key={fileName}
+                  sizes={sizes}
+                  srcSet={`
+                  ${s01} 100w, ${s02} 200w, ${s03} 300w, ${s04} 400w, ${s05} 500w, 
+                  ${s06} 600w, ${s07} 700w, ${s08} 800w, ${s09} 900w, ${s10} 1000w, 
+                  ${s11} 1100w, ${s12} 1200w, ${s13} 1296w, ${s14} 1400w, ${s15} 1600w, 
+                  ${s16} 1800w, ${s17} 2000w, ${s18} 2200w, ${s19} 2400w, ${s20} 2592w`}
+                  src={s10}
+                  alt={upload.fileName}
+                  itemProp='previewImage' />
+              )
             )
           })}
         </PrevTint>
+
       </PrevLink>
 
       {/* <PrevTitle>{post.title}</PrevTitle> */}
 
-      <AuthLink to={`/@${post.author.username}`}>
+      <AuthLink
+        to={`/@${post.author.username}`}>
         <AuthImg
           src={post.author.image}
           className='pp-author-img'
-          alt={post.author.username} />
+          alt={`go to ${post.author.username}'s profile`} />
       </AuthLink>
 
-      <AuthName to={`/@${post.author.username}`}>
+      <AuthName
+        to={`/@${post.author.username}`}
+        title={`go to ${post.author.username}'s profile`}>
         {post.author.username}
       </AuthName>
 
-      <FavButton onClick={handleClick}>
+      <FavButton
+        onClick={handleClick}
+        favorited={post.favorited ? true : false}>
         <i className="ion-heart"></i>
-        {/* {' '}{post.favoritesCount} */}
       </FavButton>
 
     </Preview>

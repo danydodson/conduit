@@ -6,7 +6,7 @@ import {
   UPLOADER_DELETE_UPLOAD
 } from '../../../constants'
 
-const cdelete = process.env.REACT_APP_CL_DELETE
+const CL_DELETE = `${process.env.REACT_APP_CL_DELETE}`
 
 const mapStateToProps = state => ({ ...state })
 
@@ -19,7 +19,7 @@ class DropzoneStatus extends Component {
 
   deleteUpload() {
     request
-      .post(cdelete)
+      .post(CL_DELETE)
       .set('Content-Type', 'application/json')
       .set('X-Requested-With', 'XMLHttpRequest')
       .send({ token: this.props.upload.response.body.delete_token })

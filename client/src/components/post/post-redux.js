@@ -10,7 +10,7 @@ import {
   POST_ITEM_UNLOADED
 } from '../../constants'
 
-const base = process.env.REACT_APP_CL_BASE
+const BASE = process.env.REACT_APP_CL_BASE
 
 const mapStateToProps = state => ({
   ...state.post,
@@ -47,6 +47,11 @@ class Post extends React.Component {
       && this.props.currentUser.username
       === this.props.post.author.username
 
+    const resource_type = this.props.post.uploads[0].response.body.resource_type
+    const type = this.props.post.uploads[0].response.body.type
+    const version = this.props.post.uploads[0].response.body.version
+    const format = this.props.post.uploads[0].response.body.format
+
     return (
       <div className="article-page">
         <div className="banner">
@@ -65,10 +70,22 @@ class Post extends React.Component {
 
               {this.props.post.uploads.map((upload, public_id) => {
                 return (
-                  <img
-                    key={public_id}
-                    src={`${base}/w_333,c_scale/${upload.response.body.public_id}`}
-                    alt={upload.fileName} />)
+                  resource_type === 'video' ? (
+                    <video
+                      key={public_id}
+                      src={`${BASE}/${resource_type}/${type}/v${version}/${upload.response.body.public_id}.${format}`}
+                      width='333'
+                      height='100'
+                      controls>
+                      <p>This browser does not support the HTML5 video element.</p>
+                    </video>
+                  ) : (
+                      <img
+                        key={public_id}
+                        src={`${BASE}/${resource_type}/${type}/w_333,c_scale/v${version}/${upload.response.body.public_id}.${format}`}
+                        alt={upload.fileName} />
+                    )
+                )
               })}
 
               <ul className="tag-list">

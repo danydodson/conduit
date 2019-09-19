@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import Dropzone from './dropzone/dropzone-redux'
 import agent from '../../middleware/middle-agent'
-import Mediums from './mediums'
+import mediums from './mediums'
 
 import {
   EDITOR_FORM_LOADED,
@@ -66,7 +66,7 @@ class Editor extends React.Component {
 
       const post = {
         uploads: this.props.uploaded,
-        title: this.props.title,
+        title: this.props.title || `untitled ${this.props.medium} post`,
         description: this.props.description,
         body: this.props.body,
         medium: this.props.medium,
@@ -75,7 +75,6 @@ class Editor extends React.Component {
         purchasable: this.props.purchasable,
         price: this.props.price,
         tagList: this.props.tagList,
-        author_name: this.props.common.currentUser.username,
       }
 
       const slug = { slug: this.props.postSlug }
@@ -122,7 +121,7 @@ class Editor extends React.Component {
             <select
               className='select'
               onChange={this.changeMedium}>
-              {Mediums.map(medium => {
+              {mediums.map(medium => {
                 return (
                   <option
                     key={medium}

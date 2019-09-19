@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
   
   /** Posts Feed ----------------------------------------------------*/
   
-    section.posts-feed {
+    div.posts-feed {
     width: 100%;
     margin: auto;
     @media (min-width: 768px) { width: 97%; }

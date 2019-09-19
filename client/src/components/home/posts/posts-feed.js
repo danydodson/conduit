@@ -22,7 +22,7 @@ const Posts = props => {
       <Masonry
         options={masonryOptions}
         className={'posts-feed'}
-        elementType={'section'}>
+        elementType={'div'}>
         {props.posts.map(post => {
           return <PostPreview key={post.slug} post={post} />
         })}

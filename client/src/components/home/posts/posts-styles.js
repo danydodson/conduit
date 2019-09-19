@@ -61,12 +61,14 @@ export const AuthName = styled(Link)`
   bottom: 34px;
   left: 75px;
   opacity: 0;
-  color:#c5c5c5;
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+  color:#c8c8c8;
+  font-size: 15px;
+  display: block;
+  text-shadow: 0 1px 8px rgba(0,0,0,.1);
+  /* font-weight: 700; */
+  letter-spacing: 1.2px;
   position: absolute;
-  transition: .1s;
+  transition: .2s;
   :hover {
     color:#ffffff;
   }
@@ -81,7 +83,7 @@ export const FavButton = styled.button`
   font-size: 1rem;
   color: ${props => props.favorited ? 'red' : '#8a8a8a'};
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: rgba(250,250,250,.6);
   border: 1px solid #8a8a8a;
   border-radius: 2px;
   transition: .1s;

@@ -85,10 +85,9 @@ class Dropzone extends Component {
   handleUploads(files) {
     for (let file of files) {
       const uid = this.uid++
-      const title = this.props.title || 'Media'
       const medium = this.props.medium
       const author = this.props.common.currentUser.username
-      const name = `${title}-${this.getRandomInt(999)}`
+      const name = `${medium}_${this.getRandomInt(999)}`
       request.post(post)
         .field('upload_preset', preset)
         .field('file', file)
@@ -96,8 +95,8 @@ class Dropzone extends Component {
         .field('folder', `${medium}`)
         .field('public_id', `${name}`)
         .field('multiple', true)
-        .field('tags', [`${medium},${title}`])
-        .field('context', `title=${title}|medium=${medium}|author=${author}`)
+        .field('tags', [`${medium}`])
+        .field('context', `medium=${medium}|author=${author}`)
         .on('progress', prog => this.onProgress(uid, name, prog))
         .end((err, res) => this.onUploaded(uid, name, res))
     }
