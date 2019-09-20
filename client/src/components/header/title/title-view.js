@@ -3,7 +3,8 @@ import { Title } from './title-styles'
 
 const AppName = ({ appName }) => {
   return (
-    <Title to="/">
+    <Title
+      to="/">
       {appName.toLowerCase()}
     </Title>
   )
