@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import agent from '../../../middleware/middle-agent'
 import imgSizes from './images/image-sizes'
 import srcSet from './images/image-srcset'
-
-import { Preview, PrevLink, PrevImg, AuthLink, AuthImg, AuthName } from './posts-styles'
-
+import { Figure } from './styles/figure-tint'
+import { Preview } from './styles/article-preview'
+import { PreviewImage } from './styles/img-preview'
+import { PreviewLink } from './styles/link-preview'
+import { AuthorLink } from './styles/link-authimg'
+import { AuthorName } from './styles/link-authname'
+import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
-
-import { Figure } from './styles/figure-tint'
 
 import { POST_ITEM_FAVORITED, POST_ITEM_UNFAVORITED } from '../../../constants'
 
@@ -40,7 +42,7 @@ const PostPreview = props => {
       itemProp='image'
       itemType='http://schema.org/ImageObject'>
 
-      <PrevLink
+      <PreviewLink
         to={`/post/${post.slug}`}
         itemProp="contentUrl"
         title={`view the post by ${post.author.username}`}>
@@ -49,7 +51,7 @@ const PostPreview = props => {
           {
             post.uploads.map((upload, fileName) => {
               return (
-                <PrevImg
+                <PreviewImage
                   key={fileName}
                   sizes={imgSizes}
                   srcSet={srcSet(upload)}
@@ -61,21 +63,21 @@ const PostPreview = props => {
           }
         </Figure>
 
-      </PrevLink>
+      </PreviewLink>
 
-      <AuthLink
+      <AuthorLink
         to={`/@${post.author.username}`}>
-        <AuthImg
+        <AuthorImage
           src={post.author.image}
           className='pp-author-img'
           alt={`go to ${post.author.username}'s profile`} />
-      </AuthLink>
+      </AuthorLink>
 
-      <AuthName
+      <AuthorName
         to={`/@${post.author.username}`}
         title={`go to ${post.author.username}'s profile`}>
         {post.author.username}
-      </AuthName>
+      </AuthorName>
 
       {post.purchasable ?
         <Cash

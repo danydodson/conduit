@@ -2,9 +2,10 @@ import React, { Fragment } from 'react'
 import PostPreview from './posts-preview'
 import ListPagination from './posts-pagination'
 import Masonry from 'react-masonry-component'
+import styled from 'styled-components'
 
 const masonryOptions = {
-  transitionDuration: 600,
+  transitionDuration: 0
 }
 
 const Posts = props => {
@@ -14,19 +15,43 @@ const Posts = props => {
   }
 
   if (props.posts.length === 0) {
-    return <article className='pp'>No posts are here... yet.</article>
+    return <article className='pp'>No posts... yet.</article>
   }
+
+  const masonry = ({ className }) => (
+    <Masonry
+      className={className}
+      options={masonryOptions}>
+      {
+        props.posts.map(post => {
+          return (
+            <PostPreview key={post.slug} post={post} />
+          )
+        })
+      }
+    </Masonry>
+  )
+
+  const PostsFeed = styled(masonry).attrs({ className: "pf" })`
+    &.pf {
+      width: 100vw;
+      margin-left: auto;
+      margin-right: auto;
+      @media (min-width: 768px) { 
+        width: 98%;
+      }
+      
+      @media (min-width: 992px) { 
+        max-width: 1334px; 
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+  `
 
   return (
     <Fragment>
-      <Masonry
-        options={masonryOptions}
-        className={'posts-feed'}
-        elementType={'div'}>
-        {props.posts.map(post => {
-          return <PostPreview key={post.slug} post={post} />
-        })}
-      </Masonry>
+      <PostsFeed />
       <ListPagination
         pager={props.pager}
         postsCount={props.postsCount}

@@ -14,4 +14,4 @@ ReactDOM.render((
       </Switch>
     </ConnectedRouter>
   </Provider>
-), document.getElementById('root'))
+), document.getElementById('app'))

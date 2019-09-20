@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { ViewTabs } from './posts-styles'
+
 import agent from '../../../middleware/middle-agent'
+
 import PostsFeed from './posts-feed'
-import { ViewTabItem } from './posts-styles'
+import { PageTablist } from './styles/ul-pagetab'
+import { PageTabItem } from './styles/li-pagetab'
 
-
-import {
-  SET_VIEW_TAB
-} from '../../../constants'
+import { SET_VIEW_TAB } from '../../../constants'
 
 const mapStateToProps = state => ({
   ...state.posts,
@@ -28,16 +27,15 @@ const YourFeedTab = props => {
       props.onTabClick('feed', agent.Posts.feed, agent.Posts.feed())
     }
     return (
-      <ViewTabItem>
+      <PageTabItem>
         <button href=""
           className={props.tab === 'feed' ? '' : ''}
           onClick={clickHandler}>
-          Your Feed
+          {'Your Feed'}
         </button>
-      </ViewTabItem>
+      </PageTabItem>
     )
   }
-
   return null
 }
 
@@ -46,35 +44,33 @@ const GlobalFeedTab = props => {
     ev.preventDefault()
     props.onTabClick('all', agent.Posts.all, agent.Posts.all())
   }
-
   return (
-    <ViewTabItem>
+    <PageTabItem>
       <button
         href=""
         className={props.tab === 'all' ? 'nav-link active' : 'nav-link'}
         onClick={clickHandler}>
-        Global Feed
+        {'Global Feed'}
       </button>
-    </ViewTabItem>
-
+    </PageTabItem>
   )
 }
 
 const TagFilterTab = props => {
   if (!props.tag) return null
   return (
-    <ViewTabItem>
+    <PageTabItem>
       <button href="" className="nav-link active">
         <i className="ion-pound"></i> {props.tag}
       </button>
-    </ViewTabItem>
+    </PageTabItem>
   )
 }
 
 const MainView = props => {
   return (
     <Fragment>
-      <ViewTabs>
+      <PageTablist>
         <YourFeedTab
           token={props.token}
           tab={props.tab}
@@ -84,7 +80,7 @@ const MainView = props => {
           onTabClick={props.onTabClick} />
         <TagFilterTab
           tag={props.tag} />
-      </ViewTabs>
+      </PageTablist>
       <PostsFeed
         pager={props.pager}
         posts={props.posts}

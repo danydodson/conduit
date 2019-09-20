@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
 // import { CloudinaryContext } from 'cloudinary-react'
 import { push } from 'connected-react-router'
@@ -60,7 +60,7 @@ class App extends React.Component {
   render() {
     if (this.props.appLoaded) {
       return (
-        <div className='app'>
+        <Fragment>
           <Header
             appName={this.props.appName}
             currentUser={this.props.currentUser}
@@ -77,17 +77,16 @@ class App extends React.Component {
             <Route path="/@:username" component={Profile} />
           </Switch>
           <Styles />
-        </div>
-
+        </Fragment>
       )
     }
     return (
-      <div className='app'>
+      <Fragment>
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
         <Styles />
-      </div>
+      </Fragment>
     )
   }
 }

@@ -2,7 +2,9 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   
-  :root { --nav-timem-color: brown;}
+  :root { 
+    --nav-timem-color: brown;
+  }
 
   *,
   *::before, 
@@ -13,13 +15,37 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
-  html,
-  body {}
-
-  body {
-    font-family: 'Source Sans Pro';
+  html {
+    height: 100%;
+    font-size: 62.5%;
+  
+    @include respond(phone) {
+      /* font-size: 56.25%; */
+      font-size: 50.25%;
+    }
+    
+    @include respond(tab-land) {
+      font-size: 56.25%;
+    }
+    
+    @include respond(tab-port) {
+      font-size: 50%;
+    }
+    
+    @include respond(big-desktop) {
+      font-size: 75%;
+    }
   }
   
+  body {
+    letter-spacing: 0.01rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  #app {
+    height:100%;
+  }
+
   a,
   link,
   button {
@@ -29,10 +55,6 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     text-decoration: none;
     background: transparent;
-    transition: .1s;
-    :hover {
-      color: #080808;
-    }
   }
 
   button:focus {
@@ -47,38 +69,15 @@ const GlobalStyle = createGlobalStyle`
     font-size: 2.2rem;
     font-weight: 600;
   }
-  
-  /** Posts Feed ----------------------------------------------------*/
-  
-    div.posts-feed {
-    width: 100%;
-    margin: auto;
-    @media (min-width: 768px) { width: 97%; }
-    @media (min-width: 992px) { max-width: 1320px; }
-  }
 
-  /** React Icons ----------------------------------------------------*/
-
-  .react-nav-icons {
-    vertical-align: middle;
-    color: #8a8a8a;
-    font-size: 20px;
-    cursor: pointer;
-    
-    &:hover {
-      color: #080808;
-    }
-  }
-
-  .react-icon-gear {
-    vertical-align: middle;
-    color: #8a8a8a;
-    font-size: 20px;
-    padding: 3px 0 1px 0;
-    &:hover {
-      color: #080808;
-    }
-  }
+  @media (max-width: 416px) {} /** */
+  @media (max-width: 450px) {}
+  @media (max-width: 600px) {}
+  @media (max-width: 675px) {} 
+  @media (min-width: 768px) {} /** */
+  @media (max-width: 992px) {}
+  @media (max-width: 1335px) {} /** */
+  @media (max-width: 1710px) {}
   
   /** Editor Form Page -------------------------------------------------*/
   
@@ -143,13 +142,6 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
   
-  /** Animations ----------------------------------------------*/
-
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
 `
 
 export default GlobalStyle;

@@ -3,10 +3,10 @@ import { FaDollarSign } from "react-icons/fa";
 
 export const Cash = styled(FaDollarSign)`
   top: 32px;
-  right: 50px;
+  right: 90px;
 
   font-size:35px;
-  padding: 2px 7.88px 1px 7.88px;
+  padding: 5px 10.88px 4px 10.88px;
   
   border-radius: 2px;
   box-shadow: 0 1px 8px rgba(0,0,0,.1);
