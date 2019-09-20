@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+
 import { Head } from './header-styles'
 import { List } from './header-styles'
 import { Item } from './header-styles'
@@ -7,15 +8,16 @@ import { LnkTo } from './header-styles'
 import { IcoLnk } from './header-styles'
 import { Image } from './header-styles'
 import { IcoImg } from './header-styles'
-import Kebab from './icons/kabob-icon'
-import Logout from './icons/arrow-icon'
-import Archive from './icons/archive-icon'
-import Pencil from './icons/pencil-icon'
-import Magnifier from './icons/search-icon'
-import Heart from './icons/heart-icon'
-import Gear from './icons/gear-icon'
-import Search from '../searchbox'
+
 import Title from './title'
+import Search from '../searchbox'
+import Kebab from './icons/kabob-icon'
+import Gear from './icons/gear-icon'
+import Logout from './icons/arrow-icon'
+import Pencil from './icons/pencil-icon'
+import Heart from './icons/heart-icon'
+import Archive from './icons/archive-icon'
+import Magnifier from './icons/search-icon'
 
 const Visitor = (
   <Fragment>

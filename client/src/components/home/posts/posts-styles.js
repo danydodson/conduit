@@ -1,19 +1,25 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { Heart } from './styles/svg-heart'
+import { Cash } from './styles/svg-cash'
+
 export const ViewTabs = styled.ul`
   display: flex;
   padding-top: 120px;
   padding-left: 16px;
 `
+// --------------------------------------- 
 
 export const ViewTabItem = styled.li`
   padding-right: 16px;
 `
+// ---------------------------------------
 
 export const PrevLink = styled(Link)`
   transition: .1s;
 `
+// ---------------------------------------
 
 export const PrevTint = styled.figure`
   margin: .8rem 0 .8rem 0;
@@ -24,13 +30,13 @@ export const PrevTint = styled.figure`
   
   :before {
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
+    left: 0;
     opacity: 0;
     content: "";
-    margin: .8rem 0 .8rem 0;
     position: absolute;
+    margin: .8rem 0 .8rem 0;
     background: rgba(0,0,0,0);
     transition: .3s;
 
@@ -40,6 +46,8 @@ export const PrevTint = styled.figure`
   }
 `
 
+// ---------------------------------------
+
 export const PrevImg = styled.img`
   width: 100%;
   height: auto;
@@ -47,9 +55,13 @@ export const PrevImg = styled.img`
   max-height: 100%;
 `
 
+// ---------------------------------------
+
 export const AuthLink = styled(Link)`
   transition: .1s;
 `
+
+// ---------------------------------------
 
 export const AuthImg = styled.img`
   bottom: 32px;
@@ -60,6 +72,8 @@ export const AuthImg = styled.img`
   border-radius: 100px;
   transition: .1s;
 `
+
+// ---------------------------------------
 
 export const AuthName = styled(Link)`
   bottom: 32px;
@@ -78,24 +92,7 @@ export const AuthName = styled(Link)`
   }
 `
 
-export const FavButton = styled.button`
-  right: 32px;
-  top: 32px;
-  /* bottom: 32px; */
-  opacity: 0;
-  position: absolute;
-  padding: 5px 10.88px 4px 10.88px;
-  color: ${props => props.favorited ? '#f15151' : '#8a8a8a'};
-  background-color: rgba(250,250,250,.7);
-  border-radius: 2px;
-  box-shadow: 0 1px 8px rgba(0,0,0,.1);
-  cursor: pointer;
-  transition: .2s ease-in-out;
-  :hover {
-    color: #f76f6f;
-    background-color: rgba(250,250,250,.9);
-  }
-`
+// ---------------------------------------
 
 export const BuyButton = styled.button`
   right: 87px;
@@ -116,6 +113,8 @@ export const BuyButton = styled.button`
   }
 `
 
+// ---------------------------------------
+
 export const Preview = styled.article`
   width: 100vw;
   margin: auto;
@@ -127,7 +126,10 @@ export const Preview = styled.article`
   /* @media (min-width: 1335px) { width: 416px } */
   :hover>${AuthLink}>${AuthImg} { opacity: .8; }
   :hover>${AuthName} { opacity: 1; }
-  :hover>${FavButton} { opacity: 1; }
+
+  :hover>${Heart} { opacity: 1; }
+  :hover>${Cash} { opacity: 1; }
+  
   :hover>${BuyButton} { opacity: 1; }
   :hover>${PrevLink}>${PrevTint}:before { 
     top: 0;

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import MdHeart from 'react-ionicons/lib/MdHeart'
 
 // header styles ---------------------------------
 
@@ -82,4 +83,13 @@ export const Image = styled.img`
 
 export const IcoImg = styled.li`
    margin: 0 1rem;
+`
+
+
+
+export const Hea = styled(MdHeart)`
+  fill: gray;
+  :hover{
+    fill:${props => props.beat ? '#f76f6f' : '#000'};
+  }
 `

@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   
+  :root { --nav-timem-color: brown;}
+
   *,
   *::before, 
   *::after {
