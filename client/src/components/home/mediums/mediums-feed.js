@@ -1,32 +1,39 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import agent from '../../../middleware/middle-agent'
 import Loading from '../../loading'
+import styled from 'styled-components'
+import { MediumList, MediumLinks } from './mediums-styles'
+
+const MediumLink = styled.button`
+  ${MediumLinks}
+`
 
 const Mediums = props => {
   const mediums = props.mediums
 
   if (mediums) {
     return (
-      <nav className='nav-medium-list hide-scrollbars'>
-        {mediums.map(medium => {
-          const handleClick = e => {
-            e.preventDefault()
-            props.onClickTag(medium, page =>
-              agent.Posts.byMedium(medium, page),
-              agent.Posts.byMedium(medium)
+      <Fragment>
+        <li>Home Feed | Global Feed</li>
+        <MediumList>
+          {mediums.map(medium => {
+            const handleClick = e => {
+              e.preventDefault()
+              props.onClickMedium(medium, page =>
+                agent.Posts.byMedium(medium, page),
+                agent.Posts.byMedium(medium)
+              )
+            }
+            return (
+              <MediumLink
+                key={medium}
+                onClick={handleClick}>
+                {medium}
+              </MediumLink>
             )
-          }
-          return (
-            <button
-              onClick={handleClick}
-              className='medium-link'
-              href=''
-              key={medium}>
-              {medium}
-            </button>
-          )
-        })}
-      </nav>
+          })}
+        </MediumList>
+      </Fragment>
     )
   } else {
     return <Loading />

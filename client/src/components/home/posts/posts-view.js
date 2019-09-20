@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { ViewTabs } from './posts-styles'
 import agent from '../../../middleware/middle-agent'
 import PostsFeed from './posts-feed'
+import { ViewTabItem } from './posts-styles'
 
 
 import {
@@ -26,15 +27,14 @@ const YourFeedTab = props => {
       ev.preventDefault()
       props.onTabClick('feed', agent.Posts.feed, agent.Posts.feed())
     }
-
     return (
-      <li className="nav-item">
+      <ViewTabItem>
         <button href=""
-          className={props.tab === 'feed' ? 'nav-link active' : 'nav-link'}
+          className={props.tab === 'feed' ? '' : ''}
           onClick={clickHandler}>
           Your Feed
         </button>
-      </li>
+      </ViewTabItem>
     )
   }
 
@@ -48,25 +48,26 @@ const GlobalFeedTab = props => {
   }
 
   return (
-    <li className="nav-item">
+    <ViewTabItem>
       <button
         href=""
         className={props.tab === 'all' ? 'nav-link active' : 'nav-link'}
         onClick={clickHandler}>
         Global Feed
       </button>
-    </li>
+    </ViewTabItem>
+
   )
 }
 
 const TagFilterTab = props => {
   if (!props.tag) return null
   return (
-    <li className="nav-item">
+    <ViewTabItem>
       <button href="" className="nav-link active">
         <i className="ion-pound"></i> {props.tag}
       </button>
-    </li>
+    </ViewTabItem>
   )
 }
 

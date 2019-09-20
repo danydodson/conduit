@@ -1,10 +1,7 @@
 import React from 'react'
 import agent from '../../../middleware/middle-agent'
 import { connect } from 'react-redux'
-
-import {
-  SET_VIEW_PAGE_
-} from '../../../constants'
+import { SET_VIEW_PAGE_ } from '../../../constants'
 
 const mapDispatchToProps = dispatch => ({
   onSetPage: (page, payload) =>
@@ -12,12 +9,15 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const ListPagination = props => {
-  // if (props.postsCount <= 10) return null
-  if (props.postsCount <= 30) return null
+
+  if (props.postsCount <= 30) return null // original was <= 10
+
   const range = []
+
   for (let i = 0; i < Math.ceil(props.postsCount / 10); ++i) {
     range.push(i)
   }
+
   const setPage = page => {
     if (props.pager) {
       props.onSetPage(page, props.pager(page))
@@ -27,26 +27,26 @@ const ListPagination = props => {
   }
 
   return (
-
     <ul className="pagination">
-      {range.map(v => {
-        const isCurrent = v === props.currentPage
-        const onClick = ev => {
-          ev.preventDefault()
-          setPage(v)
-          window.scrollTo(0, 0)
-        }
-        return (
-          <li
-            className={isCurrent ? 'page-item active' : 'page-item'}
-            onClick={onClick}
-            key={v.toString()}>
-            <button className="page-link" href="">{v + 1}</button>
-          </li>
-        )
-      })}
+      {
+        range.map(v => {
+          const isCurrent = v === props.currentPage
+          const onClick = ev => {
+            ev.preventDefault()
+            setPage(v)
+            window.scrollTo(0, 0)
+          }
+          return (
+            <li
+              key={v.toString()}
+              onClick={onClick}
+              className={isCurrent ? '' : ''}>
+              <button className="page-link" href="">{v + 1}</button>
+            </li>
+          )
+        })
+      }
     </ul>
-
   )
 }
 

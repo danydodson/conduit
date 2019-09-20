@@ -2,9 +2,7 @@ import superagentPromise from 'superagent-promise'
 import _superagent from 'superagent'
 
 const superagent = superagentPromise(_superagent, global.Promise)
-
 const LOCAL_API = process.env.REACT_APP_LOCAL_API
-
 const encode = encodeURIComponent
 const responseBody = res => res.body
 
@@ -42,6 +40,10 @@ const Tags = {
   getAll: () => requests.get('/tags')
 }
 
+const Mediums = {
+  getAll: () => requests.get('/mediums')
+}
+
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`
 const omitSlug = post => Object.assign({}, post, { slug: undefined })
 
@@ -54,6 +56,9 @@ const Posts = {
   byTag: (tag, page) =>
     // requests.get(`/posts?tag=${encode(tag)}&${limit(10, page)}`),
     requests.get(`/posts?tag=${encode(tag)}&${limit(30, page)}`),
+  byMedium: (medium, page) =>
+    // requests.get(`/posts?medium=${encode(medium)}&${limit(10, page)}`),
+    requests.get(`/posts?medium=${encode(medium)}&${limit(30, page)}`),
   del: slug =>
     requests.del(`/posts/${slug}`),
   favorite: slug =>
@@ -92,6 +97,6 @@ const Profile = {
 }
 
 export default {
-  Auth, Tags, Profile, Posts, Comments,
+  Auth, Tags, Mediums, Profile, Posts, Comments,
   setToken: _token => { token = _token }
 }

@@ -1,1 +1,1 @@
-export { default } from './mediums-redux'
+export { default } from './mediums-feed'

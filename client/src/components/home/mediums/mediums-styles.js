@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components'
 
-export const TagList = styled.nav`
+export const MediumList = styled.nav`
   width: 100%;
   padding: 0 16px;
-  padding-top: 60px;
+  padding-top: 50px;
   position: fixed;
   display: flex;
   overflow: auto;
@@ -20,8 +20,8 @@ export const TagList = styled.nav`
   }
 `
 
-export const TagLinks = css`
-  padding-bottom: 6px;
+export const MediumLinks = css`
+  padding-bottom: 15px;
   font-size: 16px;
   font-family: 'Didact Gothic';
   margin: 0 1rem 0 0;  

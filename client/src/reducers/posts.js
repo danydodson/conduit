@@ -3,7 +3,8 @@ import {
   HOME_PAGE_UNLOADED,
   SET_VIEW_TAB,
   SET_VIEW_PAGE_,
-  SET_TAG_FILTER,
+  // SET_TAG_FILTER,
+  SET_MEDIUM_FILTER,
   POST_ITEM_FAVORITED,
   POST_ITEM_UNFAVORITED,
   PROFILE_PAGE_LOADED,
@@ -39,22 +40,34 @@ export default (state = {}, action) => {
         currentPage: action.page
       }
 
-    case SET_TAG_FILTER:
+    case SET_MEDIUM_FILTER:
       return {
         ...state,
         pager: action.pager,
         posts: action.payload.posts,
         postsCount: action.payload.postsCount,
         tab: null,
-        tag: action.tag,
+        medium: action.medium,
         currentPage: 0
       }
+
+    // case SET_TAG_FILTER:
+    //   return {
+    //     ...state,
+    //     pager: action.pager,
+    //     posts: action.payload.posts,
+    //     postsCount: action.payload.postsCount,
+    //     tab: null,
+    //     tag: action.tag,
+    //     currentPage: 0
+    //   }
 
     case HOME_PAGE_LOADED:
       return {
         ...state,
         pager: action.pager,
-        tags: action.payload[0].tags,
+        mediums: action.payload[0].mediums,
+        // tags: action.payload[0].tags,
         posts: action.payload[1].posts,
         postsCount: action.payload[1].postsCount,
         currentPage: 0,
@@ -72,7 +85,8 @@ export default (state = {}, action) => {
         postsCount: action.payload.postsCount,
         tab: action.tab,
         currentPage: 0,
-        tag: null
+        medium: null,
+        // tag: null
       }
 
     case PROFILE_PAGE_LOADED:

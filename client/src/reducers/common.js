@@ -8,7 +8,7 @@ import {
   POST_ITEM_DELETE_POST,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
-  //UPLOADER_FORM_UNLOADED,
+  // UPLOADER_FORM_UNLOADED,
   SETTINGS_FORM_SAVED,
   AUTH_USER_LOGIN,
   AUTH_USER_LOGOUT,
@@ -44,7 +44,6 @@ export default (state = defaultState, action) => {
     case EDITOR_POST_SUBMITTED:
       const redirectUrl = `/post/${action.payload.post.slug}`
       return { ...state, redirectTo: redirectUrl }
-
 
     case SETTINGS_FORM_SAVED:
       return {

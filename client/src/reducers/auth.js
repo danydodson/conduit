@@ -24,8 +24,8 @@ export default (state = {}, action) => {
     case REGISTER_FORM_LOADED:
       return {}
 
-    case REGISTER_FORM_UNLOADED:
     case LOGIN_FORM_UNLOADED:
+    case REGISTER_FORM_UNLOADED:
       return {}
 
     case APP_ASYNC_START:

@@ -6,11 +6,9 @@ import CommentList from './comment-feed'
 const CommentContainer = props => {
   if (props.currentUser) {
     return (
-      <div className="col-xs-12 col-md-8 offset-md-2">
-        <div>
-          <list-errors errors={props.errors}></list-errors>
-          <CommentInput slug={props.slug} currentUser={props.currentUser} />
-        </div>
+      <div>
+        <list-errors errors={props.errors}></list-errors>
+        <CommentInput slug={props.slug} currentUser={props.currentUser} />
         <CommentList
           comments={props.comments}
           slug={props.slug}
@@ -19,7 +17,7 @@ const CommentContainer = props => {
     )
   } else {
     return (
-      <div className="col-xs-12 col-md-8 offset-md-2">
+      <div>
         <p>
           <Link to="/login">Sign in</Link>
           &nbsp;or&nbsp;

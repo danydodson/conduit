@@ -7,10 +7,10 @@ import {
   PrevLink,
   PrevTint,
   PrevImg,
-  // PrevTitle,
   AuthLink,
   AuthImg,
   AuthName,
+  BuyButton,
   FavButton
 } from './posts-styles'
 
@@ -41,14 +41,14 @@ const PostPreview = props => {
     }
   }
 
-  const options = 'c_fit,q_80,'
-  const medium = `${props.post.medium}`
   const BASE = `${process.env.REACT_APP_CL_BASE}`
-  const fileName = `${props.post.uploads[0].fileName}`
+  const name = `${props.post.uploads[0].fileName}`
   const type = `${props.post.uploads[0].response.body.type}`
+  const vs = `v${props.post.uploads[0].response.body.version}`
   const format = `${props.post.uploads[0].response.body.format}`
-  const version = `v${props.post.uploads[0].response.body.version}`
-  const resource_type = `${props.post.uploads[0].response.body.resource_type}`
+  const rs = `${props.post.uploads[0].response.body.resource_type}`
+  const med = `${props.post.medium}`
+  const opts = 'c_fit,q_80,'
 
   const sizes = `
   (min-width: 1335px) 416px, 
@@ -56,26 +56,26 @@ const PostPreview = props => {
   (min-width: 768px) calc(calc(100vw - 48px) / 2), 
   100vw`
 
-  const s01 = `${BASE}/${resource_type}/${type}/${options}w_100/${version}/${medium}/${fileName}.${format}`
-  const s02 = `${BASE}/${resource_type}/${type}/${options}w_200/${version}/${medium}/${fileName}.${format}`
-  const s03 = `${BASE}/${resource_type}/${type}/${options}w_300/${version}/${medium}/${fileName}.${format}`
-  const s04 = `${BASE}/${resource_type}/${type}/${options}w_400/${version}/${medium}/${fileName}.${format}`
-  const s05 = `${BASE}/${resource_type}/${type}/${options}w_500/${version}/${medium}/${fileName}.${format}`
-  const s06 = `${BASE}/${resource_type}/${type}/${options}w_600/${version}/${medium}/${fileName}.${format}`
-  const s07 = `${BASE}/${resource_type}/${type}/${options}w_700/${version}/${medium}/${fileName}.${format}`
-  const s08 = `${BASE}/${resource_type}/${type}/${options}w_800/${version}/${medium}/${fileName}.${format}`
-  const s09 = `${BASE}/${resource_type}/${type}/${options}w_900/${version}/${medium}/${fileName}.${format}`
-  const s10 = `${BASE}/${resource_type}/${type}/${options}w_1000/${version}/${medium}/${fileName}.${format}`
-  const s11 = `${BASE}/${resource_type}/${type}/${options}w_1100/${version}/${medium}/${fileName}.${format}`
-  const s12 = `${BASE}/${resource_type}/${type}/${options}w_1200/${version}/${medium}/${fileName}.${format}`
-  const s13 = `${BASE}/${resource_type}/${type}/${options}w_1296/${version}/${medium}/${fileName}.${format}`
-  const s14 = `${BASE}/${resource_type}/${type}/${options}w_1400/${version}/${medium}/${fileName}.${format}`
-  const s15 = `${BASE}/${resource_type}/${type}/${options}w_1600/${version}/${medium}/${fileName}.${format}`
-  const s16 = `${BASE}/${resource_type}/${type}/${options}w_1800/${version}/${medium}/${fileName}.${format}`
-  const s17 = `${BASE}/${resource_type}/${type}/${options}w_2000/${version}/${medium}/${fileName}.${format}`
-  const s18 = `${BASE}/${resource_type}/${type}/${options}w_2200/${version}/${medium}/${fileName}.${format}`
-  const s19 = `${BASE}/${resource_type}/${type}/${options}w_2400/${version}/${medium}/${fileName}.${format}`
-  const s20 = `${BASE}/${resource_type}/${type}/${options}w_2592/${version}/${medium}/${fileName}.${format}`
+  const s01 = `${BASE}/${rs}/${type}/${opts}w_100/${vs}/${med}/${name}.${format}`
+  const s02 = `${BASE}/${rs}/${type}/${opts}w_200/${vs}/${med}/${name}.${format}`
+  const s03 = `${BASE}/${rs}/${type}/${opts}w_300/${vs}/${med}/${name}.${format}`
+  const s04 = `${BASE}/${rs}/${type}/${opts}w_400/${vs}/${med}/${name}.${format}`
+  const s05 = `${BASE}/${rs}/${type}/${opts}w_500/${vs}/${med}/${name}.${format}`
+  const s06 = `${BASE}/${rs}/${type}/${opts}w_600/${vs}/${med}/${name}.${format}`
+  const s07 = `${BASE}/${rs}/${type}/${opts}w_700/${vs}/${med}/${name}.${format}`
+  const s08 = `${BASE}/${rs}/${type}/${opts}w_800/${vs}/${med}/${name}.${format}`
+  const s09 = `${BASE}/${rs}/${type}/${opts}w_900/${vs}/${med}/${name}.${format}`
+  const s10 = `${BASE}/${rs}/${type}/${opts}w_1000/${vs}/${med}/${name}.${format}`
+  const s11 = `${BASE}/${rs}/${type}/${opts}w_1100/${vs}/${med}/${name}.${format}`
+  const s12 = `${BASE}/${rs}/${type}/${opts}w_1200/${vs}/${med}/${name}.${format}`
+  const s13 = `${BASE}/${rs}/${type}/${opts}w_1296/${vs}/${med}/${name}.${format}`
+  const s14 = `${BASE}/${rs}/${type}/${opts}w_1400/${vs}/${med}/${name}.${format}`
+  const s15 = `${BASE}/${rs}/${type}/${opts}w_1600/${vs}/${med}/${name}.${format}`
+  const s16 = `${BASE}/${rs}/${type}/${opts}w_1800/${vs}/${med}/${name}.${format}`
+  const s17 = `${BASE}/${rs}/${type}/${opts}w_2000/${vs}/${med}/${name}.${format}`
+  const s18 = `${BASE}/${rs}/${type}/${opts}w_2200/${vs}/${med}/${name}.${format}`
+  const s19 = `${BASE}/${rs}/${type}/${opts}w_2400/${vs}/${med}/${name}.${format}`
+  const s20 = `${BASE}/${rs}/${type}/${opts}w_2592/${vs}/${med}/${name}.${format}`
 
   return (
     <Preview
@@ -85,21 +85,21 @@ const PostPreview = props => {
 
       <PrevLink
         to={`/post/${post.slug}`}
-        title={`view the ${resource_type} by ${post.author.username}`}
+        title={`view the ${rs} by ${post.author.username}`}
         itemProp="contentUrl">
-
         <PrevTint>
           {post.uploads.map((upload, fileName) => {
             return (
-              resource_type === 'video' ? null : (
+              rs === 'video' ? null : (
                 <PrevImg
                   key={fileName}
                   sizes={sizes}
                   srcSet={`
-                  ${s01} 100w, ${s02} 200w, ${s03} 300w, ${s04} 400w, ${s05} 500w, 
-                  ${s06} 600w, ${s07} 700w, ${s08} 800w, ${s09} 900w, ${s10} 1000w, 
-                  ${s11} 1100w, ${s12} 1200w, ${s13} 1296w, ${s14} 1400w, ${s15} 1600w, 
-                  ${s16} 1800w, ${s17} 2000w, ${s18} 2200w, ${s19} 2400w, ${s20} 2592w`}
+                    ${s01} 100w, ${s02} 200w, ${s03} 300w, ${s04} 400w, ${s05} 500w, 
+                    ${s06} 600w, ${s07} 700w, ${s08} 800w, ${s09} 900w, ${s10} 1000w, 
+                    ${s11} 1100w, ${s12} 1200w, ${s13} 1296w, ${s14} 1400w, ${s15} 1600w, 
+                    ${s16} 1800w, ${s17} 2000w, ${s18} 2200w, ${s19} 2400w, ${s20} 2592w`
+                  }
                   src={s10}
                   alt={upload.fileName}
                   itemProp='previewImage' />
@@ -107,10 +107,7 @@ const PostPreview = props => {
             )
           })}
         </PrevTint>
-
       </PrevLink>
-
-      {/* <PrevTitle>{post.title}</PrevTitle> */}
 
       <AuthLink
         to={`/@${post.author.username}`}>
@@ -126,10 +123,28 @@ const PostPreview = props => {
         {post.author.username}
       </AuthName>
 
+      <BuyButton>
+        {post.purchasable ?
+          (<i style={{ fontSize: '20px' }}
+            title={'click to see purchase details'}
+            className="ion-ios-cart"></i>) :
+          (<i style={{ fontSize: '20px' }}
+            title={'click to see purchase details'}
+            className="ion-ios-cart"></i>)
+        }
+      </BuyButton>
+
       <FavButton
         onClick={handleClick}
         favorited={post.favorited ? true : false}>
-        <i className="ion-heart"></i>
+        {post.favorited ?
+          (<i style={{ fontSize: '20px' }}
+            title={'click to unlike post'}
+            className="ion-ios-heart"></i>) :
+          (<i style={{ fontSize: '20px' }}
+            title={'click to like post'}
+            className="ion-ios-heart-outline"></i>)
+        }
       </FavButton>
 
     </Preview>

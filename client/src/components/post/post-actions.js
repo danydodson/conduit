@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => ({
 const PostActions = props => {
 
   const post = props.post
+
   const del = () => {
     props.onClickDelete(agent.Posts.del(post.slug))
   }
@@ -22,13 +23,11 @@ const PostActions = props => {
   if (props.canModify) {
     return (
       <span>
-        <Link
-          to={`/editor/${post.slug}`}
-          className="btn btn-outline-secondary btn-sm">
-          <i className="ion-edit"></i> Edit Post
+        <Link to={`/editor/${post.slug}`}>
+          {'Edit Post'}
         </Link>
-        <button className="btn btn-outline-danger btn-sm" onClick={del}>
-          <i className="ion-trash-a"></i> Delete Post
+        <button onClick={del}>
+          {'Delete Post'}
         </button>
       </span>
     )

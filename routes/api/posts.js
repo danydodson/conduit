@@ -42,6 +42,9 @@ router.get('/', auth.optional, (req, res, next) => {
   if (typeof req.query.offset !== 'undefined') {
     offset = req.query.offset
   }
+  if (typeof req.query.medium !== 'undefined') {
+    query.medium = { "$in": [req.query.medium] }
+  }
   if (typeof req.query.tag !== 'undefined') {
     query.tagList = { "$in": [req.query.tag] }
   }

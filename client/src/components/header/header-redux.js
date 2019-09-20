@@ -1,77 +1,71 @@
-import React from 'react'
-import AppName from './title'
-import Searchbox from '../searchbox'
+import React, { Fragment } from 'react'
+import { Head } from './header-styles'
+import { List } from './header-styles'
+import { Item } from './header-styles'
+import { Ruller } from './header-styles'
+import { LnkTo } from './header-styles'
+import { IcoLnk } from './header-styles'
+import { Image } from './header-styles'
+import { IcoImg } from './header-styles'
+import Kebab from './icons/kabob-icon'
+import Logout from './icons/arrow-icon'
+import Archive from './icons/archive-icon'
+import Pencil from './icons/pencil-icon'
+import Magnifier from './icons/search-icon'
+import Heart from './icons/heart-icon'
+import Gear from './icons/gear-icon'
+import Search from '../searchbox'
+import Title from './title'
 
-import {
-  Head,
-  NavList,
-  NavItem,
-  NavLink,
-  UserImg,
-} from './header-styles'
+const Visitor = (
+  <Fragment>
+    <Item><LnkTo to="/login">{`Sign in`}</LnkTo></Item>
+    <Item><LnkTo to="/register">{`Sign up`}</LnkTo></Item>
+  </Fragment>
+)
 
-const LoggedOutView = props => {
-  if (!props.currentUser) {
-    return (
-      <NavList>
-        <NavItem>
-          <NavLink to="/login">{`Sign in`}</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/register">{`Sign up`}</NavLink>
-        </NavItem>
-      </NavList>
-    )
-  }
-  return null
-}
-
-const LoggedInView = props => {
-  if (props.currentUser) {
-    return (
-      <NavList>
-        <NavItem>
-          <NavLink to="/">{'Home'}</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/editor">{`Collections`}</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/editor">{`Create`}</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/settings"><i className="ion-gear-a"></i></NavLink>
-        </NavItem>
-        {/* <NavItem>
-          <button onClick={props.onClickLogout} className="nav-link">
-            <i className="ion-log-out"></i>&nbsp;{'Logout'}
-          </button>
-        </NavItem> */}
-        <NavItem>
-          <NavLink to={`/@${props.currentUser.username}`}>
-            <UserImg
-              src={props.currentUser.image}
-              alt={props.currentUser.username} />
-          </NavLink>
-        </NavItem>
-      </NavList>
-    )
-  }
-
-  return null
+const IsAuth = props => {
+  return (
+    <List>
+      <IcoLnk to='/'><Archive size='30px' title='Mediums' /></IcoLnk>
+      <IcoLnk to='/editor'><Pencil size='30px' title='Upload' /></IcoLnk>
+      <IcoLnk to='/'><Magnifier size='30px' title='Search' /></IcoLnk>
+      <IcoLnk to='/@danydodson'><Heart size='30px' title='Show some love' /></IcoLnk>
+      {
+        props.currentUser ?
+          (<IcoLnk to='/settings'><Gear size='30px' title='Settings' /></IcoLnk>) :
+          (<IcoLnk to='/login'><Gear size='30px' title='Login' /></IcoLnk>)
+      }
+      <Item><LnkTo to="/">{`Mediums`}</LnkTo></Item>
+      <Item><LnkTo to="/">{`Tags`}</LnkTo></Item>
+      <Item><Kebab title='Droptions' size='20px' /></Item>
+      <Ruller />
+      {
+        props.currentUser ? (
+          <Fragment>
+            <Item><LnkTo to='/editor'>{`Create`}</LnkTo></Item>
+            <Item><Logout title='Logout' size='20px' onClick={props.onClickLogout} /></Item>
+            <IcoImg>
+              <LnkTo to={`/@${props.currentUser.username}`}>
+                <Image
+                  src={props.currentUser.image}
+                  alt={props.currentUser.username} />
+              </LnkTo>
+            </IcoImg>
+          </Fragment>
+        ) : Visitor
+      }
+    </List>
+  )
 }
 
 class Header extends React.Component {
-
   render() {
     return (
       <Head>
-        <AppName
-          appName={this.props.appName} />
-        <Searchbox />
-        <LoggedOutView
-          currentUser={this.props.currentUser} />
-        <LoggedInView
+        <Title appName={this.props.appName} />
+        <Search />
+        <IsAuth
           currentUser={this.props.currentUser}
           onClickLogout={this.props.onClickLogout} />
       </Head>

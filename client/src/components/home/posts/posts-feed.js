@@ -12,7 +12,7 @@ const Posts = props => {
   if (!props.posts) {
     return <article className='pp'>Loading...</article>
   }
-
+  
   if (props.posts.length === 0) {
     return <article className='pp'>No posts are here... yet.</article>
   }

@@ -1,15 +1,18 @@
-import React, { Component } from 'react'
-import { Search } from './searchbox-styles'
+import React, { Component, Fragment } from 'react'
+import { SearchBox, Magnifier } from './searchbox-styles'
 
-class Searchbox extends Component {
+class Search extends Component {
   render() {
     return (
-      <Search
-        type='text'
-        className='nav-search'
-      />
+      <Fragment>
+        <SearchBox
+          type='text'
+          placeholder='What are you looking for ?' />
+        <Magnifier
+          size='26px' />
+      </Fragment>
     )
   }
 }
 
-export default Searchbox
+export default Search

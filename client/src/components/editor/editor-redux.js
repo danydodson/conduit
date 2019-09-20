@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import Errors from '../errors'
 import Dropzone from './dropzone/dropzone-redux'
 import agent from '../../middleware/middle-agent'
 import mediums from './mediums'
@@ -115,6 +116,8 @@ class Editor extends React.Component {
             title={this.props.title}
             medium={this.props.medium} />
         )}
+
+        <Errors errors={this.props.errors} />
 
         <form className='editor-form'>
           <fieldset className='form-group'>

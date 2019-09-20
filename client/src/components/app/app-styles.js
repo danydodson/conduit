@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
   button:focus {
     outline:0;
   }
-  
+
   ul {
     list-style-type: none;
   }
@@ -53,8 +53,31 @@ const GlobalStyle = createGlobalStyle`
     margin: auto;
     @media (min-width: 768px) { width: 97%; }
     @media (min-width: 992px) { max-width: 1320px; }
-  }  
+  }
 
+  /** React Icons ----------------------------------------------------*/
+
+  .react-nav-icons {
+    vertical-align: middle;
+    color: #8a8a8a;
+    font-size: 20px;
+    cursor: pointer;
+    
+    &:hover {
+      color: #080808;
+    }
+  }
+
+  .react-icon-gear {
+    vertical-align: middle;
+    color: #8a8a8a;
+    font-size: 20px;
+    padding: 3px 0 1px 0;
+    &:hover {
+      color: #080808;
+    }
+  }
+  
   /** Editor Form Page -------------------------------------------------*/
   
   .editor-form {

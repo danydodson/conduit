@@ -1,44 +1,85 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+// header styles ---------------------------------
+
 export const Head = styled.header`
-  height: 60px;
   width: 100%;
+  height: 60px;
   display: flex;
   position: fixed;
-  z-index: 20;
   align-items: center;
   background-color: #ffffff;
   justify-content: space-between;
+  z-index: 20;
 `
 
-export const NavList = styled.ul`
+// ul list styles ---------------------------------
+
+export const List = styled.ul`
   display: flex;
+  align-items: center;
+  justify-content:space-between;
+
+  @media (max-width: 768px) { 
+    width: 100vw;
+    justify-content: space-around;
+  }
+`
+// li item styles ---------------------------------
+
+export const Item = styled.li`
+  margin: 0 1rem;
+  @media (max-width: 768px) {display: none;}
+`
+
+// Link styles ------------------------------------
+
+export const LnkTo = styled(Link)`
+  display: flex;
+  font-family: 'Didact Gothic';
   align-items: center;
 `
 
-export const Search = styled.input`
-  flex: 1;
-  margin: 0 1rem;
-  padding: 20px;
-  height: 25px;
-  border: none;
-  outline: none;
-  border-radius: 100px;
-  background-color: #f5f5f5;
+// Icon Link styles -------------------------------
+
+export const IcoLnk = styled(Link)`
+  color: #8a8a8a; 
+  transition: .1s; 
+  
+  &:hover { 
+    color: #080808
+  }
 `
 
-export const NavItem = styled.li`
-  margin: 0 1rem;
-`
+// vertical ruller styles -------------------------
 
-export const NavLink = styled(Link)`
-  display: flex;
-  /* margin: 0 1rem; */
-  align-items: center;
-`
-
-export const UserImg = styled.img`
+export const Ruller = styled.div`
+  background-color: #d1d1d1;
+  margin: 1px 22px 0px 22px;
+  width: 1px;
   height: 30px;
+
+  @media (max-width: 768px) { 
+    display: none; 
+  }
+`
+
+// li image styles --------------------------------
+
+export const Image = styled.img`
+  opacity: 1;
+  height: 30px;
+  transition: .1s;
   border-radius: 100px;
+
+  &:hover { 
+    opacity: 0.8;
+  }
+`
+
+// li image styles --------------------------------
+
+export const IcoImg = styled.li`
+   margin: 0 1rem;
 `

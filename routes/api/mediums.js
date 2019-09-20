@@ -8,7 +8,7 @@ const Post = mongoose.model('Post')
 router.get('/', (req, res, next) => {
   Post.find()
     .distinct('medium')
-    .then((medium) => res.json({ medium: medium }))
+    .then((mediums) => res.json({ mediums: mediums }))
     .catch(next)
 })
 
