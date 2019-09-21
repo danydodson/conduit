@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
-// import { CloudinaryContext } from 'cloudinary-react'
 import { push } from 'connected-react-router'
-import { connect } from 'react-redux'
+
 import { store } from '../../store'
+import { connect } from 'react-redux'
+
+import FontsLoader from '../../helpers/font-loader'
 import agent from '../../middleware/middle-agent'
 
 import Header from '../header'
@@ -55,6 +57,10 @@ class App extends React.Component {
     const token = window.localStorage.getItem('jwt')
     if (token) agent.setToken(token)
     this.props.onLoad(token ? agent.Auth.current() : null, token)
+  }
+
+  componentDidMount() {
+    FontsLoader()
   }
 
   render() {

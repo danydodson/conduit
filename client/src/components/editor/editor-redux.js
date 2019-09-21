@@ -62,8 +62,8 @@ class Editor extends React.Component {
       this.props.onRemoveTag(tag)
     }
 
-    this.submitForm = e => {
-      e.preventDefault()
+    this.submitForm = ev => {
+      ev.preventDefault()
 
       const post = {
         uploads: this.props.uploaded,

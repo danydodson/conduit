@@ -12,9 +12,7 @@ export const Heart = styled(GoHeart)`
   box-shadow: 0 1px 8px rgba(0,0,0,.1);
   background-color: rgba(250,250,250,.7);
   
-  color: ${props => (
-    props.favorited ? '#f15151' : '#8a8a8a')
-  };
+  color: ${props => props.favorited ? '#f15151' : '#8a8a8a'};
   
   opacity: 0;
   cursor: pointer;

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const MediumList = styled.nav`
   width: 100%;
   padding: 0 16px;
-  padding-top: 50px;
+  padding-top: 70px;
   position: fixed;
   display: flex;
   overflow: auto;

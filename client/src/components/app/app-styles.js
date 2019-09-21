@@ -1,10 +1,13 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
-  
-  :root { 
-    --nav-timem-color: brown;
-  }
+
+  /* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap'); */
+  /* font-family: 'Montserrat', sans-serif; */
+  /* @import url('https://fonts.googleapis.com/css?family=Didact+Gothic&display=swap'); */
+  /* font-family: 'Didact Gothic', sans-serif; */
+  /* @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap'); */
+  /* font-family: 'Varela Round', sans-serif; */
 
   *,
   *::before, 
@@ -12,34 +15,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-rendering: optimizeLegibility;
+    /* text-rendering: optimizeLegibility; */
   }
 
-  html {
-    height: 100%;
-    font-size: 62.5%;
-  
-    @include respond(phone) {
-      /* font-size: 56.25%; */
-      font-size: 50.25%;
-    }
-    
-    @include respond(tab-land) {
-      font-size: 56.25%;
-    }
-    
-    @include respond(tab-port) {
-      font-size: 50%;
-    }
-    
-    @include respond(big-desktop) {
-      font-size: 75%;
-    }
-  }
-  
   body {
-    letter-spacing: 0.01rem;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 16;
+    font-weight: 400;
+    font-family: 'Montserrat';
   }
   
   #app {
@@ -49,35 +31,35 @@ const GlobalStyle = createGlobalStyle`
   a,
   link,
   button {
+    color: #8a8a8a;
+    background: transparent;
+    
     border: none;
     outline: none;
-    color: #8a8a8a;
-    cursor: pointer;
     text-decoration: none;
-    background: transparent;
+    
+    &:hover,
+    :hover {color: #080808;}
+
+    &:focus,
+    :focus {outline:0;}
   }
 
-  button:focus {
-    outline:0;
-  }
+  ul { list-style-type: none;}
 
-  ul {
-    list-style-type: none;
+  fieldset {
+    border: none;
+    outline: none;
   }
-
-  h1 {
-    font-size: 2.2rem;
-    font-weight: 600;
-  }
-
-  @media (max-width: 416px) {} /** */
-  @media (max-width: 450px) {}
-  @media (max-width: 600px) {}
-  @media (max-width: 675px) {} 
-  @media (min-width: 768px) {} /** */
-  @media (max-width: 992px) {}
-  @media (max-width: 1335px) {} /** */
-  @media (max-width: 1710px) {}
+  
+  /* @media (max-width: 416px) {} */
+  /* @media (max-width: 450px) {} */
+  /* @media (max-width: 600px) {} */
+  /* @media (max-width: 675px) {} */
+  /* @media (min-width: 768px) {} */
+  /* @media (max-width: 992px) {} */
+  /* @media (max-width: 1335px) {} */
+  /* @media (max-width: 1710px) {} */
   
   /** Editor Form Page -------------------------------------------------*/
   

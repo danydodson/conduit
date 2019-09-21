@@ -1,23 +1,24 @@
 import React, { Fragment } from 'react'
 
-import { Head } from './header-styles'
-import { List } from './header-styles'
-import { Item } from './header-styles'
-import { Ruller } from './header-styles'
-import { LnkTo } from './header-styles'
-import { IcoLnk } from './header-styles'
-import { Image } from './header-styles'
-import { IcoImg } from './header-styles'
+import { Head } from './styles/header-styles'
+import { List } from './styles/header-styles'
+import { Item } from './styles/header-styles'
+import { Ruller } from './styles/header-styles'
+import { LnkTo } from './styles/header-styles'
+import { IcoLink } from './styles/header-styles'
+import { Image } from './styles/header-styles'
+import { IcoImg } from './styles/header-styles'
 
 import Title from './title'
-import Search from '../searchbox'
-import Kebab from './icons/kabob-icon'
-import Gear from './icons/gear-icon'
-import Logout from './icons/arrow-icon'
-import Pencil from './icons/pencil-icon'
-import Heart from './icons/heart-icon'
-import Archive from './icons/archive-icon'
-import Magnifier from './icons/search-icon'
+import Search from '../searchbar'
+
+import Kebab from './styles/kabob-icon'
+import Gear from './styles/gear-icon'
+import Logout from './styles/arrow-icon'
+import Pencil from './styles/pencil-icon'
+import Heart from './styles/heart-icon'
+import Archive from './styles/archive-icon'
+import Magnifier from './styles/search-icon'
 
 const Visitor = (
   <Fragment>
@@ -29,33 +30,33 @@ const Visitor = (
 const IsAuth = props => {
   return (
     <List>
-      <IcoLnk to='/'><Archive size='30px' title='Mediums' /></IcoLnk>
-      <IcoLnk to='/editor'><Pencil size='30px' title='Upload' /></IcoLnk>
-      <IcoLnk to='/'><Magnifier size='30px' title='Search' /></IcoLnk>
-      <IcoLnk to='/@danydodson'><Heart size='30px' title='Show some love' /></IcoLnk>
+      <IcoLink to='/'><Archive size='30px' title='Mediums' /></IcoLink>
+      <IcoLink to='/editor'><Pencil size='30px' title='Upload' /></IcoLink>
+      <IcoLink to='/'><Magnifier size='30px' title='Search' /></IcoLink>
+      <IcoLink to='/@danydodson'><Heart size='30px' title='Show some love' /></IcoLink>
       {
-        props.currentUser ?
-          (<IcoLnk to='/settings'><Gear size='30px' title='Settings' /></IcoLnk>) :
-          (<IcoLnk to='/login'><Gear size='30px' title='Login' /></IcoLnk>)
+        props.currentUser
+          ?
+          (<IcoLink to='/settings'><Gear size='30px' title='Settings' /></IcoLink>) :
+          (<IcoLink to='/login'><Gear size='30px' title='Login' /></IcoLink>)
       }
       <Item><LnkTo to="/">{`Mediums`}</LnkTo></Item>
       <Item><LnkTo to="/">{`Tags`}</LnkTo></Item>
       <Item><Kebab title='Droptions' size='20px' /></Item>
       <Ruller />
       {
-        props.currentUser ? (
-          <Fragment>
+        props.currentUser
+          ?
+          (<Fragment>
             <Item><LnkTo to='/editor'>{`Create`}</LnkTo></Item>
             <Item><Logout title='Logout' size='20px' onClick={props.onClickLogout} /></Item>
             <IcoImg>
               <LnkTo to={`/@${props.currentUser.username}`}>
-                <Image
-                  src={props.currentUser.image}
-                  alt={props.currentUser.username} />
+                <Image src={props.currentUser.image} alt={props.currentUser.username} />
               </LnkTo>
             </IcoImg>
           </Fragment>
-        ) : Visitor
+          ) : Visitor
       }
     </List>
   )
@@ -76,3 +77,4 @@ class Header extends React.Component {
 }
 
 export default Header
+// export default connect(mapStateToProps, mapDispatchToProps)(Home)

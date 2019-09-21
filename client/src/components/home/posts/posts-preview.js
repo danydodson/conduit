@@ -1,8 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import agent from '../../../middleware/middle-agent'
-import imgSizes from './images/image-sizes'
-import srcSet from './images/image-srcset'
+
+import imgSizes from './images/get-sizes'
+import srcUrl from './images/get-srcurl'
+import srcSet from './images/get-srcset'
+
 import { Figure } from './styles/figure-tint'
 import { Preview } from './styles/article-preview'
 import { PreviewImage } from './styles/img-preview'
@@ -55,7 +58,7 @@ const PostPreview = props => {
                   key={fileName}
                   sizes={imgSizes}
                   srcSet={srcSet(upload)}
-                  // src={size10}
+                  src={srcUrl(upload)}
                   alt={upload.fileName}
                   itemProp='previewImage' />
               )
@@ -92,7 +95,7 @@ const PostPreview = props => {
       <Heart
         title='isfaved'
         onClick={handleClick}
-        favorited={post.favorited ? true : false} />
+        favorited={post.favorited ? 1 : 0} />
 
     </Preview>
   )

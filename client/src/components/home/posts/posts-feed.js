@@ -5,7 +5,7 @@ import Masonry from 'react-masonry-component'
 import styled from 'styled-components'
 
 const masonryOptions = {
-  transitionDuration: 0
+  transitionDuration: 400
 }
 
 const Posts = props => {
