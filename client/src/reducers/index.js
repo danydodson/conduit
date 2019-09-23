@@ -7,20 +7,18 @@ import settings from './settings'
 import home from './home'
 import posts from './posts'
 import post from './post'
-import search from './search'
 import uploaded from './uploaded'
 import editor from './editor'
 
 export default (history) => combineReducers({
   common: common,
   auth: auth,
-  settings: settings,
   home: home,
+  editor: editor,
   profile: profile,
   uploaded: uploaded,
   posts: posts,
   post: post,
-  search: search,
-  editor: editor,
-  router: connectRouter(history)
+  settings: settings,
+  router: connectRouter(history),
 })

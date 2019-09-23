@@ -10,6 +10,13 @@ export const history = createBrowserHistory()
 
 const myRouterMiddleware = routerMiddleware(history)
 
+const composeEnhancers = composeWithDevTools({
+  realtime: true,
+  name: 'SeeSee',
+  hostname: 'localhost',
+  port: 4100
+})
+
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
     return applyMiddleware(
@@ -29,5 +36,5 @@ const getMiddleware = () => {
 
 export const store = createStore(
   reducer(history),
-  composeWithDevTools(getMiddleware())
+  composeEnhancers(getMiddleware())
 )

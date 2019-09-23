@@ -1,19 +1,19 @@
 /* eslint no-unused-vars: "off"*/
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
+import { CLOUD_UPLOAD, CLOUD_PRESET } from '../../../configs/cloud-configs'
 import { connect } from 'react-redux'
 import Loading from '../../loading'
+import Errors from '../../errors'
 import DropzoneStatus from './dropzone-status'
+
 import request from 'superagent'
 
 import {
   UPLOADER_FORM_LOADED,
   UPLOADER_UPDATE_UPLOAD,
   UPLOADER_ITEMS_UPLOADED,
-  UPLOADER_FORM_UNLOADED,
+  UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../../../constants'
-
-const post = process.env.REACT_APP_CL_POST
-const preset = process.env.REACT_APP_CL_PRESET
 
 const mapStateToProps = state => ({ ...state })
 
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   onUploaded: (uploads) =>
     dispatch({ type: UPLOADER_ITEMS_UPLOADED, uploads }),
   onUnload: () =>
-    dispatch({ type: UPLOADER_FORM_UNLOADED }),
+    dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
 })
 
 class Dropzone extends Component {
@@ -72,7 +72,8 @@ class Dropzone extends Component {
     return Math.floor(Math.random() * Math.floor(max))
   }
 
-  onProgress(id, fileName, progress) {
+  onProgress(err, id, fileName, progress) {
+    if (err) console.log(err)
     this.props.onUpdate({ id: id, fileName: fileName, progress: progress })
   }
 
@@ -88,8 +89,8 @@ class Dropzone extends Component {
       const medium = this.props.medium
       const author = this.props.common.currentUser.username
       const name = `${medium}_${this.getRandomInt(999)}`
-      request.post(post)
-        .field('upload_preset', preset)
+      request.post(CLOUD_UPLOAD)
+        .field('upload_preset', CLOUD_PRESET)
         .field('file', file)
         .field('name', file)
         .field('folder', `${medium}`)
@@ -97,36 +98,48 @@ class Dropzone extends Component {
         .field('multiple', true)
         .field('tags', [`${medium}`])
         .field('context', `medium=${medium}|author=${author}`)
-        .on('progress', prog => this.onProgress(uid, name, prog))
-        .end((err, res) => this.onUploaded(uid, name, res))
+        .on('progress', progress => this.onProgress(uid, name, progress))
+        .end((err, res) => this.onUploaded(err, uid, name, res))
     }
   }
 
   render() {
+
     const { hover } = this.state
     const { loading } = this.props
+
     return (
-      <div
-        onDrop={this.onDrop}
-        onDragOver={this.onDragOver}
-        onDragLeave={this.onDragLeave}
-        className={hover ? 'dropzone hover' : 'dropzone'}>
-        <input
-          type='file'
-          id='fileupload'
-          accept='image/*'
-          multiple='multiple'
-          ref={fileInputEl => this.fileInputEl = fileInputEl}
-          onChange={() => this.handleUploads(this.fileInputEl.files)} />
-        <div className='drag-files'>
-          {loading ? <Loading /> : 'Drag files to upload'}
+      <Fragment>
+
+        <Errors errors={this.props.errors} />
+
+        <div
+          onDrop={this.onDrop}
+          onDragOver={this.onDragOver}
+          onDragLeave={this.onDragLeave}
+          className={hover ? 'dropzone hover' : 'dropzone'}>
+
+          <input
+            type='file'
+            id='fileupload'
+            accept='image/*'
+            multiple='multiple'
+            ref={fileInputEl => this.fileInputEl = fileInputEl}
+            onChange={() => this.handleUploads(this.fileInputEl.files)} />
+
+          <div className='drag-files'>
+            {loading ? <Loading /> : 'Drag files to upload'}
+          </div>
+
+          <div className='response_wrap'>
+            {
+              this.props.uploaded.map((upload, index) => {
+                return (<DropzoneStatus key={index} upload={upload} />)
+              })
+            }
+          </div>
         </div>
-        <div className='response_wrap'>
-          {this.props.uploaded.map((upload, index) => {
-            return (<DropzoneStatus key={index} upload={upload} />)
-          })}
-        </div>
-      </div>
+      </Fragment>
     )
   }
 }

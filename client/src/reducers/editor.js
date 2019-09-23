@@ -20,7 +20,7 @@ export default (state = {}, action) => {
         title: action.payload ? action.payload.post.title : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
-        medium: action.payload ? action.payload.post.medium : [],
+        medium: action.payload ? action.payload.post.medium : '',
         shareable: action.payload ? true : false,
         allow_comments: action.payload ? true : false,
         purchasable: action.payload ? true : false,

@@ -44,7 +44,7 @@ class Post extends React.Component {
     const canModify = this.props.currentUser &&
       this.props.currentUser.username === this.props.post.author.username
 
-    const BASE = process.env.REACT_APP_CL_BASE
+    const BASE = process.env.REACT_APP_CLOUD_BASE
 
     const rs = this.props.post.uploads[0].response.body.resource_type
     const tp = this.props.post.uploads[0].response.body.type

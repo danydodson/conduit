@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { push } from 'connected-react-router'
-
 import { store } from '../../store'
 import { connect } from 'react-redux'
 
+import { CloudinaryContext } from 'cloudinary-react'
+import { CLOUD_NAME, CLOUD_PRESET } from '../../configs/cloud-configs'
 import FontsLoader from '../../helpers/font-loader'
 import agent from '../../middleware/middle-agent'
 
@@ -66,7 +67,9 @@ class App extends React.Component {
   render() {
     if (this.props.appLoaded) {
       return (
-        <Fragment>
+        <CloudinaryContext
+          cloudName={CLOUD_NAME}
+          uploadPreset={CLOUD_PRESET}>
           <Header
             appName={this.props.appName}
             currentUser={this.props.currentUser}
@@ -83,16 +86,19 @@ class App extends React.Component {
             <Route path="/@:username" component={Profile} />
           </Switch>
           <Styles />
-        </Fragment>
+        </CloudinaryContext>
       )
     }
     return (
-      <Fragment>
+      // <Fragment>
+      <CloudinaryContext
+        cloudName={CLOUD_NAME}
+        uploadPreset={CLOUD_PRESET}>
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
         <Styles />
-      </Fragment>
+      </CloudinaryContext>
     )
   }
 }

@@ -5,21 +5,17 @@ const slug = require('slug')
 const User = mongoose.model('User')
 
 const PostSchema = new Schema({
-  title: String,
   uploads: [{}],
+  title: String,
   description: String,
   body: String,
   medium: [String],
-  shareable: Boolean,
-  allow_comments: Boolean,
   purchasable: Boolean,
   price: String,
+  shareable: Boolean,
   tagList: [String],
-  // thumb_url: String,
-  // preview_url: String,
-  // modal_url: String,
-  // permalink: String,
-  // featured: Boolean,
+  allow_comments: Boolean,
+  featured: Boolean,
   slug: { type: String, lowercase: true, unique: true },
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   favoritesCount: { type: Number, default: 0 },
@@ -53,8 +49,8 @@ PostSchema.methods.updateFavoriteCount = function () {
 
 PostSchema.methods.toJSONFor = function (user) {
   return {
-    title: this.title,
     uploads: this.uploads,
+    title: this.title,
     description: this.description,
     body: this.body,
     medium: this.medium,
@@ -62,13 +58,12 @@ PostSchema.methods.toJSONFor = function (user) {
     price: this.price,
     shareable: this.shareable,
     tagList: this.tagList,
-    //thumb_url: this.thumb_url,
-    //preview_url: this.preview_url,
-    //modal_url: this.modal_url,
-    //permalink: this.perma_link,
+    allow_comments: Boolean,
+    featured: Boolean,
     slug: this.slug,
     author: this.author.toProfileJSONFor(user),
     favoritesCount: this.favoritesCount,
+    comments: this.comments,
     favorited: user ? user.isFavorite(this._id) : false,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt

@@ -20,6 +20,7 @@ router.param('post', (req, res, next, slug) => {
 })
 
 //-----------------------------------------------------------------------
+// Preload comment objects on routes 
 
 router.param('comment', (req, res, next, id) => {
   Comment.findById(id).then((comment) => {
@@ -32,6 +33,9 @@ router.param('comment', (req, res, next, id) => {
 //-----------------------------------------------------------------------
 
 router.get('/', auth.optional, (req, res, next) => {
+
+  // query all mediums and tags
+
   let query = {}
   let limit = 20
   let offset = 0
@@ -55,6 +59,7 @@ router.get('/', auth.optional, (req, res, next) => {
   ]).then(results => {
     let author = results[0]
     let favoriter = results[1]
+
     if (author) { query.author = author._id }
     if (favoriter) {
       query._id = { $in: favoriter.favorites }
@@ -133,14 +138,6 @@ router.post('/', auth.required, (req, res, next) => {
     let post = new Post(req.body.post)
     post.author = user
     return post.save().then(() => {
-      console.info(chalk.blue(`
-      ${`New Post !`}`))
-      console.info(chalk.blue(`
-      ${`username: ${post.author.username}`}
-      ${`email: ${post.author.email}`}
-      ${`created at: ${post.author.createdAt}`}
-      ${`updated at: ${post.author.updatedAt}`}
-      `))
       return res.json({ post: post.toJSONFor(user) })
     })
   }).catch(next)
@@ -169,6 +166,9 @@ router.put('/:post', auth.required, (req, res, next) => {
       if (typeof req.body.post.uploads !== 'undefined') {
         req.post.uploads = req.body.post.uploads
       }
+      if (typeof req.body.post.medium !== 'undefined') {
+        req.post.medium = req.body.post.medium
+      }
       if (typeof req.body.post.title !== 'undefined') {
         req.post.title = req.body.post.title
       }
@@ -177,9 +177,6 @@ router.put('/:post', auth.required, (req, res, next) => {
       }
       if (typeof req.body.post.body !== 'undefined') {
         req.post.body = req.body.post.body
-      }
-      if (typeof req.body.post.medium !== 'undefined') {
-        req.post.medium = req.body.post.medium
       }
       if (typeof req.body.post.shareable !== 'undefined') {
         req.post.shareable = req.body.post.shareable
@@ -212,7 +209,9 @@ router.delete('/:post', auth.required, (req, res, next) => {
   User.findById(req.payload.id).then(user => {
     if (!user) return res.sendStatus(401)
     if (req.post.author._id.toString() === req.payload.id.toString()) {
-      return req.post.remove().then(() => res.sendStatus(204))
+      return Comment.deleteMany({ post: { $eq: req.post.id } }).then(() => {
+        return req.post.remove().then(() => res.sendStatus(204))
+      })
     } else {
       return res.sendStatus(403)
     }

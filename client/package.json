@@ -10,6 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "cloudinary-core": "^2.7.4",
     "cloudinary-react": "^1.1.4",
     "connected-react-router": "^6.5.2",
     "dotenv": "^8.1.0",
@@ -57,7 +58,7 @@
       "node": true
     },
     "extends": [
-      "eslint:recommended"
+
     ],
     "parser": "babel-eslint",
     "parserOptions": {

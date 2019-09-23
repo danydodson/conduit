@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import request from 'superagent'
 
-import {
-  UPLOADER_DELETE_UPLOAD
-} from '../../../constants'
-
-const CL_DELETE = `${process.env.REACT_APP_CL_DELETE}`
+import { CLOUD_DELETE } from '../../../configs/cloud-configs'
+import { UPLOADER_DELETE_UPLOAD } from '../../../constants'
 
 const mapStateToProps = state => ({ ...state })
 
@@ -19,7 +16,7 @@ class DropzoneStatus extends Component {
 
   deleteUpload() {
     request
-      .post(CL_DELETE)
+      .post(CLOUD_DELETE)
       .set('Content-Type', 'application/json')
       .set('X-Requested-With', 'XMLHttpRequest')
       .send({ token: this.props.upload.response.body.delete_token })
@@ -34,7 +31,7 @@ class DropzoneStatus extends Component {
 
   render() {
 
-    const upload = this.props.upload
+    const upload = this.props.uploaded
     const response = upload.response
     const data = response && response.body
     const percent = Math.floor(upload.progress.percent)

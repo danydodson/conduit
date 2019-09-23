@@ -1,9 +1,10 @@
 import superagentPromise from 'superagent-promise'
 import _superagent from 'superagent'
+import { LOCAL_API } from '../configs/cloud-configs'
 
 const superagent = superagentPromise(_superagent, global.Promise)
-const LOCAL_API = process.env.REACT_APP_LOCAL_API
 const encode = encodeURIComponent
+
 const responseBody = res => res.body
 
 let token = null

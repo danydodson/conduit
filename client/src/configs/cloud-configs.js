@@ -1,0 +1,9 @@
+export const LOCAL_API = `${process.env.REACT_APP_LOCAL_API}`
+export const CLOUD_NAME = `${process.env.REACT_APP_CLOUD_NAME}`
+export const CLOUD_PRESET = `${process.env.REACT_APP_CLOUD_PRESET}`
+export const CLOUD_KEY = `${process.env.REACT_APP_CLOUD_KEY}`
+export const CLOUD_SECRET = `${process.env.REACT_APP_CLOUD_SECRET}`
+export const CLOUD_UPLOAD = `${process.env.REACT_APP_CLOUD_UPLOAD}`
+export const CLOUD_DELIVERY = `${process.env.REACT_APP_CLOUD_DELIVERY}`
+export const CLOUD_DELIVERY_TWITTER = `${process.env.REACT_APP_CLOUD_DELIVERY_TWITTER}`
+export const CLOUD_DELETE = `${process.env.REACT_APP_CLOUD_DELETE}`

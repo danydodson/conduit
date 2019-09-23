@@ -120,6 +120,7 @@ class Editor extends React.Component {
         <Errors errors={this.props.errors} />
 
         <form className='editor-form'>
+
           <fieldset className='form-group'>
             <select
               className='select'
@@ -165,7 +166,7 @@ class Editor extends React.Component {
             </textarea>
           </fieldset>
 
-          {/* <fieldset className='form-group'>
+          <fieldset className='form-group'>
             shareable
                   <input
               id='shareable'
@@ -204,7 +205,7 @@ class Editor extends React.Component {
                 value={this.props.price}
                 onChange={this.changePrice} />
             </fieldset>
-          ) : null} */}
+          ) : null}
 
           <fieldset className='form-group'>
             <input

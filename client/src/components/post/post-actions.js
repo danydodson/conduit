@@ -7,6 +7,9 @@ import {
   POST_ITEM_DELETE_POST
 } from '../../constants'
 
+// import request from 'superagent'
+// const CL_DELETE = `${process.env.REACT_APP_CL_DELETE}`
+
 const mapDispatchToProps = dispatch => ({
   onClickDelete: payload =>
     dispatch({ type: POST_ITEM_DELETE_POST, payload })
@@ -16,7 +19,17 @@ const PostActions = props => {
 
   const post = props.post
 
-  const del = () => {
+  // const removeFromCloud = () => {
+  //   request
+  //     .post(CL_DELETE)
+  //     .set('Content-Type', 'application/json')
+  //     .set('X-Requested-With', 'XMLHttpRequest')
+  //     .send({ token: `${post.uploads[0].response.body.delete_token}` })
+  //     .then(removePost)
+  //     .catch(err => console.log(err))
+  // }
+
+  const removePost = () => {
     props.onClickDelete(agent.Posts.del(post.slug))
   }
 
@@ -26,7 +39,7 @@ const PostActions = props => {
         <Link to={`/editor/${post.slug}`}>
           {'Edit Post'}
         </Link>
-        <button onClick={del}>
+        <button onClick={removePost}>
           {'Delete Post'}
         </button>
       </span>

@@ -6,6 +6,11 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
 
+    case APP_ASYNC_START:
+      return {
+        ...state,
+        inProgress: true
+      }
     case SETTINGS_FORM_SAVED:
       return {
         ...state,
@@ -14,11 +19,6 @@ export default (state = {}, action) => {
           : null
       }
 
-    case APP_ASYNC_START:
-      return {
-        ...state,
-        inProgress: true
-      }
 
     default:
       return state
