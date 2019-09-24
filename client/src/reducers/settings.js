@@ -11,6 +11,7 @@ export default (state = {}, action) => {
         ...state,
         inProgress: true
       }
+
     case SETTINGS_FORM_SAVED:
       return {
         ...state,

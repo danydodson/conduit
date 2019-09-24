@@ -1,14 +1,14 @@
 import {
   UPLOADER_UPDATE_UPLOAD,
   UPLOADER_DELETE_UPLOAD,
-  // UPLOADER_FORM_ITEMS_UNLOADED,
+  UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../constants'
 
 export default (uploaded = [], action) => {
   switch (action.type) {
 
-    // case UPLOADER_FORM_ITEMS_UNLOADED:
-    //   return uploaded = []
+    case UPLOADER_FORM_ITEMS_UNLOADED:
+      return uploaded = []
 
     case UPLOADER_UPDATE_UPLOAD: {
       let upIndex = -1

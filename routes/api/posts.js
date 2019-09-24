@@ -5,6 +5,8 @@ const Comment = mongoose.model('Comment')
 const User = mongoose.model('User')
 const chalk = require('chalk')
 const auth = require('../auth/auth-token')
+// const CLOUD_KEY = require('./config').CLOUD_KEY
+const CLOUD_SECRET = require('../../config').CLOUD_SECRET
 
 //-----------------------------------------------------------------------
 // Preload post objects on routes with ':post'
@@ -137,6 +139,11 @@ router.post('/', auth.required, (req, res, next) => {
     if (!user) return res.sendStatus(401)
     let post = new Post(req.body.post)
     post.author = user
+    post.signature = post.setSignature(
+      'public_id=' + post.uploads[0].fileName +
+      '&timestamp=' + post.uploads[0].response.body.version
+      + CLOUD_SECRET
+    )
     return post.save().then(() => {
       return res.json({ post: post.toJSONFor(user) })
     })

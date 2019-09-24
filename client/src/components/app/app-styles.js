@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   /* font-family: 'Varela Round', sans-serif; */
 
   *,
-  *::before, 
+  *::before,
   *::after {
     margin: 0;
     padding: 0;
@@ -100,7 +100,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   .preview {
-    width: 10rem
+    width: 10rem;
   }
   
   .preview:hover{

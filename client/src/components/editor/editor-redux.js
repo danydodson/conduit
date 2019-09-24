@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import { CLOUD_SECRET } from '../../configs/cloud-configs'
 import Errors from '../errors'
 import Dropzone from './dropzone/dropzone-redux'
 import agent from '../../middleware/middle-agent'
 import mediums from './mediums'
+import crypto from 'crypto'
 
 import {
   EDITOR_FORM_LOADED,
@@ -45,6 +47,7 @@ class Editor extends React.Component {
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
     this.changeMedium = updateFieldEvent('medium')
+    this.changeSignature = updateFieldEvent('signature')
     this.changeShareable = updateCheckEvent('shareable')
     this.changeAllowComments = updateCheckEvent('allow_comments')
     this.changePurchasable = updateCheckEvent('purchasable')
@@ -62,11 +65,16 @@ class Editor extends React.Component {
       this.props.onRemoveTag(tag)
     }
 
+    this.setSignature = data => {
+      crypto.createHash('sha1').update(data + CLOUD_SECRET, 'utf8').digest('hex')
+    }
+
     this.submitForm = ev => {
       ev.preventDefault()
 
       const post = {
         uploads: this.props.uploaded,
+        signature: this.props.signature || this.props.signature,
         title: this.props.title || `untitled ${this.props.medium} post`,
         description: this.props.description,
         body: this.props.body,
@@ -78,9 +86,10 @@ class Editor extends React.Component {
         tagList: this.props.tagList,
       }
 
-      const slug = { slug: this.props.postSlug }
+      // const signature = { signature: this.props.signature }
+      const slug = { slug: this.props.slug }
 
-      const promise = this.props.postSlug ?
+      const promise = this.props.slug ?
         agent.Posts.update(Object.assign(post, slug)) :
         agent.Posts.create(post)
 
@@ -142,6 +151,16 @@ class Editor extends React.Component {
             <input
               className='form-control form-control-lg'
               type='text'
+              placeholder='Post Signature'
+              value={this.props.signature}
+              onChange={this.changeMedium}
+            />
+          </fieldset>
+
+          <fieldset className='form-group'>
+            <input
+              className='form-control form-control-lg'
+              type='text'
               placeholder='Post Title'
               value={this.props.title}
               onChange={this.changeTitle} />
@@ -167,8 +186,8 @@ class Editor extends React.Component {
           </fieldset>
 
           <fieldset className='form-group'>
-            shareable
-                  <input
+            {'shareable'}
+            <input
               id='shareable'
               type='checkbox'
               placeholder='shareable'
@@ -177,8 +196,8 @@ class Editor extends React.Component {
           </fieldset>
 
           <fieldset className='form-group'>
-            allow_comments
-                  <input
+            {'allow_comments'}
+            <input
               id='allow_comments'
               type='checkbox'
               placeholder='allow_comments'
@@ -187,8 +206,8 @@ class Editor extends React.Component {
           </fieldset>
 
           <fieldset className='form-group'>
-            purchasable
-                  <input
+            {'purchasable'}
+            <input
               id='purchasable'
               type='checkbox'
               placeholder='purchasable'

@@ -17,6 +17,7 @@ export default (state = {}, action) => {
         ...state,
         postSlug: action.payload ? action.payload.post.slug : '',
         uploads: action.payload ? action.payload.post.uploads : [],
+        signature: action.payload ? action.payload.post.signature : '',
         title: action.payload ? action.payload.post.title : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
@@ -28,7 +29,7 @@ export default (state = {}, action) => {
         tagInput: '',
         tagList: action.payload ? action.payload.post.tagList : []
       }
-      
+
     case EDITOR_FORM_UNLOADED:
       return {}
 

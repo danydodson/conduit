@@ -7,6 +7,7 @@ import settings from './settings'
 import home from './home'
 import posts from './posts'
 import post from './post'
+// import upload from './upload'
 import uploaded from './uploaded'
 import editor from './editor'
 
@@ -16,6 +17,7 @@ export default (history) => combineReducers({
   home: home,
   editor: editor,
   profile: profile,
+  // upload: upload,
   uploaded: uploaded,
   posts: posts,
   post: post,

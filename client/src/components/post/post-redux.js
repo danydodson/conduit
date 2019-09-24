@@ -5,6 +5,8 @@ import Comments from './comment'
 import agent from '../../middleware/middle-agent'
 import marked from 'marked'
 
+import { CLOUD_DELIVERY } from '../../configs/cloud-configs'
+
 import {
   POST_ITEM_LOADED,
   POST_ITEM_UNLOADED
@@ -44,10 +46,6 @@ class Post extends React.Component {
     const canModify = this.props.currentUser &&
       this.props.currentUser.username === this.props.post.author.username
 
-    const BASE = process.env.REACT_APP_CLOUD_BASE
-
-    const rs = this.props.post.uploads[0].response.body.resource_type
-    const tp = this.props.post.uploads[0].response.body.type
     const vr = this.props.post.uploads[0].response.body.version
     const id = this.props.post.uploads[0].response.body.public_id
     const fm = this.props.post.uploads[0].response.body.format
@@ -68,7 +66,7 @@ class Post extends React.Component {
             <img
               key={public_id}
               alt={upload.fileName}
-              src={`${BASE}/${rs}/${tp}/w_333,c_scale/v${vr}/${id}.${fm}`} />
+              src={`${CLOUD_DELIVERY}/w_333,c_scale/v${vr}/${id}.${fm}`} />
           )
         })}
 

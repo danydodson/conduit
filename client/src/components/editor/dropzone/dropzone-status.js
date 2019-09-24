@@ -31,10 +31,10 @@ class DropzoneStatus extends Component {
 
   render() {
 
-    const upload = this.props.uploaded
+    const upload = this.props.upload
     const response = upload.response
     const data = response && response.body
-    // const percent = Math.floor(upload.progress.percent)
+    const percent = Math.floor(upload.progress.percent)
 
     return (
       <div className='container'>
@@ -43,17 +43,29 @@ class DropzoneStatus extends Component {
             <button
               className="delete-image"
               onClick={this.deleteUpload.bind(this)}>
-              {data && <img
-                className='preview'
-                alt={data.fileName}
-                src={data.secure_url} />}
+              {data && (
+                <img
+                  className='preview'
+                  alt={data.fileName}
+                  src={data.secure_url} />
+              )}
             </button>
           )
         }
-
+        <div className="status">
+          {!response && (
+            <div>
+              {percent}{'%...'}
+              <div
+                role="progressbar"
+                className="progress progress-bar"
+                style={{ width: percent + '%' }}>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(DropzoneStatus)

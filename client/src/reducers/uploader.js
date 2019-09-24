@@ -23,4 +23,3 @@ export default (uploads = [], action) => {
       return [...uploads]
   }
 }
-

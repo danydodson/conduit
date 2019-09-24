@@ -2,10 +2,12 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 const Schema = mongoose.Schema
 const slug = require('slug')
+const crypto = require('crypto')
 const User = mongoose.model('User')
 
 const PostSchema = new Schema({
   uploads: [{}],
+  signature: String,
   title: String,
   description: String,
   body: String,
@@ -20,6 +22,7 @@ const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   favoritesCount: { type: Number, default: 0 },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+
 },
   { timestamps: true }
 )
@@ -45,6 +48,18 @@ PostSchema.methods.updateFavoriteCount = function () {
       post.favoritesCount = count
       return post.save()
     })
+}
+
+PostSchema.methods.validateSignature = function (signature) {
+  var hash = crypto.pbkdf2Sync(signature, this.salt, 10000, 512, 'sha1').toString('hex')
+  return this.hash === hash
+}
+
+PostSchema.methods.setSignature = function (signature) {
+  var hash = crypto.createHash('sha1').update(signature, 'utf8').digest('hex')
+  this.signature = hash
+  return this.signature
+
 }
 
 PostSchema.methods.toJSONFor = function (user) {

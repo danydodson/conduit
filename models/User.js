@@ -3,13 +3,17 @@ var uniqueValidator = require('mongoose-unique-validator')
 var crypto = require('crypto')
 var jwt = require('jsonwebtoken')
 var SECRET = require('../config').SECRET
-var CLOUD_DELIVERY = require('../config').CLOUD_DELIVERY
+
+var DEFAULT_IMAGE = `https://res.cloudinary.com/seesee/image/upload/c_scale,h_200,w_200/v1569294732/sample.webp`
 
 var UserSchema = new mongoose.Schema({
   bio: String,
   hash: String,
   salt: String,
-  image: String,
+  image: {
+    type: String,
+    default: `${DEFAULT_IMAGE}`
+  },
   username: {
     type: String,
     index: true,
@@ -66,7 +70,7 @@ UserSchema.methods.toAuthJSON = function () {
     email: this.email,
     token: this.generateJWT(),
     bio: this.bio,
-    image: this.image
+    image: this.image,
   }
 }
 
@@ -74,8 +78,8 @@ UserSchema.methods.toProfileJSONFor = function (user) {
   return {
     username: this.username,
     bio: this.bio,
-    image: this.image || `${CLOUD_DELIVERY}/c_scale,w_200/v1569294732/sample.webp`,
-    following: user ? user.isFollowing(this._id) : false
+    image: this.image,
+    following: user ? user.isFollowing(this._id) : false,
   }
 }
 

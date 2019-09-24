@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: "off"*/
 import React, { Component, Fragment } from "react"
-import { CLOUD_UPLOAD, CLOUD_PRESET } from '../../../configs/cloud-configs'
+import { CLOUD_SECRET, CLOUD_UPLOAD, CLOUD_PRESET } from '../../../configs/cloud-configs'
 import { connect } from 'react-redux'
 import Loading from '../../loading'
 import Errors from '../../errors'
@@ -9,23 +9,23 @@ import DropzoneStatus from './dropzone-status'
 import request from 'superagent'
 
 import {
-  // UPLOADER_FORM_LOADED,
+  UPLOADER_FORM_LOADED,
   UPLOADER_UPDATE_UPLOAD,
   UPLOADER_ITEMS_UPLOADED,
-  // UPLOADER_FORM_ITEMS_UNLOADED,
+  UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../../../constants'
 
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
-  // onLoad: () =>
-  //   dispatch({ type: UPLOADER_FORM_LOADED }),
+  onLoad: () =>
+    dispatch({ type: UPLOADER_FORM_LOADED }),
   onUpdate: (upload) =>
     dispatch({ type: UPLOADER_UPDATE_UPLOAD, upload }),
   onUploaded: (uploads) =>
     dispatch({ type: UPLOADER_ITEMS_UPLOADED, uploads }),
-  // onUnload: () =>
-  //   dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
+  onUnload: () =>
+    dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
 })
 
 class Dropzone extends Component {
@@ -60,13 +60,13 @@ class Dropzone extends Component {
     this.setState({ hover: false })
   }
 
-  // UNSAFE_componentWillMount() {
-  //   this.props.onLoad()
-  // }
+  UNSAFE_componentWillMount() {
+    this.props.onLoad()
+  }
 
-  // componentWillUnmount() {
-  //   this.props.onUnload()
-  // }
+  componentWillUnmount() {
+    this.props.onUnload()
+  }
 
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max))
@@ -77,31 +77,29 @@ class Dropzone extends Component {
   }
 
   onUploaded(id, fileName, response) {
-    // this.setState({ uploaded: [...this.state.uploaded, response] })
     this.props.onUpdate({ id: id, fileName: fileName, response: response, })
     this.props.onUploaded([response.body])
   }
 
   handleUploads(files) {
+
     for (let file of files) {
       const uid = this.uid++
       const medium = this.props.medium
-      const author = this.props.common.currentUser.username
+      // const auth_email = this.props.common.currentUser.email
+      // const auth_name = this.props.common.currentUser.username
       const name = `${medium}_${this.getRandomInt(999)}`
       request.post(CLOUD_UPLOAD)
-        .field('upload_preset', CLOUD_PRESET)
         .field('file', file)
+        .field('upload_preset', CLOUD_PRESET)
+        .field('public_id', `${name}`)
         // .field('name', file)
         // .field('folder', `${medium}`)
-        .field('multiple', true)
-        .field('public_id', `${name}`)
-        .field('tags', [`${medium}`])
-        .field('context', `medium=${medium}|author=${author}`)
-        .on('progress', progress => {
-          console.log(file.progress)
-          this.onProgress(uid, name, progress)
-        })
-        .end((err, response) => this.onUploaded(uid, name, response))
+        // .field('multiple', true)
+        // .field('tags', [`${medium}`])
+        // .field('context', `medium=${medium}|author_email=${auth_email}|author_name=${auth_name}`)
+        .on('progress', (progress) => this.onProgress(uid, name, progress))
+        .end((err, response) => { this.onUploaded(uid, name, response) })
     }
   }
 
@@ -134,11 +132,9 @@ class Dropzone extends Component {
           </div>
 
           <div className='response_wrap'>
-            {
-              this.props.uploaded.map((upload, index) => {
-                return (<DropzoneStatus key={index} upload={upload} />)
-              })
-            }
+            {this.props.uploaded.map((upload, index) => {
+              return <DropzoneStatus key={index} upload={upload} />
+            })}
           </div>
         </div>
       </Fragment>
