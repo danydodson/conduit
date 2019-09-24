@@ -1,6 +1,9 @@
 module.exports = {
-  DBURI: `${process.env.DBURI}`,
+  MONGO_URI: `${process.env.DBURI}`,
   SECRET: `${process.env.SECRET}`,
-  CLOUD: `${process.env.CLOUD}`,
-  PRESET: `${process.env.PRESET}`
+  CLOUD_NAME: `${process.env.CLOUD_NAME}`,
+  CLOUD_PRESET: `${process.env.CLOUD_PRESET}`,
+  CLOUD_KEY: `${process.env.CLOUD_KEY}`,
+  CLOUD_SECRET: `${process.env.CLOUD_SECRET}`,
+  CLOUD_DELIVERY: `${process.env.CLOUD_DELIVERY}`,
 }

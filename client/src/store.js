@@ -10,12 +10,9 @@ export const history = createBrowserHistory()
 
 const myRouterMiddleware = routerMiddleware(history)
 
-const composeEnhancers = composeWithDevTools({
-  realtime: true,
-  name: 'SeeSee',
-  hostname: 'localhost',
-  port: 4100
-})
+// import { composeWithDevTools } from 'remote-redux-devtools'
+// import devToolsEnhancer from 'remote-redux-devtools'
+// const composeEnhancers = composeWithDevTools({ realtime: true, name: 'SeeSee', hostname: 'localhost', port: 8000, trace: true, suppressConnectErrors: false, })
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -36,5 +33,5 @@ const getMiddleware = () => {
 
 export const store = createStore(
   reducer(history),
-  composeEnhancers(getMiddleware())
+  composeWithDevTools(getMiddleware())
 )

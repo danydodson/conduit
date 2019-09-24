@@ -11,12 +11,12 @@ const app = express()
 
 require('dotenv').config()
 
-const DBURI = require('./config').DBURI
+const MONGO_URI = require('./config').MONGO_URI
 const SECRET = require('./config').SECRET
 const PORT = process.env.PORT || '5001'
 const PROD = 'production'
 
-mongoose.connect(DBURI, {
+mongoose.connect(MONGO_URI, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useFindAndModify: false

@@ -9,23 +9,23 @@ import DropzoneStatus from './dropzone-status'
 import request from 'superagent'
 
 import {
-  UPLOADER_FORM_LOADED,
+  // UPLOADER_FORM_LOADED,
   UPLOADER_UPDATE_UPLOAD,
   UPLOADER_ITEMS_UPLOADED,
-  UPLOADER_FORM_ITEMS_UNLOADED,
+  // UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../../../constants'
 
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: () =>
-    dispatch({ type: UPLOADER_FORM_LOADED }),
+  // onLoad: () =>
+  //   dispatch({ type: UPLOADER_FORM_LOADED }),
   onUpdate: (upload) =>
     dispatch({ type: UPLOADER_UPDATE_UPLOAD, upload }),
   onUploaded: (uploads) =>
     dispatch({ type: UPLOADER_ITEMS_UPLOADED, uploads }),
-  onUnload: () =>
-    dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
+  // onUnload: () =>
+  //   dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
 })
 
 class Dropzone extends Component {
@@ -60,20 +60,19 @@ class Dropzone extends Component {
     this.setState({ hover: false })
   }
 
-  UNSAFE_componentWillMount() {
-    this.props.onLoad()
-  }
+  // UNSAFE_componentWillMount() {
+  //   this.props.onLoad()
+  // }
 
-  componentWillUnmount() {
-    this.props.onUnload()
-  }
+  // componentWillUnmount() {
+  //   this.props.onUnload()
+  // }
 
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max))
   }
 
-  onProgress(err, id, fileName, progress) {
-    if (err) console.log(err)
+  onProgress(id, fileName, progress) {
     this.props.onUpdate({ id: id, fileName: fileName, progress: progress })
   }
 
@@ -92,14 +91,17 @@ class Dropzone extends Component {
       request.post(CLOUD_UPLOAD)
         .field('upload_preset', CLOUD_PRESET)
         .field('file', file)
-        .field('name', file)
-        .field('folder', `${medium}`)
-        .field('public_id', `${name}`)
+        // .field('name', file)
+        // .field('folder', `${medium}`)
         .field('multiple', true)
+        .field('public_id', `${name}`)
         .field('tags', [`${medium}`])
         .field('context', `medium=${medium}|author=${author}`)
-        .on('progress', progress => this.onProgress(uid, name, progress))
-        .end((err, res) => this.onUploaded(err, uid, name, res))
+        .on('progress', progress => {
+          console.log(file.progress)
+          this.onProgress(uid, name, progress)
+        })
+        .end((err, response) => this.onUploaded(uid, name, response))
     }
   }
 

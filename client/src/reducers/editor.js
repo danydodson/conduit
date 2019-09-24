@@ -28,6 +28,7 @@ export default (state = {}, action) => {
         tagInput: '',
         tagList: action.payload ? action.payload.post.tagList : []
       }
+      
     case EDITOR_FORM_UNLOADED:
       return {}
 

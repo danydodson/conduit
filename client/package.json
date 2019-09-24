@@ -5,12 +5,12 @@
   "proxy": "http://localhost:5001",
   "scripts": {
     "start": "cross-env PORT=4100 react-scripts start",
+    "redux-devtools": "redux-devtools --hostname=localhost --port=8000",
     "build": "react-scripts build",
     "test": "cross-env PORT=4100 freact-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "cloudinary-core": "^2.7.4",
     "cloudinary-react": "^1.1.4",
     "connected-react-router": "^6.5.2",
     "dotenv": "^8.1.0",
@@ -57,9 +57,7 @@
       "es6": true,
       "node": true
     },
-    "extends": [
-
-    ],
+    "extends": [],
     "parser": "babel-eslint",
     "parserOptions": {
       "sourceType": "module",

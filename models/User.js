@@ -3,6 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator')
 var crypto = require('crypto')
 var jwt = require('jsonwebtoken')
 var SECRET = require('../config').SECRET
+var CLOUD_DELIVERY = require('../config').CLOUD_DELIVERY
 
 var UserSchema = new mongoose.Schema({
   bio: String,
@@ -73,7 +74,7 @@ UserSchema.methods.toProfileJSONFor = function (user) {
   return {
     username: this.username,
     bio: this.bio,
-    image: this.image || 'https://res.cloudinary.com/seesee/sample.png',
+    image: this.image || `${CLOUD_DELIVERY}/c_scale,w_200/v1569294732/sample.webp`,
     following: user ? user.isFollowing(this._id) : false
   }
 }
