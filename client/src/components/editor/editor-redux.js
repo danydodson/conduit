@@ -1,53 +1,81 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { CLOUD_SECRET } from '../../configs/cloud-configs'
+import SelectBox from '../selectbox'
+import Dropzone from '../dropzone'
 import Errors from '../errors'
-import Dropzone from './dropzone/dropzone-redux'
-import agent from '../../middleware/middle-agent'
 import mediums from './mediums'
+
+import agent from '../../middleware/middle-agent'
 import crypto from 'crypto'
+import request from 'superagent'
 
 import {
   EDITOR_FORM_LOADED,
-  EDITOR_UPDATE_FIELD,
-  EDITOR_UPDATE_CHECKBOX,
-  EDITOR_ADD_TAG,
-  EDITOR_REMOVE_TAG,
-  EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
+  EDITOR_TAG_ADDED,
+  EDITOR_TAG_REMOVED,
+  EDITOR_TEXT_FIELD_UPDATE,
+  EDITOR_CHECKBOX_SWITCHED,
+  EDITOR_POST_SUBMITTED,
+  UPLOADER_MEDIA_PROGRESS,
+  UPLOADER_MEDIA_UPLOADED,
+  UPLOADER_MEDIA_DELETED,
 } from '../../constants'
+
+import {
+  CLOUD_UPLOAD,
+  CLOUD_PRESET,
+  CLOUD_SECRET,
+  CLOUD_DELETE,
+} from '../../configs/cloud-configs'
 
 const mapStateToProps = state => ({ ...state, ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
     dispatch({ type: EDITOR_FORM_LOADED, payload }),
-  onUpdateField: (key, value) =>
-    dispatch({ type: EDITOR_UPDATE_FIELD, key, value }),
-  onUpdateChecked: (key, value) =>
-    dispatch({ type: EDITOR_UPDATE_CHECKBOX, key, value }),
+
+  onUnload: payload =>
+    dispatch({ type: EDITOR_FORM_UNLOADED, payload }),
+
   onAddTag: () =>
-    dispatch({ type: EDITOR_ADD_TAG }),
+    dispatch({ type: EDITOR_TAG_ADDED }),
+
   onRemoveTag: tag =>
-    dispatch({ type: EDITOR_REMOVE_TAG, tag }),
+    dispatch({ type: EDITOR_TAG_REMOVED, tag }),
+
+  onUpdateField: (key, value) =>
+    dispatch({ type: EDITOR_TEXT_FIELD_UPDATE, key, value }),
+
+  onUpdateChecked: (key, value) =>
+    dispatch({ type: EDITOR_CHECKBOX_SWITCHED, key, value }),
+
   onSubmit: payload =>
     dispatch({ type: EDITOR_POST_SUBMITTED, payload }),
-  onUnload: payload =>
-    dispatch({ type: EDITOR_FORM_UNLOADED, payload })
+
+  onUploading: upload =>
+    dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
+
+  onUploaded: uploaded =>
+    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploaded }),
+
+  onDelete: pubId =>
+    dispatch({ type: UPLOADER_MEDIA_DELETED, pubId }),
 })
 
 class Editor extends React.Component {
   constructor() {
     super()
 
-    const updateFieldEvent = key => e => this.props.onUpdateField(key, e.target.value)
-    const updateCheckEvent = key => e => this.props.onUpdateChecked(key, e.target.checked)
+    this.state = { uploads: [], hover: false }
+
+    const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
+    const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
 
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
     this.changeMedium = updateFieldEvent('medium')
-    this.changeSignature = updateFieldEvent('signature')
     this.changeShareable = updateCheckEvent('shareable')
     this.changeAllowComments = updateCheckEvent('allow_comments')
     this.changePurchasable = updateCheckEvent('purchasable')
@@ -61,21 +89,95 @@ class Editor extends React.Component {
       }
     }
 
+    this.random = max => {
+      return Math.floor(Math.random() * Math.floor(max))
+    }
+
+    this.getTimestamp = () => {
+      return this.props.uploaded[0].response.body.version
+    }
+
+    this.setSign = hash => {
+      return crypto.createHash('sha1').update(hash, 'utf8')
+        .digest('hex')
+    }
+
     this.removeTagHandler = tag => () => {
       this.props.onRemoveTag(tag)
     }
 
-    this.setSignature = data => {
-      crypto.createHash('sha1').update(data + CLOUD_SECRET, 'utf8').digest('hex')
+    this.stopEvent = ev => {
+      ev.preventDefault()
+      ev.stopPropagation()
+    }
+
+    this.onDrag = ev => {
+      this.stopEvent(ev)
+      this.setState({ hover: true })
+    }
+
+    this.onLeave = ev => {
+      this.stopEvent(ev)
+      this.setState({ hover: false })
+    }
+
+    this.onDrop = ev => {
+      this.stopEvent(ev)
+      const { files } = ev.dataTransfer
+      this.handleUpload(files)
+      this.setState({ hover: false })
+    }
+
+    this.getRandomInt = max => {
+      return Math.floor(Math.random() * Math.floor(max))
+    }
+
+    this.onProgress = (id, fileName, progress) => {
+      this.props.onUploading({ id: id, fileName: fileName, progress: progress })
+    }
+
+    this.onUploaded = (id, fileName, response) => {
+      this.props.onUploading({ id: id, fileName: fileName, response: response, })
+      this.props.onUploaded([response.body])
+    }
+
+    this.handleUpload = files => {
+      for (let file of files) {
+        const id = this.uid++
+        const medium = this.props.medium
+        // const auth_email = this.props.common.currentUser.email
+        // const auth_name = this.props.common.currentUser.username
+        const name = `${medium}_${this.getRandomInt(999)}`
+        request.post(CLOUD_UPLOAD)
+          .field('file', file)
+          .field('upload_preset', CLOUD_PRESET)
+          .field('public_id', `${name}`)
+          // .field('name', file)
+          // .field('folder', `${medium}`)
+          // .field('multiple', true)
+          // .field('tags', [`${medium}`])
+          // .field('context', `medium=${medium}|author_email=${auth_email}|author_name=${auth_name}`)
+          .on('progress', progress => this.onProgress(id, file.name, progress))
+          .end((err, response) => { this.onUploaded(id, name, response) })
+      }
+    }
+
+    this.deleteUpload = () => {
+      request
+        .post(CLOUD_DELETE)
+        .set('Content-Type', 'application/json')
+        .set('X-Requested-With', 'XMLHttpRequest')
+        .send({ token: this.props.upload.response.body.delete_token })
+        .then(this.onDeleteUpload.bind(this))
     }
 
     this.submitForm = ev => {
       ev.preventDefault()
 
       const post = {
-        uploads: this.props.uploaded,
-        signature: this.props.signature || this.props.signature,
-        title: this.props.title || `untitled ${this.props.medium} post`,
+        uploads: this.props.uploads,
+        // publicId: this.props.publicId,
+        title: `${this.props.medium}_${this.random(999)}`,
         description: this.props.description,
         body: this.props.body,
         medium: this.props.medium,
@@ -83,16 +185,19 @@ class Editor extends React.Component {
         allow_comments: this.props.allow_comments,
         purchasable: this.props.purchasable,
         price: this.props.price,
-        tagList: this.props.tagList,
+        tagList: this.props.tagList
       }
 
-      // const signature = { signature: this.props.signature }
+      const final = this.setSign('public_id=' + post.title + '&timestamp=' + this.getTimestamp(post) + CLOUD_SECRET)
+
+      post.signature = final
+
       const slug = { slug: this.props.slug }
+      const promise = this.props.slug
+        ? agent.Posts.update(Object.assign(post, slug))
+        : agent.Posts.create(post)
 
-      const promise = this.props.slug ?
-        agent.Posts.update(Object.assign(post, slug)) :
-        agent.Posts.create(post)
-
+      debugger
       this.props.onSubmit(promise)
     }
   }
@@ -114,23 +219,50 @@ class Editor extends React.Component {
     this.props.onLoad(null)
   }
 
-  componentWillUnmount() { this.props.onUnload() }
+  componentWillUnmount() {
+    this.props.onUnload()
+  }
 
   render() {
+
+    const { loading } = this.props
+
     return (
       <Fragment>
 
         {this.props.medium === '' ? null : (
+
+          <Dropzone
+            loading={loading}
+            onDrop={this.onDrop}
+            onDragOver={this.onDrag}
+            onDragLeave={this.onLeave}
+            handleUpload={this.handleUpload}
+            uploads={this.state.uploads}
+          />
+        )}
+
+        {/* {this.props.medium === '' ? null : (
           <Dropzone
             title={this.props.title}
             medium={this.props.medium} />
-        )}
+        )} */}
 
         <Errors errors={this.props.errors} />
 
         <form className='editor-form'>
 
-          <fieldset className='form-group'>
+          <SelectBox
+            id="status"
+            options={mediums}
+            value={this.props.medium}
+            onChange={this.changeMedium}
+            error={this.props.errors}
+            placeholder={'choose'}
+            info=""
+          />
+
+          {/* <fieldset className='form-group'>
             <select
               className='select'
               onChange={this.changeMedium}>
@@ -145,26 +277,18 @@ class Editor extends React.Component {
                 )
               })}
             </select>
-          </fieldset>
+          </fieldset> */}
 
-          <fieldset className='form-group'>
-            <input
-              className='form-control form-control-lg'
-              type='text'
-              placeholder='Post Signature'
-              value={this.props.signature}
-              onChange={this.changeMedium}
-            />
-          </fieldset>
-
-          <fieldset className='form-group'>
-            <input
-              className='form-control form-control-lg'
-              type='text'
-              placeholder='Post Title'
-              value={this.props.title}
-              onChange={this.changeTitle} />
-          </fieldset>
+          {/* {this.props.uploaded > 1 ? (
+            <fieldset className='form-group'>
+              <input
+                className='form-control form-control-lg'
+                type='text'
+                placeholder='Post Title'
+                value={this.props.title}
+                onChange={this.changeTitle} />
+            </fieldset>
+          ) : null} */}
 
           <fieldset className='form-group'>
             <input

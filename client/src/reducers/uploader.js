@@ -1,25 +1,25 @@
-import {
-  UPLOADER_ITEMS_UPLOADED,
-  UPLOADER_DELETE_UPLOAD,
-  UPLOADER_FORM_ITEMS_UNLOADED,
-} from '../constants'
+// import {
+//   UPLOADER_ITEMS_UPLOADED,
+//   UPLOADER_DELETE_UPLOAD,
+//   UPLOADER_FORM_ITEMS_UNLOADED,
+// } from '../constants'
 
-export default (uploads = [], action) => {
-  switch (action.type) {
+// export default (uploads = [], action) => {
+//   switch (action.type) {
 
-    case UPLOADER_FORM_ITEMS_UNLOADED:
-      return uploads = []
+//     case UPLOADER_FORM_ITEMS_UNLOADED:
+//       return uploads = []
 
-    case UPLOADER_ITEMS_UPLOADED: {
-      return [...action.uploads]
-    }
+//     case UPLOADER_ITEMS_UPLOADED: {
+//       return [...action.uploads]
+//     }
 
-    case UPLOADER_DELETE_UPLOAD:
-      return uploads.filter(upload =>
-        upload.public_id !== action.publicId
-      )
+//     case UPLOADER_DELETE_UPLOAD:
+//       return uploads.filter(upload =>
+//         upload.public_id !== action.publicId
+//       )
 
-    default:
-      return [...uploads]
-  }
-}
+//     default:
+//       return [...uploads]
+//   }
+// }

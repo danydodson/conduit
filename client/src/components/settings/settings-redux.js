@@ -70,26 +70,9 @@ class SettingsForm extends React.Component {
 
   render() {
 
-    const { hover } = this.state
-    
     return (
       <form onSubmit={this.submitForm}>
         <fieldset>
-
-          <fieldset className="form-group">
-            <div
-              onDrop={this.onDrop}
-              onDragOver={this.onDragOver}
-              onDragLeave={this.onDragLeave}
-              className={hover ? "dropzone hover" : "dropzone"}>
-              <input
-                type="file"
-                id="fileupload"
-                accept="image/*"
-                ref={fileInputEl => this.fileInputEl = fileInputEl}
-                onChange={() => this.handleUploads(this.fileInputEl.files)} />
-            </div>
-          </fieldset>
 
           <fieldset className="form-group">
             <input

@@ -1,5 +1,5 @@
 module.exports = [
-  'choose medium',
+  '',
   'architecture',
   'carpentry',
   'ceramics',

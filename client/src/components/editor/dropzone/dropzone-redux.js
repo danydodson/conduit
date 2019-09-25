@@ -1,17 +1,18 @@
 /* eslint no-unused-vars: "off"*/
 import React, { Component, Fragment } from "react"
-import { CLOUD_SECRET, CLOUD_UPLOAD, CLOUD_PRESET } from '../../../configs/cloud-configs'
+import { CLOUD_UPLOAD, CLOUD_PRESET } from '../../../configs/cloud-configs'
 import { connect } from 'react-redux'
 import Loading from '../../loading'
 import Errors from '../../errors'
 import DropzoneStatus from './dropzone-status'
+// import crypto from 'crypto'
 
 import request from 'superagent'
 
 import {
   UPLOADER_FORM_LOADED,
-  UPLOADER_UPDATE_UPLOAD,
-  UPLOADER_ITEMS_UPLOADED,
+  UPLOADER_MEDIA_PROGRESS,
+  UPLOADER_MEDIA_UPLOADED,
   UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../../../constants'
 
@@ -21,9 +22,9 @@ const mapDispatchToProps = dispatch => ({
   onLoad: () =>
     dispatch({ type: UPLOADER_FORM_LOADED }),
   onUpdate: (upload) =>
-    dispatch({ type: UPLOADER_UPDATE_UPLOAD, upload }),
+    dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
   onUploaded: (uploads) =>
-    dispatch({ type: UPLOADER_ITEMS_UPLOADED, uploads }),
+    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploads }),
   onUnload: () =>
     dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
 })
@@ -77,6 +78,7 @@ class Dropzone extends Component {
   }
 
   onUploaded(id, fileName, response) {
+    // this.setSignature(response.body.public_id, response.body.version)
     this.props.onUpdate({ id: id, fileName: fileName, response: response, })
     this.props.onUploaded([response.body])
   }

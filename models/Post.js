@@ -22,7 +22,6 @@ const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   favoritesCount: { type: Number, default: 0 },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-
 },
   { timestamps: true }
 )
@@ -59,7 +58,6 @@ PostSchema.methods.setSignature = function (signature) {
   var hash = crypto.createHash('sha1').update(signature, 'utf8').digest('hex')
   this.signature = hash
   return this.signature
-
 }
 
 PostSchema.methods.toJSONFor = function (user) {

@@ -1,10 +1,10 @@
 import {
   APP_ASYNC_START,
   EDITOR_FORM_LOADED,
-  EDITOR_UPDATE_FIELD,
-  EDITOR_UPDATE_CHECKBOX,
-  EDITOR_ADD_TAG,
-  EDITOR_REMOVE_TAG,
+  EDITOR_TEXT_FIELD_UPDATE,
+  EDITOR_CHECKBOX_SWITCHED,
+  EDITOR_TAG_ADDED,
+  EDITOR_TAG_REMOVED,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
 } from '../constants'
@@ -15,7 +15,7 @@ export default (state = {}, action) => {
     case EDITOR_FORM_LOADED:
       return {
         ...state,
-        postSlug: action.payload ? action.payload.post.slug : '',
+        slug: action.payload ? action.payload.post.slug : '',
         uploads: action.payload ? action.payload.post.uploads : [],
         signature: action.payload ? action.payload.post.signature : '',
         title: action.payload ? action.payload.post.title : '',
@@ -46,7 +46,7 @@ export default (state = {}, action) => {
       }
       break
 
-    case EDITOR_ADD_TAG:
+    case EDITOR_TAG_ADDED:
       return Object.assign({}, state,
         {
           tagList: state.tagList.concat([state.tagInput]),
@@ -54,15 +54,15 @@ export default (state = {}, action) => {
         }
       )
 
-    case EDITOR_REMOVE_TAG:
+    case EDITOR_TAG_REMOVED:
       return Object.assign({}, state,
         { tagList: state.tagList.filter(tag => tag !== action.tag), }
       )
 
-    case EDITOR_UPDATE_FIELD:
+    case EDITOR_TEXT_FIELD_UPDATE:
       return Object.assign({}, state, { [action.key]: action.value })
 
-    case EDITOR_UPDATE_CHECKBOX:
+    case EDITOR_CHECKBOX_SWITCHED:
       return Object.assign({}, state, { [action.key]: action.value })
 
     default:
