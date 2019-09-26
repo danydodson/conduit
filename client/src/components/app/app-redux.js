@@ -90,7 +90,6 @@ class App extends React.Component {
       )
     }
     return (
-      // <Fragment>
       <CloudinaryContext
         cloudName={CLOUD_NAME}
         uploadPreset={CLOUD_PRESET}>

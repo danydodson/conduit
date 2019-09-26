@@ -5,6 +5,9 @@ import Dropzone from '../dropzone'
 import Errors from '../errors'
 import mediums from './mediums'
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import agent from '../../middleware/middle-agent'
 import crypto from 'crypto'
 import request from 'superagent'
@@ -67,10 +70,16 @@ class Editor extends React.Component {
   constructor() {
     super()
 
-    this.state = { uploads: [], hover: false }
+    this.state = {
+      upload: null,
+      uploads: null,
+      hover: false,
+      errors: false,
+    }
 
     const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
     const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
+    // const updateFileEvent = key => ev => this.props.onUpdateFileEvent(key, ev.target.checked)
 
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
@@ -111,21 +120,49 @@ class Editor extends React.Component {
       ev.stopPropagation()
     }
 
-    this.onDrag = ev => {
+    this.onDragEnter = ev => {
       this.stopEvent(ev)
-      this.setState({ hover: true })
+      console.log('File Detected')
     }
 
-    this.onLeave = ev => {
+    this.onDragLeave = ev => {
       this.stopEvent(ev)
       this.setState({ hover: false })
+    }
+
+    this.onDragOver = ev => {
+      this.stopEvent(ev)
+      this.setState({ hover: true })
     }
 
     this.onDrop = ev => {
       this.stopEvent(ev)
       const { files } = ev.dataTransfer
-      this.handleUpload(files)
-      this.setState({ hover: false })
+      this.validateFiles(files)
+
+      const reader = new FileReader()
+
+      reader.onload = e =>
+        this.setState({
+          hover: false,
+          upload: [e.target.result],
+          uploads: [...e.target.result]
+        })
+
+      reader.readAsDataURL(ev.dataTransfer.files[0])
+
+      console.log('validition complete')
+      // this.handleUpload(files)
+    }
+
+    this.validateFiles = (files) => {
+      const fileTypes = ['image/jpg', 'image/png', 'image/webp']
+      if (fileTypes.indexOf(files[0].type) > -1) {
+        // toast.success('file added to state')
+      }
+      else {
+        toast.error('wrong file type')
+      }
     }
 
     this.getRandomInt = max => {
@@ -176,7 +213,7 @@ class Editor extends React.Component {
 
       const post = {
         uploads: this.props.uploads,
-        // publicId: this.props.publicId,
+        publicId: this.props.publicId,
         title: `${this.props.medium}_${this.random(999)}`,
         description: this.props.description,
         body: this.props.body,
@@ -197,7 +234,6 @@ class Editor extends React.Component {
         ? agent.Posts.update(Object.assign(post, slug))
         : agent.Posts.create(post)
 
-      debugger
       this.props.onSubmit(promise)
     }
   }
@@ -225,22 +261,25 @@ class Editor extends React.Component {
 
   render() {
 
+    const { hover, upload } = this.state
     const { loading } = this.props
 
     return (
       <Fragment>
 
-        {this.props.medium === '' ? null : (
+        <ToastContainer />
 
-          <Dropzone
-            loading={loading}
-            onDrop={this.onDrop}
-            onDragOver={this.onDrag}
-            onDragLeave={this.onLeave}
-            handleUpload={this.handleUpload}
-            uploads={this.state.uploads}
-          />
-        )}
+        <Dropzone
+          // accept={'image/*'}
+          loading={loading}
+          onDrop={this.onDrop}
+          upload={this.state.upload}
+          onDragEnter={this.onDragEnter}
+          onDragOver={this.onDragOver}
+          onDragLeave={this.onDragLeave}
+          handleUpload={this.handleUpload}
+          className={hover ? 'dropzone hover' : 'dropzone'}
+          style={{ 'backgroundImage': `src(${upload})`, 'width': '100' }} />
 
         {/* {this.props.medium === '' ? null : (
           <Dropzone

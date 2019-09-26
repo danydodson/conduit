@@ -7,6 +7,7 @@ import {
   EDITOR_TAG_REMOVED,
   EDITOR_POST_SUBMITTED,
   EDITOR_FORM_UNLOADED,
+  UPLOADER_DROPZONE_ACTION,
 } from '../constants'
 
 export default (state = {}, action) => {
@@ -46,12 +47,14 @@ export default (state = {}, action) => {
       }
       break
 
+    case UPLOADER_DROPZONE_ACTION:
+      return Object.assign({}, state,
+        { uploads: state.uploads.concat([state.upload]), upload: '' }
+      )
+
     case EDITOR_TAG_ADDED:
       return Object.assign({}, state,
-        {
-          tagList: state.tagList.concat([state.tagInput]),
-          tagInput: ''
-        }
+        { tagList: state.tagList.concat([state.tagInput]), tagInput: '' }
       )
 
     case EDITOR_TAG_REMOVED:

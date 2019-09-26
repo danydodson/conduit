@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { CLOUD_NAME, CLOUD_PRESET } from './configs/cloud-configs'
 import { ConnectedRouter } from 'connected-react-router'
 import { history, store } from './store'
-import { CLOUD_NAME, CLOUD_PRESET } from './configs/cloud-configs'
+
 import App from './components/app'
 
 ReactDOM.render((

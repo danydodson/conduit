@@ -1,16 +1,16 @@
 import {
-  UPLOADER_MEDIA_PROGRESS,
+  UPLOADER_MEDIA_UPLOADED,
   UPLOADER_MEDIA_DELETED,
-  UPLOADER_FORM_ITEMS_UNLOADED,
 } from '../constants'
 
 export default (uploads = [], action) => {
   switch (action.type) {
 
-    case UPLOADER_FORM_ITEMS_UNLOADED:
-      return uploads = []
+    // case PHOTOS_UPLOADED: {
+    //   return [...action.uploads, ...uploads]
+    // }
 
-    case UPLOADER_MEDIA_PROGRESS: {
+    case UPLOADER_MEDIA_UPLOADED: {
       let upIndex = -1
 
       const updateList = uploads.map((upload, index) => {

@@ -7,7 +7,9 @@
     "start": "cross-env PORT=4100 react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env PORT=4100 freact-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "cloudinary-react": "^1.1.4",
@@ -34,6 +36,12 @@
     "superagent-promise": "^1.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/react": "^5.2.1",
+    "babel-loader": "^8.0.6",
     "cross-env": "^5.2.1",
     "react-scripts": "^3.1.2"
   },
@@ -48,31 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "es6": true,
-      "node": true
-    },
-    "extends": [],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "sourceType": "module",
-      "ecmaVersion": 2018
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "rules": {
-      "no-unused-vars": 0,
-      "react/jsx-uses-react": 0,
-      "react/jsx-uses-vars": 0,
-      "react/no-unused-prop-types": 0,
-      "react/no-unused-expressions": 0
-    }
   }
 }

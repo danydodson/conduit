@@ -21,6 +21,7 @@ import {
 const defaultState = {
   appName: 'SeeSee',
   token: null,
+  dropActive: false,
   viewChangeCounter: 0
 }
 

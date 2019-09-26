@@ -6,7 +6,7 @@ const User = mongoose.model('User')
 const chalk = require('chalk')
 const auth = require('../auth/auth-token')
 // const CLOUD_KEY = require('./config').CLOUD_KEY
-const CLOUD_SECRET = require('../../config').CLOUD_SECRET
+// const CLOUD_SECRET = require('../../config').CLOUD_SECRET
 
 //-----------------------------------------------------------------------
 // Preload post objects on routes with ':post'
