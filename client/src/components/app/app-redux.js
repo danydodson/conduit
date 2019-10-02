@@ -5,9 +5,9 @@ import { store } from '../../store'
 import { connect } from 'react-redux'
 
 import { CloudinaryContext } from 'cloudinary-react'
-import { CLOUD_NAME, CLOUD_PRESET } from '../../configs/cloud-configs'
+import { CLOUD_NAME, CLOUD_PRESET } from '../../configs'
 import FontsLoader from '../../helpers/font-loader'
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 
 import Header from '../header'
 import Home from '../home'
@@ -25,7 +25,7 @@ import {
   APP_LOAD,
   AUTH_USER_LOGOUT,
   APP_REDIRECT_LOCATION
-} from '../../constants'
+} from '../../actions'
 
 const mapStateToProps = state => {
   return {

@@ -2,15 +2,15 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import PostMeta from './post-meta'
 import Comments from './comment'
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 import marked from 'marked'
 
-import { CLOUD_DELIVERY } from '../../configs/cloud-configs'
+import { CLOUD_DELIVERY } from '../../configs'
 
 import {
   POST_ITEM_LOADED,
   POST_ITEM_UNLOADED
-} from '../../constants'
+} from '../../actions'
 
 const mapStateToProps = state => ({
   ...state.post,
@@ -46,9 +46,9 @@ class Post extends React.Component {
     const canModify = this.props.currentUser &&
       this.props.currentUser.username === this.props.post.author.username
 
-    const vr = this.props.post.uploads[0].response.body.version
-    const id = this.props.post.uploads[0].response.body.public_id
-    const fm = this.props.post.uploads[0].response.body.format
+    const vr = this.props.post.uploads[0].version
+    const id = this.props.post.uploads[0].public_id
+    const fm = this.props.post.uploads[0].format
 
     return (
       <Fragment>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 import Errors from '../errors'
 
 import { RegWrap } from './register-styles'
@@ -11,7 +11,7 @@ import {
   AUTH_UPDATE_FIELD,
   AUTH_USER_REGISTER,
   REGISTER_FORM_UNLOADED
-} from '../../constants'
+} from '../../actions'
 
 const mapStateToProps = state => ({ ...state.auth })
 

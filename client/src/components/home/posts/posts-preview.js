@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import agent from '../../../middleware/middle-agent'
+import agent from '../../../agent'
 
 import imgSizes from './images/get-sizes'
 import srcUrl from './images/get-srcurl'
@@ -16,7 +16,7 @@ import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
 
-import { POST_ITEM_FAVORITED, POST_ITEM_UNFAVORITED } from '../../../constants'
+import { POST_ITEM_FAVORITED, POST_ITEM_UNFAVORITED } from '../../../actions'
 
 const mapDispatchToProps = dispatch => ({
   favorite: slug =>

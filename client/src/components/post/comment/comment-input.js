@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import agent from '../../../middleware/middle-agent'
+import agent from '../../../agent'
 
 import {
   POST_ITEM_ADD_COMMENT
-} from '../../../constants'
+} from '../../../actions'
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: payload =>

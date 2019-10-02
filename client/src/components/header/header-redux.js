@@ -10,7 +10,7 @@ import { Image } from './styles/header-styles'
 import { IcoImg } from './styles/header-styles'
 
 import Title from './title'
-import Search from '../searchbar'
+import Search from './search'
 
 import Kebab from './styles/kabob-icon'
 import Gear from './styles/gear-icon'

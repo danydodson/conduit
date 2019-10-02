@@ -111,7 +111,7 @@ const GlobalStyle = createGlobalStyle`
     height: 1rem;
     background-color: orangered;
   }
-  
+    
   .response_wrap {
     display: flex;
     flex-wrap: wrap;
@@ -124,6 +124,9 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
   
+  @keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } 
+  }
 `
 
 export default GlobalStyle;

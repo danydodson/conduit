@@ -1,5 +1,6 @@
 import React from 'react'
-import agent from '../../../middleware/middle-agent'
+// import agent from '../../../middleware/middle-agent'
+import agent from '../../../agent'
 import Loading from '../../loading'
 import styled from 'styled-components'
 import { TagList, TagLinks } from './tags-styles'

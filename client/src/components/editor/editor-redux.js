@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import SelectBox from '../selectbox'
-import Dropzone from '../dropzone'
+import Select from '../form/select'
+import Dropzone from '../form/dropzone'
 import Errors from '../errors'
-import mediums from './mediums'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 import crypto from 'crypto'
 import request from 'superagent'
 
@@ -20,66 +19,61 @@ import {
   EDITOR_TEXT_FIELD_UPDATE,
   EDITOR_CHECKBOX_SWITCHED,
   EDITOR_POST_SUBMITTED,
-  UPLOADER_MEDIA_PROGRESS,
   UPLOADER_MEDIA_UPLOADED,
+  UPLOADER_MEDIA_PROGRESS,
   UPLOADER_MEDIA_DELETED,
-} from '../../constants'
+  TOASTIFY,
+} from '../../actions'
 
 import {
   CLOUD_UPLOAD,
   CLOUD_PRESET,
-  CLOUD_SECRET,
+  // CLOUD_SECRET,
   CLOUD_DELETE,
-} from '../../configs/cloud-configs'
+} from '../../configs'
 
 const mapStateToProps = state => ({ ...state, ...state.editor })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
     dispatch({ type: EDITOR_FORM_LOADED, payload }),
-
   onUnload: payload =>
     dispatch({ type: EDITOR_FORM_UNLOADED, payload }),
-
   onAddTag: () =>
     dispatch({ type: EDITOR_TAG_ADDED }),
-
   onRemoveTag: tag =>
     dispatch({ type: EDITOR_TAG_REMOVED, tag }),
-
   onUpdateField: (key, value) =>
     dispatch({ type: EDITOR_TEXT_FIELD_UPDATE, key, value }),
-
   onUpdateChecked: (key, value) =>
     dispatch({ type: EDITOR_CHECKBOX_SWITCHED, key, value }),
-
   onSubmit: payload =>
     dispatch({ type: EDITOR_POST_SUBMITTED, payload }),
-
-  onUploading: upload =>
+  onUpProgress: upload =>
     dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
-
-  onUploaded: uploaded =>
-    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploaded }),
-
-  onDelete: pubId =>
-    dispatch({ type: UPLOADER_MEDIA_DELETED, pubId }),
+  onUploaded: uploads =>
+    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploads }),
+  onDelete: publicId =>
+    dispatch({ type: UPLOADER_MEDIA_DELETED, publicId }),
+  showNotice: () =>
+    dispatch({ type: TOASTIFY }),
 })
 
 class Editor extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    this.photoId = 1
 
     this.state = {
-      upload: null,
-      uploads: null,
+      photoId: 1,
       hover: false,
-      errors: false,
+      upload: [] || null,
+      uploads: [] || null,
+      error: '',
     }
 
     const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
     const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
-    // const updateFileEvent = key => ev => this.props.onUpdateFileEvent(key, ev.target.checked)
 
     this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
@@ -91,121 +85,16 @@ class Editor extends React.Component {
     this.changePrice = updateFieldEvent('price')
     this.changeTagInput = updateFieldEvent('tagInput')
 
-    this.watchForEnter = e => {
-      if (e.keyCode === 13) {
-        e.preventDefault()
-        this.props.onAddTag()
-      }
-    }
-
     this.random = max => {
       return Math.floor(Math.random() * Math.floor(max))
     }
 
     this.getTimestamp = () => {
-      return this.props.uploaded[0].response.body.version
+      return this.props.uploads[0].version
     }
 
     this.setSign = hash => {
-      return crypto.createHash('sha1').update(hash, 'utf8')
-        .digest('hex')
-    }
-
-    this.removeTagHandler = tag => () => {
-      this.props.onRemoveTag(tag)
-    }
-
-    this.stopEvent = ev => {
-      ev.preventDefault()
-      ev.stopPropagation()
-    }
-
-    this.onDragEnter = ev => {
-      this.stopEvent(ev)
-      console.log('File Detected')
-    }
-
-    this.onDragLeave = ev => {
-      this.stopEvent(ev)
-      this.setState({ hover: false })
-    }
-
-    this.onDragOver = ev => {
-      this.stopEvent(ev)
-      this.setState({ hover: true })
-    }
-
-    this.onDrop = ev => {
-      this.stopEvent(ev)
-      const { files } = ev.dataTransfer
-      this.validateFiles(files)
-
-      const reader = new FileReader()
-
-      reader.onload = e =>
-        this.setState({
-          hover: false,
-          upload: [e.target.result],
-          uploads: [...e.target.result]
-        })
-
-      reader.readAsDataURL(ev.dataTransfer.files[0])
-
-      console.log('validition complete')
-      // this.handleUpload(files)
-    }
-
-    this.validateFiles = (files) => {
-      const fileTypes = ['image/jpg', 'image/png', 'image/webp']
-      if (fileTypes.indexOf(files[0].type) > -1) {
-        // toast.success('file added to state')
-      }
-      else {
-        toast.error('wrong file type')
-      }
-    }
-
-    this.getRandomInt = max => {
-      return Math.floor(Math.random() * Math.floor(max))
-    }
-
-    this.onProgress = (id, fileName, progress) => {
-      this.props.onUploading({ id: id, fileName: fileName, progress: progress })
-    }
-
-    this.onUploaded = (id, fileName, response) => {
-      this.props.onUploading({ id: id, fileName: fileName, response: response, })
-      this.props.onUploaded([response.body])
-    }
-
-    this.handleUpload = files => {
-      for (let file of files) {
-        const id = this.uid++
-        const medium = this.props.medium
-        // const auth_email = this.props.common.currentUser.email
-        // const auth_name = this.props.common.currentUser.username
-        const name = `${medium}_${this.getRandomInt(999)}`
-        request.post(CLOUD_UPLOAD)
-          .field('file', file)
-          .field('upload_preset', CLOUD_PRESET)
-          .field('public_id', `${name}`)
-          // .field('name', file)
-          // .field('folder', `${medium}`)
-          // .field('multiple', true)
-          // .field('tags', [`${medium}`])
-          // .field('context', `medium=${medium}|author_email=${auth_email}|author_name=${auth_name}`)
-          .on('progress', progress => this.onProgress(id, file.name, progress))
-          .end((err, response) => { this.onUploaded(id, name, response) })
-      }
-    }
-
-    this.deleteUpload = () => {
-      request
-        .post(CLOUD_DELETE)
-        .set('Content-Type', 'application/json')
-        .set('X-Requested-With', 'XMLHttpRequest')
-        .send({ token: this.props.upload.response.body.delete_token })
-        .then(this.onDeleteUpload.bind(this))
+      return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
     }
 
     this.submitForm = ev => {
@@ -225,17 +114,125 @@ class Editor extends React.Component {
         tagList: this.props.tagList
       }
 
-      const final = this.setSign('public_id=' + post.title + '&timestamp=' + this.getTimestamp(post) + CLOUD_SECRET)
+      // const final = this.setSign(
+      //   'public_id='
+      //   + post.title
+      //   + '&timestamp='
+      //   + this.getTimestamp(post)
+      //   + CLOUD_SECRET)
 
-      post.signature = final
+      // post.signature = final
 
       const slug = { slug: this.props.slug }
+
       const promise = this.props.slug
         ? agent.Posts.update(Object.assign(post, slug))
         : agent.Posts.create(post)
 
       this.props.onSubmit(promise)
     }
+  }
+
+  showError = (err, msg) => {
+    toast.error(`${err} ${msg}\n`)
+  }
+
+  stopEvent = ev => {
+    ev.preventDefault()
+    ev.stopPropagation()
+  }
+
+  onDragEnter = ev => {
+    this.stopEvent(ev)
+  }
+
+  onDragLeave = ev => {
+    this.stopEvent(ev)
+    this.setState({ hover: false })
+  }
+
+  onDragOver = ev => {
+    this.stopEvent(ev)
+    this.setState({ hover: true })
+  }
+
+  onDrop = ev => {
+    this.stopEvent(ev)
+    const { files } = ev.dataTransfer
+    // this.checkMimeType(ev)
+    this.onCloudinary(files)
+    this.setState({ hover: false })
+  }
+
+  checkMimeType = (ev) => {
+    const fileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+    const supported = fileTypes.indexOf(ev.dataTransfer.files[0].type) > -1
+    return supported
+      ? this.showPreview(ev)
+      : toast.error(`${ev.dataTransfer.files[0].type} is not a supported format\n`)
+  }
+
+  showPreview = (ev) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(ev.dataTransfer.files[0] || [])
+    return reader.onload = ev => this.setState({ hover: false, uploads: [...this.state.uploads, ev.target.result] })
+  }
+
+  onProgress = (id, fileName, progress) => {
+    this.props.onUpProgress({ id: id, fileName: fileName, progress: progress })
+  }
+
+  onUploaded = (id, fileName, response) => {
+    this.props.onUpProgress({ id: id, fileName: fileName, response: response, })
+    this.props.onUploaded([response.body])
+  }
+
+  onClearAllUploads = () => {
+    this.setState({ upload: [] || null });
+  }
+
+  onClearUpload = ev => {
+    const id = this.state.uploads.findIndex(uploads => uploads === ev.target.src)
+    this.setState(state => {
+      const uploads = state.uploads.slice(0, id).concat(state.uploads.slice(id + 1, state.uploads.length))
+      return { uploads, }
+    })
+  }
+
+  onCloudinary(files) {
+    for (let file of files) {
+      const photoId = this.photoId++
+      const medium = this.props.medium
+      const auth_email = this.props.common.currentUser.email
+      const auth_name = this.props.common.currentUser.username
+      const name = `${medium}_${this.getRandomInt(999)}`
+      request.post(CLOUD_UPLOAD)
+        .field('file', file)
+        .field('upload_preset', CLOUD_PRESET)
+        .field('public_id', `${name}`)
+        .field('name', file)
+        .field('folder', `${medium}`)
+        .field('multiple', true)
+        .field('tags', [`${medium}`])
+        .field('context', `medium=${medium}|author_email=${auth_email}|author_name=${auth_name}`)
+        .on('progress', progress => this.onProgress(photoId, file.name, progress))
+        .end((err, response) => this.onUploaded(photoId, name, response))
+    }
+  }
+
+  deleteUpload = () => {
+    request
+      .post(CLOUD_DELETE)
+      .set('Content-Type', 'application/json')
+      .set('X-Requested-With', 'XMLHttpRequest')
+      .send({ token: this.props.uploads[0].delete_token })
+      .then(this.onDeleteUpload.bind(this))
+  }
+
+  onDeleteUpload() {
+    this.props.onDelete(
+      this.props.uploads[0].public_id
+    )
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -245,6 +242,21 @@ class Editor extends React.Component {
         return this.props.onLoad(agent.Posts.get(this.props.match.params.slug))
       }
       this.props.onLoad(null)
+    }
+
+    this.watchForEnter = e => {
+      if (e.keyCode === 13) {
+        e.preventDefault()
+        this.props.onAddTag()
+      }
+    }
+
+    this.removeTagHandler = tag => () => {
+      this.props.onRemoveTag(tag)
+    }
+
+    this.getRandomInt = max => {
+      return Math.floor(Math.random() * Math.floor(max))
     }
   }
 
@@ -261,73 +273,33 @@ class Editor extends React.Component {
 
   render() {
 
-    const { hover, upload } = this.state
-    const { loading } = this.props
-
     return (
       <Fragment>
 
-        <ToastContainer />
-
         <Dropzone
-          // accept={'image/*'}
-          loading={loading}
+          uploads={this.props.uploads}
+          onClick={this.deleteUpload}
           onDrop={this.onDrop}
-          upload={this.state.upload}
           onDragEnter={this.onDragEnter}
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
-          handleUpload={this.handleUpload}
-          className={hover ? 'dropzone hover' : 'dropzone'}
-          style={{ 'backgroundImage': `src(${upload})`, 'width': '100' }} />
+          hover={this.state.hover}
+          onChange={this.onCloudinary}
+          loading={this.props.loading}
+          info={this.props.info}
+          errors={this.state.errors} />
 
-        {/* {this.props.medium === '' ? null : (
-          <Dropzone
-            title={this.props.title}
-            medium={this.props.medium} />
-        )} */}
-
-        <Errors errors={this.props.errors} />
+        <ToastContainer />
 
         <form className='editor-form'>
 
-          <SelectBox
-            id="status"
-            options={mediums}
+          <Select
             value={this.props.medium}
             onChange={this.changeMedium}
-            error={this.props.errors}
             placeholder={'choose'}
-            info=""
-          />
+            info={this.props.info} />
 
-          {/* <fieldset className='form-group'>
-            <select
-              className='select'
-              onChange={this.changeMedium}>
-              {mediums.map(medium => {
-                return (
-                  <option
-                    key={medium}
-                    value={medium}
-                    className='select-option'>
-                    {medium}
-                  </option>
-                )
-              })}
-            </select>
-          </fieldset> */}
-
-          {/* {this.props.uploaded > 1 ? (
-            <fieldset className='form-group'>
-              <input
-                className='form-control form-control-lg'
-                type='text'
-                placeholder='Post Title'
-                value={this.props.title}
-                onChange={this.changeTitle} />
-            </fieldset>
-          ) : null} */}
+          <Errors errors={this.state.error} />
 
           <fieldset className='form-group'>
             <input

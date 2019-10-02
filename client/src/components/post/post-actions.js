@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 
 import {
   POST_ITEM_DELETE_POST
-} from '../../constants'
+} from '../../actions'
 
 // import request from 'superagent'
 // const CL_DELETE = `${process.env.REACT_APP_CL_DELETE}`

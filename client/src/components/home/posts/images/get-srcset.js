@@ -1,11 +1,11 @@
-import { CLOUD_DELIVERY } from '../../../../configs/cloud-configs'
+import { CLOUD_DELIVERY } from '../../../../configs'
 
 const srcSet = props => {
 
   const base = CLOUD_DELIVERY
-  const name = props.response.body.public_id
-  const version = props.response.body.version
-  const format = props.response.body.format
+  const name = props.public_id
+  const version = props.version
+  const format = props.format
 
   const urls = {
     size01: `${base}/c_fit,w_100/v${version}/${name}.${format}`,

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import agent from '../../../middleware/middle-agent'
+import agent from '../../../agent'
 
 import PostsFeed from './posts-feed'
 import { PageTablist } from './styles/ul-pagetab'
 import { PageTabItem } from './styles/li-pagetab'
 
-import { SET_VIEW_TAB } from '../../../constants'
+import { SET_VIEW_TAB } from '../../../actions'
 
 const mapStateToProps = state => ({
   ...state.posts,

@@ -1,15 +1,14 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import auth from './auth'
-import common from './common'
-import profile from './profile'
-import settings from './settings'
-import home from './home'
-import posts from './posts'
-import post from './post'
-// import upload from './upload'
-import uploaded from './uploaded'
-import editor from './editor'
+import auth from './reduce-auth'
+import common from './reduce-common'
+import profile from './reduce-profile'
+import settings from './reduce-settings'
+import home from './reduce-home'
+import posts from './reduce-posts'
+import post from './reduce-post'
+import uploads from './reduce-uploads'
+import editor from './reduce-editor'
 
 export default (history) => combineReducers({
   common: common,
@@ -17,8 +16,7 @@ export default (history) => combineReducers({
   home: home,
   editor: editor,
   profile: profile,
-  // upload: upload,
-  uploaded: uploaded,
+  uploads: uploads,
   posts: posts,
   post: post,
   settings: settings,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import agent from '../../middleware/middle-agent'
+import agent from '../../agent'
 import Mediums from './mediums'
 import Posts from './posts'
 
@@ -8,7 +8,7 @@ import {
   HOME_PAGE_LOADED,
   SET_MEDIUM_FILTER,
   HOME_PAGE_UNLOADED,
-} from '../../constants'
+} from '../../actions'
 
 const Promise = global.Promise
 
