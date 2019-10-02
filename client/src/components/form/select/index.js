@@ -1,20 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import mediums from './mediums'
+import mediums from './mediums-array'
 
-const Select = ({ value, onChange, info, errors, }) => {
+const Select = ({ version, value, onChange, errors, }) => {
 
   const selectOptions = mediums.map(option => (
     <option
       key={option}
-      value={option}>
+      value={option + '/' + option + '_' + version}>
       {option}
     </option>
   ))
 
   return (
-    <div
-      className="form-group">
+    <fieldset className='form-group'>
       <select
         value={value}
         className={!errors
@@ -23,16 +22,13 @@ const Select = ({ value, onChange, info, errors, }) => {
         onChange={onChange}>
         {selectOptions}
       </select>
-      {info && <small>{info}</small>}
-      {errors && <div>{errors}</div>}
-    </div>
+    </fieldset>
   )
 }
 
 Select.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
-  info: PropTypes.string,
   errors: PropTypes.string,
 }
 

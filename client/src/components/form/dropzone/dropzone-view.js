@@ -9,7 +9,6 @@ const Dropzone = ({
   onDragOver,
   onDragLeave,
   hover,
-  inputRef,
   onChange,
   loading,
 }) => {
@@ -35,7 +34,6 @@ const Dropzone = ({
         ? 'dropzone hover'
         : 'dropzone'}>
       <input
-        ref={inputRef}
         onChange={onChange} />
       <div
         className='drag-files'>

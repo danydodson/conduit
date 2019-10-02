@@ -1,36 +1,19 @@
-import React, { Component } from "react"
+import React from "react"
 import { GoHeart } from "react-icons/go"
+import styles from './styles.scss'
 
-class LikeButton extends Component {
+const LikeButton = (props) => {
 
-  handleFavorite = () => {
-    this.setState({
-      isOpen: true
-    });
-  }
-
-  renderButton = () => {
-
-    const { buttonColor, buttonText } = this.props
-    const propsToPass = Object.assign({}, this.props)
-
-    delete propsToPass.buttonColor
-    delete propsToPass.buttonText
-
-    return (
-      <button
-        color={buttonColor}
-        onClick={this.handleFavorite}
-        {...propsToPass}>
-        {buttonText}
-        {GoHeart}
-      </button>
-    )
-  }
-
-  render() {
-    return this.renderButton()
-  }
+  return (
+    <GoHeart
+      style={{ styles }}
+      className={
+        props.liked ? 'like' : 'unlike'
+      }
+      onClick={props.onClick}>
+    </GoHeart>
+  )
 }
+
 
 export default LikeButton

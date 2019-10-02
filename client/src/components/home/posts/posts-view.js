@@ -9,8 +9,6 @@ import { PageTabItem } from './styles/li-pagetab'
 
 import { SET_VIEW_TAB } from '../../../actions'
 
-import LikeButton from '../../buttons/like-button'
-
 const mapStateToProps = state => ({
   ...state.posts,
   tags: state.home.tags,
@@ -82,10 +80,6 @@ const MainView = props => {
           onTabClick={props.onTabClick} />
         <TagFilterTab
           tag={props.tag} />
-
-        <LikeButton 
-        />
-
       </PageTablist>
       <PostsFeed
         pager={props.pager}

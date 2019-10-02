@@ -16,6 +16,8 @@ import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
 
+// import LikeButton from '../../buttons/like-button'
+
 import {
   POST_ITEM_FAVORITED,
   POST_ITEM_UNFAVORITED
@@ -99,6 +101,11 @@ const PostPreview = props => {
         onClick={handleClick}
         favorited={post.favorited ? 1 : 0}
       />
+
+      {/* <LikeButton
+        liked={post.favorited ? 1 : 0}
+        onClick={handleClick}
+      /> */}
 
 
     </Preview>

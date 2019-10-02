@@ -7,3 +7,4 @@ export const CLOUD_UPLOAD = `${process.env.REACT_APP_CLOUD_UPLOAD}`
 export const CLOUD_DELIVERY = `${process.env.REACT_APP_CLOUD_DELIVERY}`
 export const CLOUD_DELIVERY_TWITTER = `${process.env.REACT_APP_CLOUD_DELIVERY_TWITTER}`
 export const CLOUD_DELETE = `${process.env.REACT_APP_CLOUD_DELETE}`
+export const CLOUD_DESTROY = `${process.env.REACT_APP_CLOUD_DESTROY}`

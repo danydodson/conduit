@@ -30,6 +30,7 @@ const Visitor = (
 const IsAuth = props => {
   return (
     <List>
+
       <IcoLink to='/'><Archive size='30px' title='Mediums' /></IcoLink>
       <IcoLink to='/editor'><Pencil size='30px' title='Upload' /></IcoLink>
       <IcoLink to='/'><Magnifier size='30px' title='Search' /></IcoLink>

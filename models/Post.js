@@ -64,6 +64,7 @@ PostSchema.methods.toJSONFor = function (user) {
   return {
     slug: this.slug,
     uploads: this.uploads,
+    signature: this.signature,
     title: this.title,
     description: this.description,
     body: this.body,

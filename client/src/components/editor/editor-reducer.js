@@ -17,8 +17,8 @@ export default (state = {}, action) => {
       return {
         ...state,
         slug: action.payload ? action.payload.post.slug : '',
-        // uploaded: action.payload ? action.payload.post.uploaded : [],
         title: action.payload ? action.payload.post.title : '',
+        signature: action.payload ? action.payload.post.signature : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
         medium: action.payload ? action.payload.post.medium : '',

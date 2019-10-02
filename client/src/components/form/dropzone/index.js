@@ -1,1 +1,1 @@
-export { default } from './dropzone-view'
+export { default } from './dropzone-redux'
