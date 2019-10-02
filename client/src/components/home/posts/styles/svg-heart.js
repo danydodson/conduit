@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { GoHeart } from "react-icons/go";
+import { GoHeart } from "react-icons/go"
 
 export const Heart = styled(GoHeart)`
   top: 32px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { ArrowRight } from 'styled-icons/octicons/ArrowRight'
 
 export default styled(ArrowRight)`

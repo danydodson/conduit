@@ -3,7 +3,7 @@ import {
   UPLOADER_MEDIA_UPLOADED,
   UPLOADER_MEDIA_PROGRESS,
   UPLOADER_MEDIA_DELETED,
-} from '../actions'
+} from '../../../actions'
 
 export default (uploads = [], action) => {
   switch (action.type) {

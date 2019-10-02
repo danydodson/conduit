@@ -1,18 +1,20 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import auth from './reduce-auth'
-import common from './reduce-common'
-import profile from './reduce-profile'
-import settings from './reduce-settings'
-import home from './reduce-home'
-import posts from './reduce-posts'
-import post from './reduce-post'
-import uploads from './reduce-uploads'
-import editor from './reduce-editor'
+import app from '../components/app/app-reducer'
+import register from '../components/register/register-reducer'
+import login from '../components/login/login-reducer'
+import home from '../components/home/home-reducer'
+import editor from '../components/editor/editor-reducer'
+import profile from '../components/profile/profile-reducer'
+import uploads from '../components/form/dropzone/dropzone-reducer'
+import posts from '../components/home/posts/posts-reducer'
+import post from '../components/post/post-reducer'
+import settings from '../components/settings/settings-reducer'
 
 export default (history) => combineReducers({
-  common: common,
-  auth: auth,
+  app: app,
+  register: register,
+  login: login,
   home: home,
   editor: editor,
   profile: profile,

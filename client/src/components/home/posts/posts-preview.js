@@ -16,7 +16,10 @@ import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
 
-import { POST_ITEM_FAVORITED, POST_ITEM_UNFAVORITED } from '../../../actions'
+import {
+  POST_ITEM_FAVORITED,
+  POST_ITEM_UNFAVORITED
+} from '../../../actions'
 
 const mapDispatchToProps = dispatch => ({
   favorite: slug =>
@@ -31,7 +34,6 @@ const PostPreview = props => {
 
   const handleClick = ev => {
     ev.preventDefault()
-
     if (post.favorited) {
       props.unfavorite(post.slug)
     } else {
@@ -95,7 +97,9 @@ const PostPreview = props => {
       <Heart
         title='isfaved'
         onClick={handleClick}
-        favorited={post.favorited ? 1 : 0} />
+        favorited={post.favorited ? 1 : 0}
+      />
+
 
     </Preview>
   )

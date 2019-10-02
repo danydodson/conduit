@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { Tag } from 'styled-icons/evil/Tag'
 
 export default styled(Tag)`
