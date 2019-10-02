@@ -17,18 +17,17 @@ export default (state = {}, action) => {
       return {
         ...state,
         slug: action.payload ? action.payload.post.slug : '',
-        // uploads: action.payload ? action.payload.post.tagList : [],
-        signature: action.payload ? action.payload.post.signature : '',
+        // uploaded: action.payload ? action.payload.post.uploaded : [],
         title: action.payload ? action.payload.post.title : '',
         description: action.payload ? action.payload.post.description : '',
         body: action.payload ? action.payload.post.body : '',
         medium: action.payload ? action.payload.post.medium : '',
-        shareable: action.payload ? true : false,
-        allow_comments: action.payload ? true : false,
-        purchasable: action.payload ? true : false,
+        shareable: action.payload ? action.payload.shareable : true,
+        allow_comments: action.payload ? action.payload.allow_comments : true,
+        purchasable: action.payload ? action.payload.purchasable : false,
         price: action.payload ? action.payload.post.price : '',
-        tagInput: '',
         tagList: action.payload ? action.payload.post.tagList : [],
+        tagInput: '',
       }
 
     case EDITOR_FORM_UNLOADED:
@@ -67,7 +66,7 @@ export default (state = {}, action) => {
       return Object.assign({}, state, { [action.key]: action.value })
 
     case EDITOR_CHECKBOX_SWITCHED:
-      return Object.assign({}, state, { [action.key]: action.value })
+      return Object.assign({}, state, { [action.key]: action.checked })
 
     default:
       return state

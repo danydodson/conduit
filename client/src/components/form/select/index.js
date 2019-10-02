@@ -33,7 +33,7 @@ Select.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   info: PropTypes.string,
-  errors: PropTypes.array,
+  errors: PropTypes.string,
 }
 
 export default Select

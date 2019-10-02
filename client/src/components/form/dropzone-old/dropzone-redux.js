@@ -10,23 +10,23 @@ import DropzoneStatus from './dropzone-status'
 import request from 'superagent'
 
 import {
-  UPLOADER_FORM_LOADED,
-  UPLOADER_MEDIA_PROGRESS,
-  UPLOADER_MEDIA_UPLOADED,
-  UPLOADER_FORM_ITEMS_UNLOADED,
+  DROPZONE_FORM_LOADED,
+  DROPZONE_MEDIA_PROGRESS,
+  DROPZONE_MEDIA_UPLOADED,
+  DROPZONE_FORM_ITEMS_UNLOADED,
 } from '../../../actions'
 
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: () =>
-    dispatch({ type: UPLOADER_FORM_LOADED }),
+    dispatch({ type: DROPZONE_FORM_LOADED }),
   onUpdate: (upload) =>
-    dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
+    dispatch({ type: DROPZONE_MEDIA_PROGRESS, upload }),
   onUploaded: (uploads) =>
-    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploads }),
+    dispatch({ type: DROPZONE_MEDIA_UPLOADED, uploads }),
   onUnload: () =>
-    dispatch({ type: UPLOADER_FORM_ITEMS_UNLOADED }),
+    dispatch({ type: DROPZONE_FORM_ITEMS_UNLOADED }),
 })
 
 class Dropzone extends Component {
@@ -88,8 +88,8 @@ class Dropzone extends Component {
     for (let file of files) {
       const uid = this.uid++
       const medium = this.props.medium
-      // const auth_email = this.props.common.currentUser.email
-      // const auth_name = this.props.common.currentUser.username
+      // const auth_email = this.props.app.currentUser.email
+      // const auth_name = this.props.app.currentUser.username
       const name = `${medium}_${this.getRandomInt(999)}`
       request.post(`${CLOUD_UPLOAD}`)
         .field('upload_preset', `${CLOUD_PRESET}`)

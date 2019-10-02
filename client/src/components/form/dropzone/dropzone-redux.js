@@ -4,9 +4,9 @@ import Dropzone from '.'
 import request from 'superagent'
 
 import {
-  UPLOADER_MEDIA_UPLOADED,
-  UPLOADER_MEDIA_PROGRESS,
-  UPLOADER_MEDIA_DELETED,
+  DROPZONE_MEDIA_UPLOADED,
+  DROPZONE_MEDIA_PROGRESS,
+  DROPZONE_MEDIA_DELETED,
   TOASTIFY,
 } from '../../../actions'
 
@@ -19,12 +19,14 @@ import {
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
+  onLoad: () =>
+    dispatch({ type: DROPZONE_INPUT_ZONE_LOADED }),
   onUpProgress: upload =>
-    dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
+    dispatch({ type: DROPZONE_MEDIA_PROGRESS, upload }),
   onUploaded: uploads =>
-    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploads }),
+    dispatch({ type: DROPZONE_MEDIA_UPLOADED, uploads }),
   onDelete: publicId =>
-    dispatch({ type: UPLOADER_MEDIA_DELETED, publicId }),
+    dispatch({ type: DROPZONE_MEDIA_DELETED, publicId }),
   showNotice: () =>
     dispatch({ type: TOASTIFY }),
 })
@@ -41,6 +43,10 @@ class DropzoneArea extends React.Component {
       uploads: [] || null,
       error: '',
     }
+  }
+
+  componentWillMount() {
+    this.props.onLoad()
   }
 
   stopEvent = ev => {
@@ -109,8 +115,8 @@ class DropzoneArea extends React.Component {
     for (let file of files) {
       const photoId = this.photoId++
       const medium = this.props.medium
-      const auth_email = this.props.common.currentUser.email
-      const auth_name = this.props.common.currentUser.username
+      const auth_email = this.props.app.currentUser.email
+      const auth_name = this.props.app.currentUser.username
       const name = `${medium}_${this.getRandomInt(999)}`
       request
         .post(CLOUD_UPLOAD)

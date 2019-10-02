@@ -2,9 +2,10 @@ import { applyMiddleware, createStore } from 'redux'
 import { promiseMiddleware, localStorageMiddleware } from './agent/agent-middleware'
 import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
-import { createLogger } from 'redux-logger'
 import { createBrowserHistory } from 'history'
+import { createLogger } from 'redux-logger'
 import reducer from './reducers'
+
 
 export const history = createBrowserHistory()
 
@@ -22,7 +23,10 @@ const getMiddleware = () => {
       myRouterMiddleware,
       promiseMiddleware,
       localStorageMiddleware,
-      createLogger({ collapsed: (getState, action, logEntry) => !logEntry.error })
+      createLogger({
+        timestamp: false,
+        collapsed: (getState, action, logEntry) => !logEntry.error
+      })
     )
   }
 }

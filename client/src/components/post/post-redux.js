@@ -14,7 +14,7 @@ import {
 
 const mapStateToProps = state => ({
   ...state.post,
-  currentUser: state.common.currentUser
+  currentUser: state.app.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({

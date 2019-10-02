@@ -19,16 +19,15 @@ import {
   EDITOR_TEXT_FIELD_UPDATE,
   EDITOR_CHECKBOX_SWITCHED,
   EDITOR_POST_SUBMITTED,
-  UPLOADER_MEDIA_UPLOADED,
-  UPLOADER_MEDIA_PROGRESS,
-  UPLOADER_MEDIA_DELETED,
+  DROPZONE_MEDIA_UPLOADED,
+  DROPZONE_MEDIA_PROGRESS,
+  DROPZONE_MEDIA_DELETED,
   TOASTIFY,
 } from '../../actions'
 
 import {
   CLOUD_UPLOAD,
   CLOUD_PRESET,
-  // CLOUD_SECRET,
   CLOUD_DELETE,
 } from '../../configs'
 
@@ -45,16 +44,16 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: EDITOR_TAG_REMOVED, tag }),
   onUpdateField: (key, value) =>
     dispatch({ type: EDITOR_TEXT_FIELD_UPDATE, key, value }),
-  onUpdateChecked: (key, value) =>
-    dispatch({ type: EDITOR_CHECKBOX_SWITCHED, key, value }),
+  onUpdateChecked: (key, checked) =>
+    dispatch({ type: EDITOR_CHECKBOX_SWITCHED, key, checked }),
   onSubmit: payload =>
     dispatch({ type: EDITOR_POST_SUBMITTED, payload }),
   onUpProgress: upload =>
-    dispatch({ type: UPLOADER_MEDIA_PROGRESS, upload }),
+    dispatch({ type: DROPZONE_MEDIA_PROGRESS, upload }),
   onUploaded: uploads =>
-    dispatch({ type: UPLOADER_MEDIA_UPLOADED, uploads }),
+    dispatch({ type: DROPZONE_MEDIA_UPLOADED, uploads }),
   onDelete: publicId =>
-    dispatch({ type: UPLOADER_MEDIA_DELETED, publicId }),
+    dispatch({ type: DROPZONE_MEDIA_DELETED, publicId }),
   showNotice: () =>
     dispatch({ type: TOASTIFY }),
 })
@@ -203,8 +202,8 @@ class Editor extends React.Component {
     for (let file of files) {
       const photoId = this.photoId++
       const medium = this.props.medium
-      const auth_email = this.props.common.currentUser.email
-      const auth_name = this.props.common.currentUser.username
+      const auth_email = this.props.app.currentUser.email
+      const auth_name = this.props.app.currentUser.username
       const name = `${medium}_${this.getRandomInt(999)}`
       request.post(CLOUD_UPLOAD)
         .field('file', file)
@@ -295,16 +294,14 @@ class Editor extends React.Component {
 
           <Select
             value={this.props.medium}
-            onChange={this.changeMedium}
-            placeholder={'choose'}
-            info={this.props.info} />
+            onChange={this.changeMedium} />
 
           <Errors errors={this.state.error} />
 
           <fieldset className='form-group'>
             <input
-              className='form-control'
               type='text'
+              className='form-control'
               placeholder="What's this post about?"
               value={this.props.description}
               onChange={this.changeDescription} />
@@ -312,8 +309,8 @@ class Editor extends React.Component {
 
           <fieldset className='form-group'>
             <textarea
-              className='form-control'
               rows='8'
+              className='form-control'
               placeholder='Write your post (in markdown)'
               value={this.props.body}
               onChange={this.changeBody}>
@@ -323,19 +320,23 @@ class Editor extends React.Component {
           <fieldset className='form-group'>
             {'shareable'}
             <input
-              id='shareable'
+              // name='shareable'
               type='checkbox'
-              placeholder='shareable'
+              // placeholder='shareable'
+              checked={this.props.shareable}
               value={this.props.shareable}
               onChange={this.changeShareable} />
           </fieldset>
 
+
+
           <fieldset className='form-group'>
             {'allow_comments'}
             <input
-              id='allow_comments'
+              // name='allow_comments'
               type='checkbox'
-              placeholder='allow_comments'
+              // placeholder='allow_comments'
+              checked={this.props.allow_comments}
               value={this.props.allow_comments}
               onChange={this.changeAllowComments} />
           </fieldset>
@@ -343,9 +344,10 @@ class Editor extends React.Component {
           <fieldset className='form-group'>
             {'purchasable'}
             <input
-              id='purchasable'
+              // name='purchasable'
               type='checkbox'
-              placeholder='purchasable'
+              // placeholder='purchasable'
+              checked={this.props.purchasable}
               value={this.props.purchasable}
               onChange={this.changePurchasable} />
           </fieldset>
@@ -353,9 +355,9 @@ class Editor extends React.Component {
           {this.props.purchasable ? (
             <fieldset className='form-group'>
               <input
-                id='price'
+                // id='price'
                 type='text'
-                placeholder='price'
+                // placeholder='price'
                 value={this.props.price}
                 onChange={this.changePrice} />
             </fieldset>
@@ -363,9 +365,9 @@ class Editor extends React.Component {
 
           <fieldset className='form-group'>
             <input
-              className='form-control'
               type='text'
-              id='tagList'
+              className='form-control'
+              // id='tagList'
               placeholder='Enter tags'
               value={this.props.tagInput}
               onChange={this.changeTagInput}

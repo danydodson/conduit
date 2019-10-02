@@ -1,22 +1,22 @@
 import {
-  // UPLOADER_FORM_LOADED,
-  UPLOADER_MEDIA_UPLOADED,
-  UPLOADER_MEDIA_PROGRESS,
-  UPLOADER_MEDIA_DELETED,
+  DROPZONE_INPUT_ZONE_LOADED,
+  DROPZONE_MEDIA_UPLOADED,
+  DROPZONE_MEDIA_PROGRESS,
+  DROPZONE_MEDIA_DELETED,
 } from '../../../actions'
 
 export default (uploads = [], action) => {
   switch (action.type) {
 
-    // case UPLOADER_FORM_LOADED: {
-    //   return uploads = []
-    // }
+    case DROPZONE_INPUT_ZONE_LOADED: {
+      return uploads = []
+    }
 
-    case UPLOADER_MEDIA_UPLOADED: {
+    case DROPZONE_MEDIA_UPLOADED: {
       return [...action.uploads]
     }
 
-    case UPLOADER_MEDIA_PROGRESS: {
+    case DROPZONE_MEDIA_PROGRESS: {
       let upIndex = -1
 
       const updateList = uploads.map((uploadItem, index) => {
@@ -31,7 +31,7 @@ export default (uploads = [], action) => {
         : [action.upload, ...uploads]
     }
 
-    case UPLOADER_MEDIA_DELETED: {
+    case DROPZONE_MEDIA_DELETED: {
       const index = uploads.findIndex(current =>
         current.public_id === action.publicId
       )

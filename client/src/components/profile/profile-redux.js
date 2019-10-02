@@ -58,7 +58,7 @@ const FollowUserButton = props => {
 
 const mapStateToProps = state => ({
   ...state.posts,
-  currentUser: state.common.currentUser,
+  currentUser: state.app.currentUser,
   profile: state.profile
 })
 

@@ -10,10 +10,10 @@ import {
 
 const mapStateToProps = state => {
   return {
-    appLoaded: state.common.appLoaded,
-    appName: state.common.appName,
-    currentUser: state.common.currentUser,
-    redirectTo: state.common.redirectTo
+    appLoaded: state.app.appLoaded,
+    appName: state.app.appName,
+    currentUser: state.app.currentUser,
+    redirectTo: state.app.redirectTo
   }
 }
 

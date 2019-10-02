@@ -7,14 +7,14 @@ import {
 } from '../../../configs'
 
 import {
-  UPLOADER_DELETE_UPLOAD
+  DROPZONE_DELETE_UPLOAD
 } from '../../../actions'
 
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
   onDelete: publicId =>
-    dispatch({ type: UPLOADER_DELETE_UPLOAD, publicId }),
+    dispatch({ type: DROPZONE_DELETE_UPLOAD, publicId }),
 })
 
 class DropzoneStatus extends Component {

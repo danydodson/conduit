@@ -6,7 +6,7 @@ const crypto = require('crypto')
 const User = mongoose.model('User')
 
 const PostSchema = new Schema({
-  uploads: [{}],
+  uploads: [],
   signature: String,
   title: String,
   description: String,
@@ -62,6 +62,7 @@ PostSchema.methods.setSignature = function (signature) {
 
 PostSchema.methods.toJSONFor = function (user) {
   return {
+    slug: this.slug,
     uploads: this.uploads,
     title: this.title,
     description: this.description,
@@ -71,9 +72,8 @@ PostSchema.methods.toJSONFor = function (user) {
     price: this.price,
     shareable: this.shareable,
     tagList: this.tagList,
-    allow_comments: Boolean,
-    featured: Boolean,
-    slug: this.slug,
+    allow_comments: this.allow_comments,
+    featured: this.featured,
     author: this.author.toProfileJSONFor(user),
     favoritesCount: this.favoritesCount,
     comments: this.comments,

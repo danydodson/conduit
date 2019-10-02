@@ -6,11 +6,12 @@ import agent from '../../agent'
 import {
   AUTH_USER_DELETE,
   SETTINGS_FORM_SAVED,
+  SETTINGS_FORM_UNLOADED,
 } from '../../actions'
 
 const mapStateToProps = state => ({
   ...state.settings,
-  currentUser: state.common.currentUser
+  currentUser: state.app.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -18,6 +19,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: AUTH_USER_DELETE, payload: agent.Auth.delete(user) }),
   onSubmitForm: user =>
     dispatch({ type: SETTINGS_FORM_SAVED, payload: agent.Auth.save(user) }),
+  onUnload: () =>
+    dispatch({ type: SETTINGS_FORM_UNLOADED }),
 })
 
 class SettingsForm extends React.Component {
@@ -52,7 +55,7 @@ class SettingsForm extends React.Component {
         image: this.props.currentUser.image || '',
         username: this.props.currentUser.username,
         bio: this.props.currentUser.bio,
-        email: this.props.currentUser.email
+        email: this.props.currentUser.email,
       })
     }
   }
@@ -121,10 +124,10 @@ class SettingsForm extends React.Component {
           </fieldset>
 
           <button
-            className="btn btn-lg btn-primary pull-xs-right"
-            type="submit"
-            disabled={this.state.inProgress}>
-            Update Settings
+            className=''
+            disabled={this.state.inProgress}
+            type="submit">
+            {'Update Settings'}
           </button>
 
         </fieldset>

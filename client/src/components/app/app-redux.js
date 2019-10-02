@@ -4,9 +4,11 @@ import { push } from 'connected-react-router'
 import { store } from '../../store'
 import { connect } from 'react-redux'
 
-import { CloudinaryContext } from 'cloudinary-react'
 import { CLOUD_NAME, CLOUD_PRESET } from '../../configs'
+import { CloudinaryContext } from 'cloudinary-react'
+
 import FontsLoader from '../../helpers/font-loader'
+import Private from '../../helpers/set-private'
 import agent from '../../agent'
 
 import Header from '../header'
@@ -29,10 +31,10 @@ import {
 
 const mapStateToProps = state => {
   return {
-    appLoaded: state.common.appLoaded,
-    appName: state.common.appName,
-    currentUser: state.common.currentUser,
-    redirectTo: state.common.redirectTo
+    appLoaded: state.app.appLoaded,
+    appName: state.app.appName,
+    currentUser: state.app.currentUser,
+    redirectTo: state.app.redirectTo
   }
 }
 
@@ -78,10 +80,10 @@ class App extends React.Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/editor/:slug" component={Editor} />
-            <Route path="/editor" component={Editor} />
+            <Private path="/editor/:slug" component={Editor} />
+            <Private path="/editor" component={Editor} />
             <Route path="/post/:id" component={Post} />
-            <Route path="/settings" component={Settings} />
+            <Private path="/settings" component={Settings} />
             <Route path="/@:username/favorites" component={Favorites} />
             <Route path="/@:username" component={Profile} />
           </Switch>

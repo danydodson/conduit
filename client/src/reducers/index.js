@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 import app from '../components/app/app-reducer'
-import register from '../components/register/register-reducer'
-import login from '../components/login/login-reducer'
+import auth from './auth-reducer'
 import home from '../components/home/home-reducer'
 import editor from '../components/editor/editor-reducer'
 import profile from '../components/profile/profile-reducer'
@@ -13,8 +12,7 @@ import settings from '../components/settings/settings-reducer'
 
 export default (history) => combineReducers({
   app: app,
-  register: register,
-  login: login,
+  auth: auth,
   home: home,
   editor: editor,
   profile: profile,

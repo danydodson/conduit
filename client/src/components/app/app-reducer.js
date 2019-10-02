@@ -1,21 +1,25 @@
 import {
   APP_LOAD,
   APP_REDIRECT_LOCATION,
-  HOME_PAGE_UNLOADED,
-  PROFILE_PAGE_UNLOADED,
-  PROFILE_FAVORITES_UNLOADED,
-  POST_ITEM_UNLOADED,
-  POST_ITEM_DELETE_POST,
+
   EDITOR_POST_SUBMITTED,
-  EDITOR_FORM_UNLOADED,
-  // UPLOADER_FORM_UNLOADED,
   SETTINGS_FORM_SAVED,
+  POST_ITEM_DELETE_POST,
+
   AUTH_USER_LOGIN,
   AUTH_USER_LOGOUT,
   AUTH_USER_REGISTER,
   AUTH_USER_DELETE,
+
+  HOME_PAGE_UNLOADED,
   LOGIN_FORM_UNLOADED,
   REGISTER_FORM_UNLOADED,
+  SETTINGS_FORM_UNLOADED,
+  PROFILE_PAGE_UNLOADED,
+  POST_ITEM_UNLOADED,
+  EDITOR_FORM_UNLOADED,
+  PROFILE_FAVORITES_UNLOADED,
+
 } from '../../actions'
 
 const defaultState = {
@@ -39,6 +43,7 @@ export default (state = defaultState, action) => {
     case APP_REDIRECT_LOCATION:
       return { ...state, redirectTo: null }
 
+    case AUTH_USER_DELETE:
     case AUTH_USER_LOGOUT:
       return { ...state, redirectTo: '/', token: null, currentUser: null }
 
@@ -62,24 +67,18 @@ export default (state = defaultState, action) => {
         currentUser: action.error ? null : action.payload.user
       }
 
-    case AUTH_USER_DELETE:
-      const userId = action.userId
-      return {
-        ...state,
-        users: state.users.filter(user => user.id !== userId)
-      }
-
     case POST_ITEM_DELETE_POST:
       return {
         ...state, redirectTo: '/'
       }
 
+    case HOME_PAGE_UNLOADED:
     case LOGIN_FORM_UNLOADED:
     case REGISTER_FORM_UNLOADED:
-    case HOME_PAGE_UNLOADED:
-    case EDITOR_FORM_UNLOADED:
-    case POST_ITEM_UNLOADED:
+    case SETTINGS_FORM_UNLOADED:
     case PROFILE_PAGE_UNLOADED:
+    case POST_ITEM_UNLOADED:
+    case EDITOR_FORM_UNLOADED:
     case PROFILE_FAVORITES_UNLOADED:
       return {
         ...state,
