@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Signed from '../../../helpers/sign-request'
 import DropzoneView from './dropzone-view'
 import request from 'superagent'
+import agent from '../../../agent'
 import crypto from 'crypto'
 
 import { toast } from 'react-toastify'
@@ -13,14 +15,12 @@ import {
   DROPZONE_MEDIA_PROGRESS,
   DROPZONE_MEDIA_DELETED,
   TOAST_SUCCESS_NOTIFICATION,
-  TOAST_INFO_NOTIFICATION,
   TOAST_ERROR_NOTIFICATION,
 } from '../../../actions'
 
 import {
   CLOUD_UPLOAD,
   CLOUD_SECRET,
-  CLOUD_DESTROY,
   CLOUD_KEY,
 } from '../../../configs'
 
@@ -33,12 +33,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: DROPZONE_MEDIA_PROGRESS, upload }),
   onUploaded: uploads =>
     dispatch({ type: DROPZONE_MEDIA_UPLOADED, uploads }),
-  onDelete: publicId =>
-    dispatch({ type: DROPZONE_MEDIA_DELETED, publicId }),
+  onDelete: (payload, publicId) =>
+    dispatch({ type: DROPZONE_MEDIA_DELETED, payload, publicId }),
   onToastSuccess: success =>
     dispatch({ type: TOAST_SUCCESS_NOTIFICATION, success }),
-  onToastInfo: info =>
-    dispatch({ type: TOAST_INFO_NOTIFICATION, info }),
   onToastError: error =>
     dispatch({ type: TOAST_ERROR_NOTIFICATION, error }),
 })
@@ -46,12 +44,17 @@ const mapDispatchToProps = dispatch => ({
 class Dropzone extends React.Component {
   constructor() {
     super()
+
     this.photoId = 1
     this.loading = false
-    this.state = {
-      hover: false,
-      uploads: [] || null,
-    }
+
+    this.state = { hover: false, uploads: [] || null, }
+  }
+
+  componentDidMount = () => {
+    return this.props.medium
+      ? this.props.onLoad()
+      : null
   }
 
   stopEvent = ev => {
@@ -80,11 +83,6 @@ class Dropzone extends React.Component {
     this.setState({ hover: false })
   }
 
-  toastInfo = info => {
-    this.props.onToastInfo(info)
-    return toast.info(info)
-  }
-
   toastSuccess = success => {
     this.props.onToastSuccess(success)
     return toast.success(success)
@@ -108,7 +106,10 @@ class Dropzone extends React.Component {
     return Math.round(Date.now() / millisecondsToSeconds)
   }
 
-  
+  setSign = hash => {
+    return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
+  }
+
   onUpload(files) {
     for (let file of files) {
       const time = this.timestamp()
@@ -146,28 +147,16 @@ class Dropzone extends React.Component {
     this.toastSuccess(`Your photo was uploaded\n`)
   }
 
-  setSign = hash => {
-    return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
-  }
-
   deleteUpload = () => {
-    const sign = this.setSign('public_id=' + this.props.uploads[0].public_id + '&timestamp=' + this.props.uploads[0].version + CLOUD_SECRET)
-    const payload = CLOUD_DESTROY + 'public_id=' + this.props.uploads[0].public_id + '&timestamp=' + this.props.uploads[0].version + '&api_key=' + CLOUD_KEY + '&signature=' + sign
-    request
-      .del(payload)
-      .on('response', res => { return res ? this.toastInfo(`Status: ${res.status} ${res.statusText}`) : null })
-      .then(this.onDeleteUpload.bind(this))
+    const id = this.props.uploads[0].public_id
+    const time = this.props.uploads[0].version
+    const payload = agent.Uploads.delete(Signed(id, time), this.onDeleteUpload.bind(this))
+    this.props.onDelete(payload, id)
   }
 
   onDeleteUpload = () => {
     this.props.onDelete(this.props.uploads[0].public_id)
     this.toastSuccess(`your upload was deleted\n`)
-  }
-
-  componentDidMount = () => {
-    return this.props.medium
-      ? this.props.onLoad()
-      : null
   }
 
   render() {

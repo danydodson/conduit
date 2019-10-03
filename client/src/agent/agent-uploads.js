@@ -20,12 +20,9 @@ const Uploads = {
 
   delete: (
     req,
-    // toastInfo,
     onDeleteUpload,
   ) =>
-    requests.upDel(req)
-      // .on('response', response => response ? toastInfo(`Status: ${response.statusText}`) : null)
-      .then(onDeleteUpload.bind(this)),
+    requests.upDel(req).then(onDeleteUpload.bind(this)),
 }
 
 export default Uploads
