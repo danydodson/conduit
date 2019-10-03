@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DropzoneView from './dropzone-view'
 import request from 'superagent'
+import crypto from 'crypto'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -18,8 +19,7 @@ import {
 
 import {
   CLOUD_UPLOAD,
-  CLOUD_PRESET,
-  // CLOUD_DELETE,
+  CLOUD_SECRET,
   CLOUD_DESTROY,
   CLOUD_KEY,
 } from '../../../configs'
@@ -101,31 +101,36 @@ class Dropzone extends React.Component {
     return supported
       ? this.onUpload(files)
       : this.toastError(`${ev.dataTransfer.files[0].type} is not a supported format\n`)
-
   }
 
+  timestamp = () => {
+    const millisecondsToSeconds = 1000;
+    return Math.round(Date.now() / millisecondsToSeconds)
+  }
+
+  
   onUpload(files) {
     for (let file of files) {
+      const time = this.timestamp()
       const photoId = this.photoId++
       const title = this.props.medium
+      const sign = this.setSign('eager=w_200,h_200&public_id=' + title + '&timestamp=' + time + CLOUD_SECRET)
       // const auth_email = this.props.app.currentUser.email
       // const auth_name = this.props.app.currentUser.username
       request
         .post(CLOUD_UPLOAD)
         .field('file', file)
-        .field('upload_preset', CLOUD_PRESET)
-        .field('public_id', `${title}`)
-        // .field('name', file)
+        .field('eager', 'w_200,h_200')
+        .field('public_id', title)
+        .field('timestamp', time)
+        .field('api_key', CLOUD_KEY)
+        .field('signature', sign)
         // .field('folder', `${medium}`)
         // .field('multiple', true)
         // .field('tags', [`${medium}`])
         // .field('context', `author_email=${auth_email}|author_name=${auth_name}`)
         .on('progress', progress => this.onProgress(photoId, file.name, progress))
-        .end((err, response) => {
-          err
-            ? this.toastError(response.error)
-            : this.onUploaded(photoId, file.name, response)
-        })
+        .end((error, response) => { error ? this.toastError(response.body.error.message) : this.onUploaded(photoId, file.name, response) })
     }
   }
 
@@ -138,22 +143,21 @@ class Dropzone extends React.Component {
     this.loading = false
     this.props.onUpProgress({ id: id, fileName: fileName, response: response, })
     this.props.onUploaded([response.body])
-    this.toastSuccess(`your photo was uploaded\n`)
+    this.toastSuccess(`Your photo was uploaded\n`)
+  }
+
+  setSign = hash => {
+    return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
   }
 
   deleteUpload = () => {
-    const payload = CLOUD_DESTROY + 'public_id=' + this.props.uploads[0].public_id + '&timestamp=' + this.props.uploads[0].version + '&api_key=' + CLOUD_KEY + '&signature=' + this.props.uploads[0].signature
-    request('DELETE', payload).then(this.onDeleteUpload.bind(this))
+    const sign = this.setSign('public_id=' + this.props.uploads[0].public_id + '&timestamp=' + this.props.uploads[0].version + CLOUD_SECRET)
+    const payload = CLOUD_DESTROY + 'public_id=' + this.props.uploads[0].public_id + '&timestamp=' + this.props.uploads[0].version + '&api_key=' + CLOUD_KEY + '&signature=' + sign
+    request
+      .del(payload)
+      .on('response', res => { return res ? this.toastInfo(`Status: ${res.status} ${res.statusText}`) : null })
+      .then(this.onDeleteUpload.bind(this))
   }
-  // deleteUpload = () => {
-  //   request
-  //     .post(CLOUD_DELETE)
-  //     .set('Content-Type', 'application/json')
-  //     .set('X-Requested-With', 'XMLHttpRequest')
-  //     .send({ token: this.props.uploads[0].delete_token })
-  //     // .on('progress', progress => this.toastInfo(progress))
-  //     .then(this.onDeleteUpload.bind(this))
-  // }
 
   onDeleteUpload = () => {
     this.props.onDelete(this.props.uploads[0].public_id)
@@ -177,7 +181,6 @@ class Dropzone extends React.Component {
         onDragOver={this.onDragOver}
         onDragLeave={this.onDragLeave}
         hover={this.state.hover}
-        // loading={this.props.loading} 
         onChange={this.onUpload} />
     )
   }

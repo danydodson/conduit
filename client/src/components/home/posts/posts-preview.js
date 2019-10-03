@@ -52,9 +52,6 @@ const PostPreview = props => {
     else toast.error('Login ')
   }
 
-
-  console.log(props)
-
   return (
     <Preview
       itemScope

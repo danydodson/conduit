@@ -6,11 +6,10 @@ import { connect } from 'react-redux'
 
 import { CLOUD_NAME, CLOUD_PRESET } from '../../configs'
 import { CloudinaryContext } from 'cloudinary-react'
-
 import FontsLoader from '../../helpers/font-loader'
-import Private from '../../helpers/set-private'
 import agent from '../../agent'
 
+import Private from '../private'
 import Header from '../header'
 import Home from '../home'
 import Post from '../post'

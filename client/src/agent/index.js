@@ -1,11 +1,12 @@
 import superagentPromise from 'superagent-promise'
 import _superagent from 'superagent'
 import Auth from './agent-auth'
-import Comments from './agent-comments'
-import Mediums from './agent-mediums'
-import Posts from './agent-posts'
-import Profile from './agent-profiles'
 import Tags from './agent-tags'
+import Mediums from './agent-mediums'
+import Profile from './agent-profiles'
+import Posts from './agent-posts'
+import Comments from './agent-comments'
+import Uploads from './agent-uploads'
 
 import { LOCAL_API } from '../configs'
 
@@ -26,9 +27,13 @@ export const requests = {
   put: (url, body) =>
     superagent.put(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody),
   post: (url, body) =>
-    superagent.post(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody)
+    superagent.post(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody),
+  upDel: url =>
+    superagent.del(url).use(tokenPlugin).then(responseBody),
+  upPost: (url, body) =>
+    superagent.del(url, body).use(tokenPlugin).then(responseBody),
 }
 
 export default {
-  Auth, Tags, Mediums, Profile, Posts, Comments, setToken: _token => { token = _token }
+  Auth, Tags, Mediums, Profile, Posts, Comments, Uploads, setToken: _token => { token = _token }
 }

@@ -1,49 +1,45 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import agent from '../../agent'
-// import fetch from 'fetch'
+import { Link } from 'react-router-dom'
+import { GoTrashcan } from "react-icons/go"
+import agent from '../../agent'
+import crypto from 'crypto'
 
 import {
-  POST_ITEM_DELETE_POST
+  CLOUD_SECRET,
+  CLOUD_DESTROY,
+  CLOUD_KEY,
+} from '../../configs'
+
+import {
+  POST_ITEM_DELETE_POST,
+  DROPZONE_MEDIA_DELETED,
 } from '../../actions'
-
-// import request from 'superagent'
-
-// const {
-//   CLOUD_DESTROY,
-//   CLOUD_KEY,
-// } = `../../configs`
 
 const mapDispatchToProps = dispatch => ({
   onClickDelete: payload =>
-    dispatch({ type: POST_ITEM_DELETE_POST, payload })
+    dispatch({ type: POST_ITEM_DELETE_POST, payload }),
+  onDeleteUpload: (payload) =>
+    dispatch({ type: DROPZONE_MEDIA_DELETED, payload }),
 })
 
 const PostActions = props => {
-
   const post = props.post
+  const getHash = hash => {
+    return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
+  }
+  const sig = getHash('public_id=' + post.uploads[0].public_id + '&timestamp=' + post.uploads[0].version + CLOUD_SECRET)
+  const req = CLOUD_DESTROY + 'public_id=' + post.uploads[0].public_id + '&timestamp=' + post.uploads[0].version + '&api_key=' + CLOUD_KEY + '&signature=' + sig
 
-  // const destroy = `https://api.cloudinary.com/v1_1/seesee/image/destroy?public_id=drawing/drawing_380&timestamp=1570051541&api_key=282549924735476&signature=6f243743ab65bdfaf85e2cca443d8cae800ffacd`
-
-  const removeFromCloud = () => {
-
-    var requestOptions = {
-      method: 'DELETE',
-      redirect: 'follow',
-    }
-
-    fetch(
-      'https://api.cloudinary.com/v1_1/seesee/image/destroy?public_id=' + post.uploads[0].public_id + '&timestamp=' + post.uploads[0].version + '&api_key=282549924735476&signature=' + post.signature, requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+  const del = () => {
+    const payload = agent.Uploads.delete(req, removePost.bind(this))
+    props.onDeleteUpload(payload)
   }
 
-  // const removePost = () => {
-
-  //   props.onClickDelete(agent.Posts.del(post.slug))
-  // }
+  const removePost = () => {
+    props.onClickDelete(agent.Posts.del(post.slug))
+    console.log('done')
+  }
 
   if (props.canModify) {
     return (
@@ -51,16 +47,13 @@ const PostActions = props => {
         <Link to={`/editor/${post.slug}`}>
           {'Edit Post'}
         </Link>
-        <button onClick={removeFromCloud}>
+        <GoTrashcan onClick={del} >
           {'Delete Post'}
-        </button>
+        </GoTrashcan>
       </span>
     )
   }
-  return (
-    <span>
-    </span>
-  )
+  return <span></span>
 }
 
 export default connect(() => ({}), mapDispatchToProps)(PostActions)

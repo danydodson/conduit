@@ -78,4 +78,3 @@ class Header extends React.Component {
 }
 
 export default Header
-// export default connect(mapStateToProps, mapDispatchToProps)(Home)
