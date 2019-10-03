@@ -16,12 +16,20 @@ import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
 
-// import LikeButton from '../../buttons/like-button'
+import { ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import {
   POST_ITEM_FAVORITED,
   POST_ITEM_UNFAVORITED
 } from '../../../actions'
+
+const mapStateToProps = state => {
+  return {
+    token: state.app.token,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   favorite: slug =>
@@ -36,12 +44,16 @@ const PostPreview = props => {
 
   const handleClick = ev => {
     ev.preventDefault()
-    if (post.favorited) {
-      props.unfavorite(post.slug)
-    } else {
-      props.favorite(post.slug)
+
+    if (props.token) {
+      if (post.favorited) props.unfavorite(post.slug)
+      else props.favorite(post.slug)
     }
+    else toast.error('Login ')
   }
+
+
+  console.log(props)
 
   return (
     <Preview
@@ -72,6 +84,8 @@ const PostPreview = props => {
 
       </PreviewLink>
 
+      <ToastContainer />
+
       <AuthorLink
         to={`/@${post.author.username}`}>
         <AuthorImage
@@ -79,6 +93,7 @@ const PostPreview = props => {
           className='pp-author-img'
           alt={`go to ${post.author.username}'s profile`} />
       </AuthorLink>
+
 
       <AuthorName
         to={`/@${post.author.username}`}
@@ -90,11 +105,9 @@ const PostPreview = props => {
         <Cash
           onClick={handleClick}
           title='This item is purchasable' />
-        :
-        <Cash
-          onClick={handleClick}
-          title='This item is purchasable' />
+        : null
       }
+
 
       <Heart
         title='isfaved'
@@ -112,4 +125,4 @@ const PostPreview = props => {
   )
 }
 
-export default connect(() => ({}), mapDispatchToProps)(PostPreview)
+export default connect(mapStateToProps, mapDispatchToProps)(PostPreview)

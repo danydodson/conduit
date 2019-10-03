@@ -19,9 +19,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    box-sizing: border-box;
-    font-family: 'Source Sans Pro';
-    /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+    font-size: 16;
+    font-weight: 400;
+    font-family: 'Montserrat';
+  }
+
+  #app {
+    height:100%;
   }
 
   ul {
@@ -254,6 +258,15 @@ const GlobalStyle = createGlobalStyle`
     background-color: orangered;
   }
   
+  .status {
+    width: 100%;
+  }
+
+  .percent{
+    font-family: 'Montserrat'; 
+    opacity: .7;
+  }
+
   .response_wrap {
     display: flex;
     flex-wrap: wrap;

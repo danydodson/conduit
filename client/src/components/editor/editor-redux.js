@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import Select from '../form/select'
-import Dropzone from '../form/dropzone'
 
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import Dropzone from '../form/dropzone'
+import Checkbox from '../form/checkbox'
+import TextArea from '../form/textarea'
+import Select from '../form/select'
+import Input from '../form/input'
 
 import agent from '../../agent'
 import crypto from 'crypto'
@@ -21,7 +22,6 @@ import {
   EDITOR_TEXT_FIELD_UPDATE,
   EDITOR_CHECKBOX_SWITCHED,
   EDITOR_POST_SUBMITTED,
-  TOASTIFY,
 } from '../../actions'
 
 const mapStateToProps = state => ({ ...state, ...state.editor })
@@ -41,8 +41,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: EDITOR_TEXT_FIELD_UPDATE, key, value }),
   onUpdateChecked: (key, checked) =>
     dispatch({ type: EDITOR_CHECKBOX_SWITCHED, key, checked }),
-  showNotice: () =>
-    dispatch({ type: TOASTIFY }),
 })
 
 class Editor extends React.Component {
@@ -89,16 +87,16 @@ class Editor extends React.Component {
 
       const post = {
         uploads: this.props.uploads,
-        description: this.props.description,
-        body: this.props.body,
         medium: this.props.medium,
         title: this.props.medium,
+        description: this.props.description,
+        body: this.props.body,
         shareable: this.props.shareable,
         allow_comments: this.props.allow_comments,
         purchasable: this.props.purchasable,
         price: this.props.price,
-        signature: this.props.signature,
         tagList: this.props.tagList,
+        signature: this.props.signature,
       }
 
       const final = this.setSign(
@@ -136,12 +134,6 @@ class Editor extends React.Component {
     }
   }
 
-  createTitle = (medium) => `${medium}_${this.random(999)}`
-
-  componentDidUpdate = () => {
-    this.createTitle = this.createTitle.bind(this)
-  }
-
   componentWillUnmount() {
     this.props.onUnload()
   }
@@ -151,11 +143,10 @@ class Editor extends React.Component {
     return (
       <Fragment>
 
-        <ToastContainer />
-
         {this.props.medium === ''
           ? null
-          : <Dropzone medium={this.props.medium} />
+          : <Dropzone
+            medium={this.props.medium} />
         }
 
         <form className='editor-form'>
@@ -165,92 +156,56 @@ class Editor extends React.Component {
             version={this.random(999)}
             onChange={this.changeMedium} />
 
-          <fieldset className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              placeholder="What's this post about?"
-              value={this.props.description}
-              onChange={this.changeDescription} />
-          </fieldset>
+          <Input
+            name='description'
+            placeholder="What's this post about?"
+            value={this.props.description}
+            onChange={this.changeDescription} />
 
-          <fieldset className='form-group'>
-            <textarea
-              rows='8'
-              className='form-control'
-              placeholder='Write your post (in markdown)'
-              value={this.props.body}
-              onChange={this.changeBody}>
-            </textarea>
-          </fieldset>
+          <TextArea
+            name='description'
+            rows='8'
+            placeholder='Write your post (in markdown)'
+            value={this.props.body}
+            onChange={this.changeBody} />
 
-          <fieldset className='form-group'>
-            {'shareable'}
-            <input
-              // name='shareable'
-              type='checkbox'
-              // placeholder='shareable'
-              checked={this.props.shareable}
-              value={this.props.shareable}
-              onChange={this.changeShareable} />
-          </fieldset>
+          <Checkbox
+            label='shareable'
+            name='description'
+            checked={this.props.shareable}
+            value={this.props.shareable}
+            onChange={this.changeShareable} />
 
+          <Checkbox
+            label='allow_comments'
+            name='allow_comments'
+            checked={this.props.allow_comments}
+            value={this.props.allow_comments}
+            onChange={this.changeAllowComments} />
 
-
-          <fieldset className='form-group'>
-            {'allow_comments'}
-            <input
-              // name='allow_comments'
-              type='checkbox'
-              // placeholder='allow_comments'
-              checked={this.props.allow_comments}
-              value={this.props.allow_comments}
-              onChange={this.changeAllowComments} />
-          </fieldset>
-
-          <fieldset className='form-group'>
-            {'purchasable'}
-            <input
-              // name='purchasable'
-              type='checkbox'
-              // placeholder='purchasable'
-              checked={this.props.purchasable}
-              value={this.props.purchasable}
-              onChange={this.changePurchasable} />
-          </fieldset>
+          <Checkbox
+            label='purchasable'
+            name='purchasable'
+            checked={this.props.purchasable}
+            value={this.props.purchasable}
+            onChange={this.changePurchasable} />
 
           {this.props.purchasable ? (
-            <fieldset className='form-group'>
-              <input
-                // id='price'
-                type='text'
-                // placeholder='price'
-                value={this.props.price}
-                onChange={this.changePrice} />
-            </fieldset>
+            <Input
+              name='price'
+              value={this.props.price}
+              onChange={this.changePrice} />
           ) : null}
 
-          <fieldset className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              // id='tagList'
-              placeholder='Enter tags'
-              value={this.props.tagInput}
-              onChange={this.changeTagInput}
-              onKeyUp={this.watchForEnter} />
-            <div className='tag-list'>
-              {(this.props.tagList || []).map(tag => {
-                return (
-                  <span className='tag-default tag-pill' key={tag}>
-                    <i className='ion-close-round'
-                      onClick={this.removeTagHandler(tag)} />
-                    {tag}
-                  </span>
-                )
-              })}
-            </div>
-          </fieldset>
+          <Input
+            type='text'
+            name='tags_list'
+            placeholder='Enter tags'
+            value={this.props.tagInput}
+            onChange={this.changeTagInput}
+            onKeyUp={this.watchForEnter}
+            tagsList={this.props.tagsList}
+            onClick={this.removeTagHandler.bind(this)} />
 
           <button
             className='btn btn-lg pull-xs-right btn-primary'

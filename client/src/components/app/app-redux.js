@@ -21,6 +21,9 @@ import Favorites from '../favorites'
 import Register from '../register'
 import Settings from '../settings'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import Styles from './app-styles'
 
 import {
@@ -72,6 +75,7 @@ class App extends React.Component {
         <CloudinaryContext
           cloudName={CLOUD_NAME}
           uploadPreset={CLOUD_PRESET}>
+          <ToastContainer />
           <Header
             appName={this.props.appName}
             currentUser={this.props.currentUser}

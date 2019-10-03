@@ -11,6 +11,10 @@ import {
   AUTH_USER_REGISTER,
   AUTH_USER_DELETE,
 
+  // TOAST_SUCCESS_NOTIFICATION,
+  // TOAST_INFO_NOTIFICATION,
+  // TOAST_ERROR_NOTIFICATION,
+
   HOME_PAGE_UNLOADED,
   LOGIN_FORM_UNLOADED,
   REGISTER_FORM_UNLOADED,
@@ -25,8 +29,8 @@ import {
 const defaultState = {
   appName: 'SeeSee',
   token: null,
-  dropActive: false,
-  viewChangeCounter: 0
+  viewChangeCounter: 0,
+  // toast: null,
 }
 
 export default (state = defaultState, action) => {
@@ -37,11 +41,16 @@ export default (state = defaultState, action) => {
         ...state,
         token: action.token || null,
         appLoaded: true,
-        currentUser: action.payload ? action.payload.user : null
+        currentUser: action.payload ? action.payload.user : null,
+        // toast: null,
       }
 
     case APP_REDIRECT_LOCATION:
-      return { ...state, redirectTo: null }
+      return {
+        ...state,
+        redirectTo: null,
+        // toast: null,
+      }
 
     case AUTH_USER_DELETE:
     case AUTH_USER_LOGOUT:
@@ -49,13 +58,18 @@ export default (state = defaultState, action) => {
 
     case EDITOR_POST_SUBMITTED:
       const redirectUrl = `/post/${action.payload.post.slug}`
-      return { ...state, redirectTo: redirectUrl }
+      return {
+        ...state,
+        redirectTo: redirectUrl,
+        // toast: null,
+      }
 
     case SETTINGS_FORM_SAVED:
       return {
         ...state,
         redirectTo: action.error ? null : '/',
-        currentUser: action.error ? null : action.payload.user
+        currentUser: action.error ? null : action.payload.user,
+        // toast: null,
       }
 
     case AUTH_USER_LOGIN:
@@ -64,13 +78,31 @@ export default (state = defaultState, action) => {
         ...state,
         redirectTo: action.error ? null : '/',
         token: action.error ? null : action.payload.user.token,
-        currentUser: action.error ? null : action.payload.user
+        currentUser: action.error ? null : action.payload.user,
       }
 
     case POST_ITEM_DELETE_POST:
       return {
         ...state, redirectTo: '/'
       }
+
+    // case TOAST_SUCCESS_NOTIFICATION:
+    //   return {
+    //     ...state,
+    //     toast: action.success
+    //   }
+
+    // case TOAST_INFO_NOTIFICATION:
+    //   return {
+    //     ...state,
+    //     toast: action.info
+    //   }
+
+    // case TOAST_ERROR_NOTIFICATION:
+    //   return {
+    //     ...state,
+    //     toast: action.error
+    //   }
 
     case HOME_PAGE_UNLOADED:
     case LOGIN_FORM_UNLOADED:

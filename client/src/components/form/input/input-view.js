@@ -1,49 +1,57 @@
-// import React from 'react';
-// import classnames from 'classnames';
-// import PropTypes from 'prop-types';
+import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-// const InputGroup = ({
-//   name,
-//   placeholder,
-//   value,
-//   error,
-//   icon,
-//   type,
-//   onChange
-// }) => {
-//   return (
-//     <div className="input-group mb-3">
-//       <div className="input-group-prepend">
-//         <span className="input-group-text">
-//           <i className={icon} />
-//         </span>
-//       </div>
-//       <input
-//         className={classnames('form-control form-control-lg', {
-//           'is-invalid': error
-//         })}
-//         placeholder={placeholder}
-//         name={name}
-//         value={value}
-//         onChange={onChange}
-//       />
-//       {error && <div className="invalid-feedback">{error}</div>}
-//     </div>
-//   );
-// };
+const Input = ({
+  type,
+  name,
+  placeholder,
+  value,
+  onChange,
+  onKeyUp,
+  tagsList,
+  onClick,
+}) => {
 
-// InputGroup.propTypes = {
-//   name: PropTypes.string,
-//   placeholder: PropTypes.string,
-//   value: PropTypes.string,
-//   icon: PropTypes.string,
-//   error: PropTypes.string,
-//   type: PropTypes.string,
-//   onChange: PropTypes.func
-// };
+  const tags = tagsList || [].map(tag => {
+    return (
+      <span
+        key={tag}>
+        <span
+          onClick={onClick(tag)} />
+        {tag}
+      </span>
+    )
+  })
 
-// InputGroup.defaultProps = {
-//   type: 'text'
-// };
+  return (
+    <Fragment>
+      <fieldset className='form-group'>
+        <input
+          type={type}
+          name={name}
+          className='form-input'
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onKeyUp={onKeyUp}
+        />
+      </fieldset>
+      <div>
+        {tags}
+      </div>
+    </Fragment>
+  )
+}
 
-// export default InputGroup;
+Input.propTypes = {
+  type: PropTypes.string,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onClick: PropTypes.func,
+  tagsList: PropTypes.array,
+}
+
+export default Input

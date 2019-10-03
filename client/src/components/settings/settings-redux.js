@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Errors from '../errors'
 import agent from '../../agent'
 
 import {
@@ -144,7 +143,6 @@ class Settings extends React.Component {
           <div className="row">
             <div className="col-md-6 offset-md-3 col-xs-12">
               <h1 className="text-xs-center">Your Settings</h1>
-              <Errors errors={this.props.errors}></Errors>
               <SettingsForm
                 currentUser={this.props.currentUser}
                 onSubmitForm={this.props.onSubmitForm} />

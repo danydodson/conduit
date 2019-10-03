@@ -71,3 +71,7 @@ export const AUTH_USER_LOGOUT = '@@auth/USER_LOGOUT'
 export const AUTH_USER_REGISTER = '@@auth/USER_REGISTER'
 export const AUTH_USER_DELETE = '@@auth/USER_DELETE'
 export const AUTH_UPDATE_FIELD = '@@auth/UPDATE_FIELD'
+
+export const TOAST_SUCCESS_NOTIFICATION = '@@toast/NOTIFY_SUCCESS'
+export const TOAST_INFO_NOTIFICATION = '@@toast/NOTIFY_INFO'
+export const TOAST_ERROR_NOTIFICATION = '@@toast/NOTIFY_ERROR'

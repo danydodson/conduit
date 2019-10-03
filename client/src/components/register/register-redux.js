@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import agent from '../../agent'
-import Errors from '../errors'
 
 import { RegWrap } from './register-styles'
 
@@ -60,8 +59,6 @@ class Register extends React.Component {
       <RegWrap>
         <h1>{'Sign Up'}</h1>
         <Link to="/login">{'Have an account?'}</Link>
-
-        <Errors errors={this.props.errors} />
 
         <form onSubmit={this.submitForm(username, email, password)}>
           <fieldset>

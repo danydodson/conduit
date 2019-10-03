@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom'
-import Errors from '../errors'
 import React from 'react'
-import agent from '../../agent'
 import { connect } from 'react-redux'
-import { Wrap } from './login-styles'
+import { Link } from 'react-router-dom'
+
+import Input from '../form/input'
+
+import agent from '../../agent'
 
 import {
   LOGIN_FORM_LOADED,
@@ -30,8 +31,10 @@ const mapDispatchToProps = dispatch => ({
 class Login extends React.Component {
   constructor() {
     super()
+
     this.changeEmail = ev => this.props.onChangeEmail(ev.target.value)
     this.changePassword = ev => this.props.onChangePassword(ev.target.value)
+
     this.submitForm = (email, password) => ev => {
       ev.preventDefault()
       this.props.onSubmit(email, password)
@@ -47,48 +50,39 @@ class Login extends React.Component {
   }
 
   render() {
+
     const email = this.props.email
     const password = this.props.password
-    return (
-      <Wrap>
-        <h1 className="text-xs-center">Sign In</h1>
-        <p className="text-xs-center">
-          <Link to="/register">Need an account?</Link>
-        </p>
 
-        <Errors errors={this.props.errors} />
+    return (
+      <div style={{ paddingTop: 80 }}>
+
+        <h1>Sign In</h1>
+
+        <Link to="/register">Need an account?</Link>
 
         <form onSubmit={this.submitForm(email, password)}>
-          <fieldset>
+          <Input
+            type='email'
+            name='email'
+            placeholder='Email'
+            value={email}
+            onChange={this.changeEmail} />
+          <Input
+            type='password'
+            name='password'
+            placeholder='Password'
+            value={password}
+            onChange={this.changePassword} />
+          <button
+            className="btn btn-lg btn-primary pull-xs-right"
+            disabled={this.props.inProgress}
+            type="submit">
+            {'Sign in'}
+          </button>
 
-            <fieldset className="form-group">
-              <input
-                className="form-control form-control-lg"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={this.changeEmail} />
-            </fieldset>
-
-            <fieldset className="form-group">
-              <input
-                className="form-control form-control-lg"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={this.changePassword} />
-            </fieldset>
-
-            <button
-              className="btn btn-lg btn-primary pull-xs-right"
-              disabled={this.props.inProgress}
-              type="submit">
-              Sign in
-                  </button>
-
-          </fieldset>
         </form>
-      </Wrap>
+      </div>
     )
   }
 }

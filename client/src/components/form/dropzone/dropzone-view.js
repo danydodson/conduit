@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const Dropzone = ({
   uploads,
+  progress,
   onClick,
   onDrop,
   onDragEnter,
@@ -16,13 +17,36 @@ const Dropzone = ({
   const previews = uploads.map((upload, id) => (
     !upload === upload ?
       null
-      : <img
-        draggable={false}
-        width='100'
-        key={id}
-        src={upload.url}
-        alt={upload.url}
-        onClick={onClick} />
+      : (
+        <figure>
+          <img
+            draggable={false}
+            width='100'
+            key={id}
+            src={upload.url}
+            alt={upload.url}
+            onClick={onClick} />
+
+
+          <div className="status">
+            {!loading
+              ? null
+              :
+              (
+                <div className='percent'>
+                  {Math.round(uploads[0].progress.percent)}{' %...'}
+                  <div
+                    role="progressbar"
+                    className="progress progress-bar"
+                    style={{ width: uploads[0].progress.percent + '%' }}>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+        </figure>
+      )
   ))
   return (
     <div
@@ -38,7 +62,7 @@ const Dropzone = ({
       <div
         className='drag-files'>
         {loading
-          ? 'loading'
+          ? ''
           : 'Drag files to upload'}
       </div>
       <div

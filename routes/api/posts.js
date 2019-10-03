@@ -139,7 +139,6 @@ router.post('/', auth.required, (req, res, next) => {
     if (!user) return res.sendStatus(401)
     let post = new Post(req.body.post)
     post.author = user
-    // post.signature = post.setSignature('public_id=' + post.uploads[0].fileName + '&timestamp=' + post.uploads[0].response.body.version + CLOUD_SECRET)
     return post.save().then(() => {
       return res.json({ post: post.toJSONFor(user) })
     })
@@ -168,6 +167,9 @@ router.put('/:post', auth.required, (req, res, next) => {
 
       if (typeof req.body.post.uploads !== 'undefined') {
         req.post.uploads = req.body.post.uploads
+      }
+      if (typeof req.body.post.signature !== 'undefined') {
+        req.post.signature = req.body.post.signature
       }
       if (typeof req.body.post.medium !== 'undefined') {
         req.post.medium = req.body.post.medium
