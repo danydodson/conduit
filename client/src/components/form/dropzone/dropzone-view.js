@@ -21,7 +21,7 @@ const Dropzone = ({
           <img
             draggable={false}
             width='100'
-            key={upload.public_id}
+            key={id}
             src={upload.url}
             alt={upload.url}
             onClick={onClick} />
