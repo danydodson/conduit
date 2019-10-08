@@ -1,6 +1,6 @@
 import React from 'react'
 import agent from '../../../agent'
-import Loading from '../../loading'
+import Loading from '../../form/loading'
 import styled from 'styled-components'
 import { MediumList, MediumLinks } from './mediums-styles'
 

@@ -1,16 +1,13 @@
 import {
   APP_LOAD,
   APP_REDIRECT_LOCATION,
-
   EDITOR_POST_SUBMITTED,
   SETTINGS_FORM_SAVED,
   POST_ITEM_DELETE_POST,
-
   AUTH_USER_LOGIN,
   AUTH_USER_LOGOUT,
   AUTH_USER_REGISTER,
   AUTH_USER_DELETE,
-
   HOME_PAGE_UNLOADED,
   LOGIN_FORM_UNLOADED,
   REGISTER_FORM_UNLOADED,
@@ -26,7 +23,6 @@ const defaultState = {
   appName: 'SeeSee',
   token: null,
   viewChangeCounter: 0,
-  // toast: null,
 }
 
 export default (state = defaultState, action) => {
@@ -38,14 +34,12 @@ export default (state = defaultState, action) => {
         token: action.token || null,
         appLoaded: true,
         currentUser: action.payload ? action.payload.user : null,
-        // toast: null,
       }
 
     case APP_REDIRECT_LOCATION:
       return {
         ...state,
         redirectTo: null,
-        // toast: null,
       }
 
     case AUTH_USER_DELETE:
@@ -57,7 +51,6 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         redirectTo: redirectUrl,
-        // toast: null,
       }
 
     case SETTINGS_FORM_SAVED:
@@ -65,7 +58,6 @@ export default (state = defaultState, action) => {
         ...state,
         redirectTo: action.error ? null : '/',
         currentUser: action.error ? null : action.payload.user,
-        // toast: null,
       }
 
     case AUTH_USER_LOGIN:
@@ -81,24 +73,6 @@ export default (state = defaultState, action) => {
       return {
         ...state, redirectTo: '/'
       }
-
-    // case TOAST_SUCCESS_NOTIFICATION:
-    //   return {
-    //     ...state,
-    //     toast: action.success
-    //   }
-
-    // case TOAST_INFO_NOTIFICATION:
-    //   return {
-    //     ...state,
-    //     toast: action.info
-    //   }
-
-    // case TOAST_ERROR_NOTIFICATION:
-    //   return {
-    //     ...state,
-    //     toast: action.error
-    //   }
 
     case HOME_PAGE_UNLOADED:
     case LOGIN_FORM_UNLOADED:

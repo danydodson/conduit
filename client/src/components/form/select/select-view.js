@@ -2,12 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mediums from './mediums'
 
-const Select = ({ version, value, onChange, errors, }) => {
+const Select = ({ name, version, value, onChange, errors, }) => {
 
   const selectOptions = mediums.map(option => (
     <option
       key={option}
-      value={option + '/' + option + '_' + version}>
+      value={
+        name === 'medium'
+          ? option
+          : option + '_' + version}>
       {option}
     </option>
   ))

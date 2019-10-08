@@ -30,8 +30,8 @@ export const requests = {
     superagent.post(`${LOCAL_API}${url}`, body).use(tokenPlugin).then(responseBody),
   upDel: url =>
     superagent.del(url).use(tokenPlugin).then(responseBody),
-  upPost: (url, body) =>
-    superagent.del(url, body).use(tokenPlugin).then(responseBody),
+  upPost: (url) =>
+    superagent.post(url).use(tokenPlugin).then(responseBody),
 }
 
 export default {

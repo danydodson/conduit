@@ -1,13 +1,14 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { push } from 'connected-react-router'
-import { store } from '../../store'
 import { connect } from 'react-redux'
+import { store } from '../../store'
+import { push } from 'connected-react-router'
 
-import { CLOUD_NAME, CLOUD_PRESET } from '../../configs'
 import { CloudinaryContext } from 'cloudinary-react'
-import FontsLoader from '../../helpers/font-loader'
-import agent from '../../agent'
+import { CLOUD_NAME, CLOUD_PRESET } from '../../configs'
+
+import FontsLoader from '../../helpers/load-fonts'
+import Styles from './app-styles'
 
 import Private from '../private'
 import Header from '../header'
@@ -20,10 +21,7 @@ import Favorites from '../favorites'
 import Register from '../register'
 import Settings from '../settings'
 
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
-import Styles from './app-styles'
+import agent from '../../agent'
 
 import {
   APP_LOAD,
@@ -74,7 +72,6 @@ class App extends React.Component {
         <CloudinaryContext
           cloudName={CLOUD_NAME}
           uploadPreset={CLOUD_PRESET}>
-          <ToastContainer />
           <Header
             appName={this.props.appName}
             currentUser={this.props.currentUser}

@@ -44,7 +44,6 @@ class CommentInput extends React.Component {
           rows="3">
         </textarea>
 
-
         <img
           src={this.props.currentUser.image}
           alt={this.props.currentUser.username} />

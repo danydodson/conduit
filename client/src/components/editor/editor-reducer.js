@@ -1,9 +1,6 @@
 import {
   EDITOR_FORM_UNLOADED,
   EDITOR_POST_SUBMITTED,
-  TOAST_SUCCESS_NOTIFICATION,
-  TOAST_INFO_NOTIFICATION,
-  TOAST_ERROR_NOTIFICATION,
   APP_ASYNC_START,
   EDITOR_FORM_LOADED,
   EDITOR_TEXT_FIELD_UPDATE,
@@ -66,24 +63,6 @@ export default (state = {}, action) => {
 
     case EDITOR_CHECKBOX_SWITCHED:
       return Object.assign({}, state, { [action.key]: action.checked })
-
-    case TOAST_SUCCESS_NOTIFICATION:
-      return {
-        ...state,
-        toast: action.success
-      }
-
-    case TOAST_INFO_NOTIFICATION:
-      return {
-        ...state,
-        toast: action.info
-      }
-
-    case TOAST_ERROR_NOTIFICATION:
-      return {
-        ...state,
-        toast: action.error
-      }
 
     default:
       return state

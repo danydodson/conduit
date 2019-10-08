@@ -44,10 +44,9 @@ const mapDispatchToProps = dispatch => ({
 class Dropzone extends React.Component {
   constructor() {
     super()
-
     this.photoId = 1
     this.loading = false
-
+    this.toastId = null
     this.state = { hover: false, uploads: [] || null, }
   }
 
@@ -101,37 +100,58 @@ class Dropzone extends React.Component {
       : this.toastError(`${ev.dataTransfer.files[0].type} is not a supported format\n`)
   }
 
-  timestamp = () => {
+  setTimestamp = () => {
     const millisecondsToSeconds = 1000;
     return Math.round(Date.now() / millisecondsToSeconds)
   }
 
-  setSign = hash => {
-    return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
-  }
+  setSignature = params =>
+    crypto
+      .createHash('sha1')
+      .update(params, 'utf8')
+      .digest('hex')
+
 
   onUpload(files) {
     for (let file of files) {
-      const time = this.timestamp()
+      const title = this.props.title
+      const time = this.setTimestamp()
+      const folder = this.props.medium
       const photoId = this.photoId++
-      const title = this.props.medium
-      const sign = this.setSign('eager=w_200,h_200&public_id=' + title + '&timestamp=' + time + CLOUD_SECRET)
-      // const auth_email = this.props.app.currentUser.email
-      // const auth_name = this.props.app.currentUser.username
+      const auth_email = this.props.app.currentUser.email
+      const auth_name = this.props.app.currentUser.username
+      const eager = 'c_fit,w_100|c_fit,w_200|c_fit,w_300|c_fit,w_400|c_fit,w_500|c_fit,w_600|c_fit,w_700|c_fit,w_800|c_fit,w_900|c_fit,w_1000|c_fit,w_1100|c_fit,w_1200|c_fit,w_1296|c_fit,w_1400|c_fit,w_1600|c_fit,w_1800|c_fit,w_2000'
+      const sign = this.setSignature('context=author_email=' + auth_email + '|author_name=' + auth_name + '&eager=' + eager + '&eager_async=true&folder=' + folder + '&invalidate=true&public_id=' + title + '&tags=' + folder + '&timestamp=' + time + CLOUD_SECRET)
       request
         .post(CLOUD_UPLOAD)
         .field('file', file)
-        .field('eager', 'w_200,h_200')
         .field('public_id', title)
         .field('timestamp', time)
+        .field('eager', eager)
+        .field('eager_async', true)
+        .field('folder', folder)
         .field('api_key', CLOUD_KEY)
         .field('signature', sign)
-        // .field('folder', `${medium}`)
-        // .field('multiple', true)
-        // .field('tags', [`${medium}`])
-        // .field('context', `author_email=${auth_email}|author_name=${auth_name}`)
-        .on('progress', progress => this.onProgress(photoId, file.name, progress))
-        .end((error, response) => { error ? this.toastError(response.body.error.message) : this.onUploaded(photoId, file.name, response) })
+        .field('multiple', true)
+        .field('invalidate', true)
+        .field('tags', [`${folder}`])
+        .field('context', `author_email=${auth_email}|author_name=${auth_name}`)
+        .on('progress', progress => {
+          if (this.toastId === null) {
+            this.toastId = toast('Upload in Progress', {
+              progress: progress.loaded / progress.total
+            });
+          } else {
+            toast.update(this.toastId, { progress: progress.loaded / progress.total })
+          }
+          toast.done(toast.id)
+          // this.onProgress(photoId, file.name, progress)
+        })
+        .end((error, response) => {
+          error
+            ? this.toastError(response.body.error.message)
+            : this.onUploaded(photoId, file.name, response)
+        })
     }
   }
 

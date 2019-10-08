@@ -50,9 +50,10 @@ class Editor extends React.Component {
     const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value)
     const updateCheckEvent = key => ev => this.props.onUpdateChecked(key, ev.target.checked)
 
+    this.changeMedium = updateFieldEvent('medium')
+    this.changeTitle = updateFieldEvent('title')
     this.changeDescription = updateFieldEvent('description')
     this.changeBody = updateFieldEvent('body')
-    this.changeMedium = updateFieldEvent('medium')
     this.changeShareable = updateCheckEvent('shareable')
     this.changeAllowComments = updateCheckEvent('allow_comments')
     this.changePurchasable = updateCheckEvent('purchasable')
@@ -63,11 +64,11 @@ class Editor extends React.Component {
       return Math.floor(Math.random() * Math.floor(max))
     }
 
-    this.getTimestamp = () => {
+    this.getVersion = () => {
       return this.props.uploads[0].version
     }
 
-    this.setSign = hash => {
+    this.createSigned = hash => {
       return crypto.createHash('sha1').update(hash, 'utf8').digest('hex')
     }
 
@@ -88,7 +89,7 @@ class Editor extends React.Component {
       const post = {
         uploads: this.props.uploads,
         medium: this.props.medium,
-        title: this.props.medium,
+        title: this.props.title,
         description: this.props.description,
         body: this.props.body,
         shareable: this.props.shareable,
@@ -99,20 +100,13 @@ class Editor extends React.Component {
         signature: this.props.signature,
       }
 
-      const final = this.setSign(
-        'public_id=' + post.title
-        + '&timestamp=' + this.getTimestamp(post)
-        + CLOUD_SECRET
-      )
-
+      const final = this.createSigned('public_id=' + post.title + '&timestamp=' + this.getVersion(post) + CLOUD_SECRET)
       post.signature = final
-
+      
       const slug = { slug: this.props.slug }
-
       const promise = this.props.slug
         ? agent.Posts.update(Object.assign(post, slug))
         : agent.Posts.create(post)
-
       this.props.onSubmit(promise)
     }
   }
@@ -146,15 +140,22 @@ class Editor extends React.Component {
         {this.props.medium === ''
           ? null
           : <Dropzone
-            medium={this.props.medium} />
+            medium={this.props.medium}
+            title={this.props.title} />
         }
 
         <form className='editor-form'>
 
           <Select
+            name='medium'
             value={this.props.medium}
-            version={this.random(999)}
             onChange={this.changeMedium} />
+
+          <Select
+            name='title'
+            value={this.props.title}
+            version={this.random(999)}
+            onChange={this.changeTitle} />
 
           <Input
             name='description'
@@ -163,7 +164,7 @@ class Editor extends React.Component {
             onChange={this.changeDescription} />
 
           <TextArea
-            name='description'
+            name='content'
             rows='8'
             placeholder='Write your post (in markdown)'
             value={this.props.body}
@@ -171,7 +172,7 @@ class Editor extends React.Component {
 
           <Checkbox
             label='shareable'
-            name='description'
+            name='shareable'
             checked={this.props.shareable}
             value={this.props.shareable}
             onChange={this.changeShareable} />

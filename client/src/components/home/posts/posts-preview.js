@@ -16,10 +16,6 @@ import { AuthorImage } from './styles/img-author'
 import { Heart } from './styles/svg-heart'
 import { Cash } from './styles/svg-cash'
 
-import { ToastContainer } from 'react-toastify'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
 import {
   POST_ITEM_FAVORITED,
   POST_ITEM_UNFAVORITED
@@ -44,12 +40,8 @@ const PostPreview = props => {
 
   const handleClick = ev => {
     ev.preventDefault()
-
-    if (props.token) {
-      if (post.favorited) props.unfavorite(post.slug)
-      else props.favorite(post.slug)
-    }
-    else toast.error('Login ')
+    if (post.favorited) props.unfavorite(post.slug)
+    else props.favorite(post.slug)
   }
 
   return (
@@ -81,16 +73,14 @@ const PostPreview = props => {
 
       </PreviewLink>
 
-      <ToastContainer />
-
       <AuthorLink
         to={`/@${post.author.username}`}>
+          
         <AuthorImage
           src={post.author.image}
           className='pp-author-img'
           alt={`go to ${post.author.username}'s profile`} />
       </AuthorLink>
-
 
       <AuthorName
         to={`/@${post.author.username}`}
@@ -105,18 +95,11 @@ const PostPreview = props => {
         : null
       }
 
-
       <Heart
         title='isfaved'
         onClick={handleClick}
         favorited={post.favorited ? 1 : 0}
       />
-
-      {/* <LikeButton
-        liked={post.favorited ? 1 : 0}
-        onClick={handleClick}
-      /> */}
-
 
     </Preview>
   )
