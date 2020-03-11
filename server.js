@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const errorhandler = require('errorhandler')
 
-const logger = require('./logs/logger')
+// const logger = require('./logs/logger')
 const chalk = require('chalk')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -28,7 +28,7 @@ mongoose.connect(MONGO_URI, {
 // Smongoose.set('debug', mongooselogs)
 
 app.use(cors())
-app.use(logger())
+// app.use(logger())
 app.use(errorhandler())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

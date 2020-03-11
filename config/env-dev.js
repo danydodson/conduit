@@ -1,5 +1,6 @@
 module.exports = {
-  MONGO_URI: `${process.env.MONGO_URI}`,
+  MONGO_URI: 'mongodb+srv://danydodson:IZmJ5l8Qp357l6@working-egitb.mongodb.net/conduit_dev?retryWrites=true&w=majority',
+  // MONGO_URI: `${process.env.MONGO_URI}`,
   SECRET: `${process.env.SECRET}`,
   CLOUD_NAME: `${process.env.CLOUD_NAME}`,
   CLOUD_PRESET: `${process.env.CLOUD_PRESET}`,
